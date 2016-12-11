@@ -179,13 +179,13 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3 : basicAttackStatement = "This hero has a very weak basic attack. While you may very well end up using it, it should never be the focus of your assault.\n";
                         break;
-                    case 4 : basicAttackStatement = "This hero has a slightly below average basic attack. More than likely, you want to foucs on another trait that is higher, especially in builds, but don't be afraid to use your basics.\n";
+                    case 4 : basicAttackStatement = "This hero has a slightly below average basic attack. More than likely, you want to focus on another trait that is higher, especially in builds, but don't be afraid to use your basics.\n";
                         break;
-                    case 5 : basicAttackStatement = "This hero has an average basic attack. More than likely, you want to foucs on another trait that is higher, especially in builds, but don't be afraid to use your basics.\n";
+                    case 5 : basicAttackStatement = "This hero has an average basic attack. More than likely, you want to focus on another trait that is higher, especially in builds, but don't be afraid to use your basics.\n";
                         break;
-                    case 6 : basicAttackStatement = "This hero has a slightly above average basic attack. More than likely, they are a mixed attacker building basic damage in conjuction with another trait. Match the rating of this trait with the others to determine how you want to utulize this.\n";
+                    case 6 : basicAttackStatement = "This hero has a slightly above average basic attack. More than likely, they are a mixed attacker building basic damage in conjunction with another trait. Match the rating of this trait with the others to determine how you want to utilize this.\n";
                         break;
-                    case 7 : basicAttackStatement = "This hero has an above average basic attack. More than likely, they are a mixed attacker building basic damage in conjuction with another trait. Match the rating of this trait with the others to determine how you want to utulize this.\n";
+                    case 7 : basicAttackStatement = "This hero has an above average basic attack. More than likely, they are a mixed attacker building basic damage in conjunction with another trait. Match the rating of this trait with the others to determine how you want to utilize this.\n";
                         break;
                     case 8 : basicAttackStatement = "This hero has a strong basic attack. You should make a point to focus on it in your builds, as it will be key in your success.\n";
                         break;
