@@ -50,6 +50,11 @@
             android:indeterminate="true"
             android:layout_centerHorizontal="true"
             android:visibility="gone" />
+        <ImageView
+            android:id="@+id/HeroImages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
     </RelativeLayout>
 

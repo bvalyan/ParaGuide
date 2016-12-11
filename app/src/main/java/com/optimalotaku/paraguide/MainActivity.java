@@ -1,15 +1,21 @@
 package com.optimalotaku.paraguide;
 
+        import android.graphics.Canvas;
+        import android.graphics.ColorFilter;
+        import android.graphics.PixelFormat;
+        import android.graphics.drawable.Drawable;
         import android.os.AsyncTask;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
         import android.view.View;
         import android.widget.EditText;
+        import android.widget.ImageView;
         import android.widget.ProgressBar;
         import android.widget.TextView;
 
         import java.io.BufferedReader;
+        import java.io.InputStream;
         import java.io.InputStreamReader;
         import java.net.HttpURLConnection;
         import java.net.URL;
@@ -20,6 +26,30 @@ package com.optimalotaku.paraguide;
 public class MainActivity extends AppCompatActivity {
 
     String heroID;
+    String picURL;
+    Drawable d = new Drawable() {
+        @Override
+        public void draw(Canvas canvas) {
+
+        }
+
+        @Override
+        public void setAlpha(int i) {
+
+        }
+
+        @Override
+        public void setColorFilter(ColorFilter colorFilter) {
+
+        }
+
+        @Override
+        public int getOpacity() {
+            return PixelFormat.OPAQUE;
+        }
+
+
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             JSONArray arr = new JSONArray();
             try {
                 JSONObject obj = new JSONObject(response);
-                String picURL = obj.getJSONObject("images").getString("icon");
+                picURL = "https:" + obj.getJSONObject("images").getString("icon");
                 int mobility = Integer.parseInt(obj.getJSONObject("stats").getString("Mobility"));
                 int basicAttack = Integer.parseInt(obj.getJSONObject("stats").getString("BasicAttack"));
                 int durability = Integer.parseInt(obj.getJSONObject("stats").getString("Durability"));
@@ -211,11 +241,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    class RetrieveImages extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected String doInBackground(Void... urls) {
+            try {
+                InputStream is = (InputStream) new URL(picURL).getContent();
+                d = Drawable.createFromStream(is, "src name");
+
+            } catch (Exception e) {
+                return null;
+            }
+            return "good";
+        }
+
+        protected void onPostExecute(String response) {
+            ImageView picDisplay = (ImageView) findViewById(R.id.HeroImages);
+            picDisplay.setImageDrawable(d);
+        }
+    }
+
     public void onClick(View view){
+
         EditText hEdit = (EditText) findViewById(R.id.heroText);
         heroID = hEdit.getText().toString();
         RetrieveFeedTask feed = new RetrieveFeedTask();
+        RetrieveImages images = new RetrieveImages();
         feed.execute();
+        images.execute();
+
+
     }
 
 }
