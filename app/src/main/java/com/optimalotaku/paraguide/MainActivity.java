@@ -198,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 4 : mobilityStatement = "This hero is very immobile. While you may have an escape move, do your best to ensure your blind spots are clear at all times and be wary of enemy team-ups.\n";
                         break;
-                    case 5 : mobilityStatement = "This hero is somewhat immobile. While you have ways to get around, you can still be killed do to lack of escape options. Make sure to prioritize having your escape options up, especially if the fight goes south.\n";
+                    case 5 : mobilityStatement = "This hero is somewhat immobile. While you have ways to get around, you can still be killed due to lack of escape options. Make sure to prioritize having your escape options up, especially if the fight goes south.\n";
                         break;
-                    case 6 : mobilityStatement = "This hero is somewhat immobile. While you have ways to get around, you can still be killed do to lack of escape options. Make sure to prioritize having your escape options up, especially if the fight goes south.\n";
+                    case 6 : mobilityStatement = "This hero is somewhat immobile. While you have ways to get around, you can still be killed due to lack of escape options. Make sure to prioritize having your escape options up, especially if the fight goes south.\n";
                         break;
                     case 7 : mobilityStatement = "This hero is very mobile. You can roam the map with decent options for both engage and disengage. Utilize this mobility to maximize the potential of this hero.\n";
                         break;
