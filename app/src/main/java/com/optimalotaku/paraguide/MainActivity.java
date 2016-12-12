@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     String heroID;
     String picURL;
+
     Drawable d = new Drawable() {
         @Override
         public void draw(Canvas canvas) {
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
 
         private Exception exception;
+        private int mProgressStatus = 0;
 
 
         protected void onPreExecute() {
@@ -308,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPostExecute(String response) {
             ImageView picDisplay = (ImageView) findViewById(R.id.HeroImages);
+            picDisplay.setVisibility(View.VISIBLE);
             //picDisplay.setImageDrawable(d);
 
             Glide.with(MainActivity.this).load(picURL).into(picDisplay);
