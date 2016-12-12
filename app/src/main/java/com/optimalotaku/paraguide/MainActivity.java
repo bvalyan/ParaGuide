@@ -1,32 +1,33 @@
 package com.optimalotaku.paraguide;
 
-        import android.app.Activity;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.graphics.Canvas;
-        import android.graphics.ColorFilter;
-        import android.graphics.PixelFormat;
-        import android.graphics.drawable.Drawable;
-        import android.os.AsyncTask;
-        import android.os.Handler;
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.Menu;
-        import android.view.View;
-        import android.view.inputmethod.InputMethodManager;
-        import android.widget.EditText;
-        import android.widget.ImageView;
-        import android.widget.ProgressBar;
-        import android.widget.TextView;
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
-        import java.io.BufferedReader;
-        import java.io.InputStream;
-        import java.io.InputStreamReader;
-        import java.net.HttpURLConnection;
-        import java.net.URL;
-        import java.lang.*;
-        import org.json.*;
+import com.bumptech.glide.Glide;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -206,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                     case 9 : mobilityStatement = "This hero is very mobile. You can roam the map with decent options for both engage and disengage. Utilize this mobility to maximize the potential of this hero.\n";
                         break;
                     case 10 : mobilityStatement = "This hero is very mobile. You can roam the map with decent options for both engage and disengage. Utilize this mobility to maximize the potential of this hero.\n";
-                };
+                }
 
                 switch(basicAttack){
                     case 1 : basicAttackStatement = "This hero does not specialize in basic attacks at all. Don't spend CP on anything enhancing basics. It's probably a better idea to focus on their abilities.\n";
@@ -228,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                     case 9 : basicAttackStatement = "This hero has a strong basic attack. You should make a point to focus on it in your builds, as it will be key in your success.\n";
                         break;
                     case 10 : basicAttackStatement = "This hero has a strong basic attack. You should make a point to focus on it in your builds, as it will be key in your success.\n";
-                };
+                }
 
                 switch(durability){
                     case 1 : durabilityStatement = "This hero suffers from low durability. Be very careful to avoid unnecessary damage during fights and take advatage of other attributes.\n";
@@ -250,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                     case 9 : durabilityStatement = "This hero is very durable. You should be the enagager in virtually every team fight. Build some HP or armor to fulfill the role of tanking for your team.\n";
                         break;
                     case 10 : durabilityStatement = "This hero is very durable. You should be the enagager in virtually every team fight. Build some HP or armor to fulfill the role of tanking for your team.\n";
-                };
+                }
 
                 switch(abilityAttack){
                     case 1 : abilityAttackStatement = "This hero has very low ability power and should absolutely focus on other attributes. It would probably be better not to build cards solely for the purpose of boosting ability power.\n";
@@ -272,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                     case 9 : abilityAttackStatement = "This hero has high ability power. Boost it with cards that increase power and make sure to build mana or mana regen to supplement your casting.\n";
                         break;
                     case 10 : abilityAttackStatement = "This hero has high ability power. Boost it with cards that increase power and make sure to build mana or mana regen to supplement your casting.\n";
-                };
+                }
 
                 responseView.setText(mobilityStatement);
                 responseView.append("\n");
@@ -307,7 +308,9 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPostExecute(String response) {
             ImageView picDisplay = (ImageView) findViewById(R.id.HeroImages);
-            picDisplay.setImageDrawable(d);
+            //picDisplay.setImageDrawable(d);
+
+            Glide.with(MainActivity.this).load(picURL).into(picDisplay);
         }
     }
 
