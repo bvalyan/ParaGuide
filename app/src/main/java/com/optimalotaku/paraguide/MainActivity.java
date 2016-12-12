@@ -1,14 +1,20 @@
 package com.optimalotaku.paraguide;
 
+        import android.app.Activity;
+        import android.content.Context;
+        import android.content.Intent;
         import android.graphics.Canvas;
         import android.graphics.ColorFilter;
         import android.graphics.PixelFormat;
         import android.graphics.drawable.Drawable;
         import android.os.AsyncTask;
+        import android.os.Handler;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.util.Log;
+        import android.view.Menu;
         import android.view.View;
+        import android.view.inputmethod.InputMethodManager;
         import android.widget.EditText;
         import android.widget.ImageView;
         import android.widget.ProgressBar;
@@ -224,6 +230,50 @@ public class MainActivity extends AppCompatActivity {
                     case 10 : basicAttackStatement = "This hero has a strong basic attack. You should make a point to focus on it in your builds, as it will be key in your success.\n";
                 };
 
+                switch(durability){
+                    case 1 : durabilityStatement = "This hero suffers from low durability. Be very careful to avoid unnecessary damage during fights and take advatage of other attributes.\n";
+                        break;
+                    case 2 : durabilityStatement = "This hero suffers from low durability. Be very careful to avoid unnecessary damage during fights and take advatage of other attributes.\n";
+                        break;
+                    case 3 : durabilityStatement = "This hero is not very durable. Prioritize movement or damage when confronted with conflict.\n";
+                        break;
+                    case 4 : durabilityStatement = "This hero has below average durability. You can take hits, but don't rely on your durability to get you out of any situation.\n";
+                        break;
+                    case 5 : durabilityStatement = "This hero has average durability. You can take hits, but you should focus just as much on basic attacking or firing your abilities.\n";
+                        break;
+                    case 6 : durabilityStatement = "This hero has slightly above average durability. You can take hits, but you should focus just as much on basic attacking or firing your abilities.\n";
+                        break;
+                    case 7 : durabilityStatement = "This hero is durable. You might do well to build HP/armor and take advantage of these natural defense stats and shouldn't hesitate to jump in team fights.\n";
+                        break;
+                    case 8 : durabilityStatement = "This hero is very durable. You should be the enagager in virtually every team fight. Build some HP or armor to fulfill the role of tanking for your team.\n";
+                        break;
+                    case 9 : durabilityStatement = "This hero is very durable. You should be the enagager in virtually every team fight. Build some HP or armor to fulfill the role of tanking for your team.\n";
+                        break;
+                    case 10 : durabilityStatement = "This hero is very durable. You should be the enagager in virtually every team fight. Build some HP or armor to fulfill the role of tanking for your team.\n";
+                };
+
+                switch(abilityAttack){
+                    case 1 : abilityAttackStatement = "This hero has very low ability power and should absolutely focus on other attributes. It would probably be better not to build cards solely for the purpose of boosting ability power.\n";
+                        break;
+                    case 2 : abilityAttackStatement = "This hero has very low ability power and should absolutely focus on other attributes. It would probably be better not to build cards solely for the purpose of boosting ability power.\n";
+                        break;
+                    case 3 : abilityAttackStatement = "This hero has low ability power. It would be best not to focus on it over other attributes.\n";
+                        break;
+                    case 4 : abilityAttackStatement = "This hero has slightly below average ability power. Utilize it in conjuction with other beneficial attributes to be effective.\n";
+                        break;
+                    case 5 : abilityAttackStatement = "This hero has average ability power. Utilize it in conjuction with other beneficial attributes to be effective.\n";
+                        break;
+                    case 6 : abilityAttackStatement = "This hero has slightly above average ability power. Take full advatage of your abilities in battle, but don't expect too much from them.\n";
+                        break;
+                    case 7 : abilityAttackStatement = "This hero has above average ability power. Boost it with cards that increase power and make sure to build mana or mana regen to supplement your casting.\n";
+                        break;
+                    case 8 : abilityAttackStatement = "This hero has high ability power. Boost it with cards that increase power and make sure to build mana or mana regen to supplement your casting.\n";
+                        break;
+                    case 9 : abilityAttackStatement = "This hero has high ability power. Boost it with cards that increase power and make sure to build mana or mana regen to supplement your casting.\n";
+                        break;
+                    case 10 : abilityAttackStatement = "This hero has high ability power. Boost it with cards that increase power and make sure to build mana or mana regen to supplement your casting.\n";
+                };
+
                 responseView.setText(mobilityStatement);
                 responseView.append("\n");
                 responseView.append(basicAttackStatement);
@@ -252,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 return null;
             }
-            return "good";
+            return null;
         }
 
         protected void onPostExecute(String response) {
@@ -260,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
             picDisplay.setImageDrawable(d);
         }
     }
+
 
     public void onClick(View view){
 
@@ -269,6 +320,12 @@ public class MainActivity extends AppCompatActivity {
         RetrieveImages images = new RetrieveImages();
         feed.execute();
         images.execute();
+        View view2 = this.getCurrentFocus();
+        if (view2 != null) {
+            //hide keyboard upon return
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
+        }
 
 
     }
