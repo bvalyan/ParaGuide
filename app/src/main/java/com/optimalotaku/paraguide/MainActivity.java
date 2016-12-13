@@ -238,9 +238,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 switch(durability){
-                    case 1 : durabilityStatement = "This hero suffers from low durability. Be very careful to avoid unnecessary damage during fights and take advatage of other attributes.\n";
+                    case 1 : durabilityStatement = "This hero suffers from low durability. Be very careful to avoid unnecessary damage during fights and take advantage of other attributes.\n";
                         break;
-                    case 2 : durabilityStatement = "This hero suffers from low durability. Be very careful to avoid unnecessary damage during fights and take advatage of other attributes.\n";
+                    case 2 : durabilityStatement = "This hero suffers from low durability. Be very careful to avoid unnecessary damage during fights and take advantage of other attributes.\n";
                         break;
                     case 3 : durabilityStatement = "This hero is not very durable. Prioritize movement or damage when confronted with conflict.\n";
                         break;
@@ -266,11 +266,11 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3 : abilityAttackStatement = "This hero has low ability power. It would be best not to focus on it over other attributes.\n";
                         break;
-                    case 4 : abilityAttackStatement = "This hero has slightly below average ability power. Utilize it in conjuction with other beneficial attributes to be effective.\n";
+                    case 4 : abilityAttackStatement = "This hero has slightly below average ability power. Utilize it in conjunction with other beneficial attributes to be effective.\n";
                         break;
-                    case 5 : abilityAttackStatement = "This hero has average ability power. Utilize it in conjuction with other beneficial attributes to be effective.\n";
+                    case 5 : abilityAttackStatement = "This hero has average ability power. Utilize it in conjunction with other beneficial attributes to be effective.\n";
                         break;
-                    case 6 : abilityAttackStatement = "This hero has slightly above average ability power. Take full advatage of your abilities in battle, but don't expect too much from them.\n";
+                    case 6 : abilityAttackStatement = "This hero has slightly above average ability power. Take full advantage of your abilities in battle, but don't expect too much from them.\n";
                         break;
                     case 7 : abilityAttackStatement = "This hero has above average ability power. Boost it with cards that increase power and make sure to build mana or mana regen to supplement your casting.\n";
                         break;
