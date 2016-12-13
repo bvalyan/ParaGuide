@@ -23,9 +23,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     String heroID;
     String picURL;
+    String apiKey = "b6d974bd42ec4a2f9b2322034bd0d0e0";
 
     Drawable d = new Drawable() {
         @Override
@@ -135,10 +138,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "grux"           : heroID = "fc010be1a0bf295a347944e1e97ba583";
                         break;
-                    default               : System.exit(2);
+                    default               : heroID = null;
                 }
 
-                String apiKey = "b6d974bd42ec4a2f9b2322034bd0d0e0";
+                apiKey = "b6d974bd42ec4a2f9b2322034bd0d0e0";
                 URL url = new URL( "https://developer-paragon.epicgames.com/v1/hero/" + heroID);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.addRequestProperty("X-Epic-ApiKey", apiKey);
@@ -165,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String response) {
             TextView responseView = (TextView) findViewById(R.id.responseView);
             if(response == null) {
-                response = "THERE WAS AN ERROR";
+                response = "HERO NOT FOUND";
+                responseView.setText(response);
             }
 
             ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -286,7 +290,6 @@ public class MainActivity extends AppCompatActivity {
                 responseView.append(abilityAttackStatement);
 
 
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -296,35 +299,107 @@ public class MainActivity extends AppCompatActivity {
 
     class RetrieveImages extends AsyncTask<Void, Void, String>{
 
+        private Exception exception;
+
         @Override
         protected String doInBackground(Void... urls) {
+            URL url = null;
+            try {
+                url = new URL( "https://developer-paragon.epicgames.com/v1/hero/" + heroID);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            HttpURLConnection urlConnection = null;
+            try {
+                urlConnection = (HttpURLConnection) url.openConnection();
+            } catch (IOException e) {
+                System.out.println("hereURL");
+                e.printStackTrace();
+            }
+            urlConnection.addRequestProperty("X-Epic-ApiKey", apiKey);
+
+            BufferedReader bufferedReader = null;
+            try {
+                bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            try {
+                if(bufferedReader != null){
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line).append("\n");
+                    }
+                }
+            } catch (IOException e) {
+                System.out.println("here");
+                e.printStackTrace();
+            }
+            try {
+                if(bufferedReader != null)
+                    bufferedReader.close();
+            } catch (IOException e) {
+                System.out.println("here2");
+                e.printStackTrace();
+            }
+
+            String picJSONDATA = stringBuilder.toString();
+
+            JSONObject obj = null;
+            try {
+                obj = new JSONObject(picJSONDATA);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(obj != null)
+                    picURL = "https:" + obj.getJSONObject("images").getString("icon");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             try {
                 InputStream is = (InputStream) new URL(picURL).getContent();
                 d = Drawable.createFromStream(is, "src name");
 
             } catch (Exception e) {
+                System.out.println(Log.e("ERROR", e.getMessage(), e));
                 return null;
             }
-            return null;
+            return "found!";
         }
 
         protected void onPostExecute(String response) {
             ImageView picDisplay = (ImageView) findViewById(R.id.HeroImages);
-            picDisplay.setVisibility(View.VISIBLE);
-            //picDisplay.setImageDrawable(d);
+            picDisplay.setVisibility(View.GONE);
+            String questionURL = "http://images.clipartpanda.com/question-mark-icon-8235.png";
 
-            Glide.with(MainActivity.this).load(picURL).into(picDisplay);
+            //picDisplay.setImageDrawable(d);
+            if(response == null){
+
+                System.out.println("ITS NULL");
+                //Glide.with(MainActivity.this).load(questionURL).into(picDisplay);
+                picDisplay.setVisibility(View.GONE);
+            }
+            else{
+                picDisplay.setVisibility(View.VISIBLE);
+                Glide.with(MainActivity.this).load(picURL).into(picDisplay);
+                picURL = null;
+
+            }
+
         }
     }
 
 
-    public void onClick(View view){
+    public void onClick(View view) throws InterruptedException {
 
         EditText hEdit = (EditText) findViewById(R.id.heroText);
         heroID = hEdit.getText().toString();
         RetrieveFeedTask feed = new RetrieveFeedTask();
         RetrieveImages images = new RetrieveImages();
-        feed.execute();
+        feed.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        Thread.sleep(1000);
         images.execute();
         View view2 = this.getCurrentFocus();
         if (view2 != null) {
