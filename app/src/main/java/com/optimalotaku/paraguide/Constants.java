@@ -50,7 +50,7 @@ public class Constants {
     public static final String HI_MOBILITY_STATEMENT        = "This hero is very mobile. You can roam the map with decent options for both engage and disengage."
                                                             + "Utilize this mobility to maximize the potential of this hero.\n";
 
-    public static final String LOW_BASIC_ATTACK             = "This hero does not specialize in basic attacks at all. Don't spend CP on anything enhancing basics."
+    public static final String LOW_BASIC_ATTACK_STATEMENT   = "This hero does not specialize in basic attacks at all. Don't spend CP on anything enhancing basics."
                                                             + "It's probably a better idea to focus on their abilities.\n";
     public static final String MED_BASIC_ATTACK_STATEMENT   = "This hero has an average basic attack. More than likely, you want to focus on another trait that is higher, especially in builds,"
                                                             + "but don't be afraid to use your basics.\n";
