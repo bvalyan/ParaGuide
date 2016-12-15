@@ -56,7 +56,7 @@
         android:visibility="gone" />
     <ScrollView
 
-        android:layout_width="340dp"
+        android:layout_width="fill_parent"
         android:layout_height="170dp"
         android:layout_marginTop="1dp"
         android:layout_gravity="center"
@@ -64,9 +64,9 @@
         android:layout_weight="0.47">
         <TextView
             android:id="@+id/responseView"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="clip_horizontal"/>
+            android:width="0dp"/>
     </ScrollView>
 
 
