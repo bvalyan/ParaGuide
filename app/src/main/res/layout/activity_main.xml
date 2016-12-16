@@ -44,7 +44,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="21dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -54,10 +54,19 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:visibility="gone" />
+
+    <Button
+        android:text="Display My Decks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        android:onClick="loginSend"/>
+
     <ScrollView
 
         android:layout_width="fill_parent"
-        android:layout_height="170dp"
+        android:layout_height="350dp"
         android:layout_marginTop="1dp"
         android:layout_gravity="center"
         android:id="@+id/scrollView2"
@@ -68,6 +77,8 @@
             android:layout_height="wrap_content"
             android:width="0dp"/>
     </ScrollView>
+
+
 
 
 </LinearLayout>
