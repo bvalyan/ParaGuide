@@ -30,6 +30,6 @@
         android:id="@+id/button3"
         android:layout_x="23dp"
         android:layout_y="167dp"
-        style="@style/Widget.AppCompat.Button.Borderless" />
+        style="@style/Widget.AppCompat.ButtonBar.AlertDialog" />
 
 </LinearLayout>

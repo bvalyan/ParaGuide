@@ -39,8 +39,8 @@
         android:background="@android:drawable/alert_light_frame"
         android:layout_weight="0.28"
         android:visibility="gone"
-        android:layout_height="110dp"
-        android:layout_width="110dp" />
+        android:layout_height="296dp"
+        android:layout_width="230dp" />
 
     <Space
         android:layout_width="match_parent"
@@ -58,7 +58,7 @@
     <Button
         android:text="Display My Decks"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="43dp"
         android:id="@+id/button"
         style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
         android:onClick="loginSend"/>
@@ -70,15 +70,13 @@
         android:layout_marginTop="1dp"
         android:layout_gravity="center"
         android:id="@+id/scrollView2"
-        android:layout_weight="0.47">
+        android:layout_weight="0.72">
         <TextView
             android:id="@+id/responseView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:width="0dp"/>
     </ScrollView>
-
-
 
 
 </LinearLayout>
