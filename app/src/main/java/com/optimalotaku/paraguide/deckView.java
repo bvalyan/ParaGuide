@@ -2,20 +2,21 @@ package com.optimalotaku.paraguide;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,35 +25,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by Brandon on 12/15/16.
  */
 
-public class webLogin extends AppCompatActivity {
+public class DeckView extends AppCompatActivity {
 
-    private static final String SHPREF_KEY_ACCESS_TOKEN = "Access_Token";
-    private String accessToken;
-    private static final String REDIRECT_URI = "https://optimalotaku.com/paraguide/";
-    private static final String AUTHORIZE_PATH = "https://developer-paragon.epicgames.com/v1/auth/login/";
-    private static final String apiKey = "b6d974bd42ec4a2f9b2322034bd0d0e0";
-    private static final String clientID = "5cbc82af86414e03a549dbb811dfbbc5";
     private String authCode;
-    private String token;
-
-
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-        String apiKey = "b6d974bd42ec4a2f9b2322034bd0d0e0";
-        String clientID = "5cbc82af86414e03a549dbb811dfbbc5";
         setContentView(R.layout.login);
 
         WebView myWebView = (WebView) findViewById(R.id.webview);
@@ -73,7 +56,7 @@ public class webLogin extends AppCompatActivity {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                    if (url.startsWith(REDIRECT_URI)) {
+                    if (url.startsWith(Constants.REDIRECT_URI)) {
 
                         // extract OAuth2 access_code appended in url
                         if (url.indexOf("?code=") != -1) {
@@ -87,7 +70,7 @@ public class webLogin extends AppCompatActivity {
                             //e.commit();
 
                             // spawn worker thread to do api calls t
-                            new MyWebservicesAsyncTask().execute();
+                            new PullDeck().execute();
                         }
 
                         // don't go to redirectUri
@@ -106,7 +89,7 @@ public class webLogin extends AppCompatActivity {
         } else {
 
             // have access token, so spawn worker thread to do api calls
-            new MyWebservicesAsyncTask().execute();
+            new PullDeck().execute();
         }
 
 
@@ -122,8 +105,8 @@ public class webLogin extends AppCompatActivity {
 
     private String mReturnAuthorizationRequestUri() {
         StringBuilder sb = new StringBuilder();
-        sb.append(AUTHORIZE_PATH);
-        sb.append(clientID);
+        sb.append(Constants.AUTHORIZE_PATH);
+        sb.append(Constants.CLIENT_ID);
         return sb.toString();
     }
 
@@ -133,7 +116,7 @@ public class webLogin extends AppCompatActivity {
         return encodedBytes.toString().trim();
     }
 
-    private class MyWebservicesAsyncTask extends AsyncTask<Void, Void, String> {
+    private class PullDeck extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... urls) {
 
@@ -231,11 +214,9 @@ public class webLogin extends AppCompatActivity {
                         deckID = "Deck ID: " + deck.getString("id");
                         heroName = "Hero Name: " + deck.getJSONObject("hero").getString("name");
                         if(i < 1){
-                            responseView.setText(deckID);}
+                            responseView.setText(deckName);}
                         else
-                            responseView.append(deckID);
-                        responseView.append("\n");
-                        responseView.append(deckName);
+                            responseView.append(deckName);
                         responseView.append("\n");
                         responseView.append(heroName);
                         responseView.append("\n");
@@ -259,7 +240,7 @@ public class webLogin extends AppCompatActivity {
         }
 
         public void endSession(View view){
-            Intent intent = new Intent(webLogin.this, MainActivity.class);
+            Intent intent = new Intent(DeckView.this, MainActivity.class);
             startActivity(intent);
         }
     }
