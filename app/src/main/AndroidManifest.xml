@@ -5,6 +5,7 @@
     android:versionName="1.1">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCOUNT_MANAGER" />
 
     <application
         android:allowBackup="true"
@@ -13,15 +14,20 @@
 
         android:supportsRtl="true"
         android:uiOptions="splitActionBarWhenNarrow"
-        android:theme="@style/Theme.AppCompat.Light.Dialog.Alert">
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
 
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="stateVisible|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
+        </activity>
+        <activity android:name=".webLogin"
+            android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
     </application>
 
