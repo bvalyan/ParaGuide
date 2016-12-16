@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -43,6 +45,7 @@ public class webLogin extends AppCompatActivity {
 
 
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -51,8 +54,8 @@ public class webLogin extends AppCompatActivity {
         String apiKey = "b6d974bd42ec4a2f9b2322034bd0d0e0";
         String clientID = "5cbc82af86414e03a549dbb811dfbbc5";
         setContentView(R.layout.login);
-        WebView myWebView = (WebView) findViewById(R.id.webview);
 
+        WebView myWebView = (WebView) findViewById(R.id.webview);
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setDomStorageEnabled(true);
         myWebView.getSettings().setLoadWithOverviewMode(true);
@@ -205,15 +208,22 @@ public class webLogin extends AppCompatActivity {
             String deckName = null;
             String heroName = null;
 
+
+
+            TextView responseView = (TextView) findViewById(R.id.textView);
+
             if (response == null) {
                 Log.i("INFO", "ACCOUNT ERROR");
             } else {
+
                 Log.i("INFO", response);
                 JSONArray deckArray = null;
 
                 try {
                     //setContentView(R.layout.activity_main);
-                    TextView responseView = (TextView) findViewById(R.id.deckDisplay);
+
+                    setContentView(R.layout.deckreadout);
+                    responseView = (TextView) findViewById(R.id.textView);
                     deckArray = new JSONArray(response);
                     for(int i = 0; i < deckArray.length(); i++){
                         JSONObject deck = deckArray.getJSONObject(i);
@@ -231,10 +241,10 @@ public class webLogin extends AppCompatActivity {
                         responseView.append("\n");
                         responseView.append("\n");
                     }
-                    TextView deckDisplay = (TextView) findViewById(R.id.deckDisplay);
+
                     InputMethodManager imm = (InputMethodManager)getSystemService(
                             Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(deckDisplay.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(responseView.getWindowToken(), 0);
                     Button endButton = (Button) findViewById(R.id.button3);
                     endButton.setVisibility(View.VISIBLE);
 

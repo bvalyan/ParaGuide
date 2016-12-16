@@ -21,15 +21,5 @@
 
     </WebView>
 
-    <Button
-        android:text="DONE"
-        android:layout_width="141dp"
-        android:layout_height="wrap_content"
-        android:onClick="endSession"
-        android:visibility="invisible"
-        android:id="@+id/button3"
-        android:layout_x="23dp"
-        android:layout_y="167dp"
-        style="@style/Widget.AppCompat.ButtonBar.AlertDialog" />
 
 </LinearLayout>
