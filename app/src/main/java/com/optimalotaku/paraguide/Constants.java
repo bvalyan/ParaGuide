@@ -11,8 +11,8 @@ public class Constants {
     public static final String CLIENT_ID        = "5cbc82af86414e03a549dbb811dfbbc5";
     public static final String CLIENT_SECRET    = "ea931c9fb41249e5a67b4038e121a2a8";
     public static final String AUTH_VAR         = "Authorization";
-    public static final String REDIRECT_URI = "https://optimalotaku.com/paraguide/";
-    public static final String AUTHORIZE_PATH = "https://developer-paragon.epicgames.com/v1/auth/login/";
+    public static final String REDIRECT_URI     = "https://optimalotaku.com/paraguide/";
+    public static final String AUTHORIZE_PATH   = "https://developer-paragon.epicgames.com/v1/auth/login/";
 
     //Paragon Version
     public static final String PARAGON_VERSION  = "35.1";
