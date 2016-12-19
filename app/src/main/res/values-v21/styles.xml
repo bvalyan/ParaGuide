@@ -6,4 +6,8 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/colorPrimary</item>
     </style>
+
+    <style name="newtheme" parent="android:Theme.Material.Dialog.NoActionBar" >
+        <item name="android:colorAccent">@color/accent_material_dark_1</item>
+    </style>
 </resources>
