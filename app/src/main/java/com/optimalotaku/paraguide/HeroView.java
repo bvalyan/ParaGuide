@@ -42,9 +42,6 @@ public class HeroView extends AppCompatActivity implements HeroInfoResponse {
     }
 
 
-
-
-
     @Override
     public void processHeroInfoFinish(HeroData hData){
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -54,78 +51,74 @@ public class HeroView extends AppCompatActivity implements HeroInfoResponse {
         progressBar.setVisibility(View.GONE);
 
         //Picture
-        picDisplay.setVisibility(View.VISIBLE);
-        Log.i("INFO","MainActivity - processHeroInfoFinish() - ImageURL: "+ hData.getImageIconURL());
-        Glide.with(this).load("https:"+hData.getImageIconURL()).into(picDisplay);
+        if(hData.getImageIconURL() != null && !hData.getImageIconURL().equals("")) {
+            picDisplay.setVisibility(View.VISIBLE);
+            Log.i("INFO", "MainActivity - processHeroInfoFinish() - ImageURL: " + hData.getImageIconURL());
+            Glide.with(this).load("https:" + hData.getImageIconURL()).into(picDisplay);
+        }
 
-        //Set Summary Text
-        //Mobility
-        if(isBetween(hData.getMobility(),1,3)){
-            responseView.setText(Constants.LOW_MOBILITY_STATEMENT);
-            responseView.append("\n");
-        }
-        else if(isBetween(hData.getMobility(),4,7)){
-            responseView.setText(Constants.MED_MOBILITY_STATEMENT);
-            responseView.append("\n");
-        }
-        else if(isBetween(hData.getMobility(),8,10)){
-            responseView.setText(Constants.HI_MOBILITY_STATEMENT);
-            responseView.append("\n");
+        if(!hData.getEmpty()) {
+            //Set Summary Text
+            //Mobility
+            if (isBetween(hData.getMobility(), 1, 3)) {
+                responseView.setText(Constants.LOW_MOBILITY_STATEMENT);
+                responseView.append("\n");
+            } else if (isBetween(hData.getMobility(), 4, 7)) {
+                responseView.setText(Constants.MED_MOBILITY_STATEMENT);
+                responseView.append("\n");
+            } else if (isBetween(hData.getMobility(), 8, 10)) {
+                responseView.setText(Constants.HI_MOBILITY_STATEMENT);
+                responseView.append("\n");
+            } else {
+                Log.i("INFO", "No valid Mobility given: " + hData.getMobility().toString());
+            }
+
+            //Basic Attack
+            if (isBetween(hData.getBasicAttack(), 1, 3)) {
+                responseView.append(Constants.LOW_BASIC_ATTACK_STATEMENT);
+                responseView.append("\n");
+            } else if (isBetween(hData.getBasicAttack(), 4, 7)) {
+                responseView.append(Constants.MED_BASIC_ATTACK_STATEMENT);
+                responseView.append("\n");
+            } else if (isBetween(hData.getBasicAttack(), 8, 10)) {
+                responseView.append(Constants.HI_BASIC_ATTACK_STATEMENT);
+                responseView.append("\n");
+            } else {
+                Log.i("INFO", "No valid Basic Attack given: " + hData.getBasicAttack().toString());
+            }
+
+            //Durability
+            if (isBetween(hData.getDurability(), 1, 3)) {
+                responseView.append(Constants.LOW_DURABILITY_STATEMENT);
+                responseView.append("\n");
+            } else if (isBetween(hData.getDurability(), 4, 7)) {
+                responseView.append(Constants.MED_DURABILITY_STATEMENT);
+                responseView.append("\n");
+            } else if (isBetween(hData.getDurability(), 8, 10)) {
+                responseView.append(Constants.HI_DURABILITY_STATEMENT);
+                responseView.append("\n");
+            } else {
+                Log.i("INFO", "No valid Durability given: " + hData.getDurability().toString());
+            }
+
+
+            //Ability Attack
+            if (isBetween(hData.getAbilityAttack(), 1, 3)) {
+                responseView.append(Constants.LOW_ABILITY_ATTACK_STATEMENT);
+                responseView.append("\n");
+            } else if (isBetween(hData.getAbilityAttack(), 4, 7)) {
+                responseView.append(Constants.MED_ABILITY_ATTACK_STATEMENT);
+                responseView.append("\n");
+            } else if (isBetween(hData.getAbilityAttack(), 8, 10)) {
+                responseView.append(Constants.HI_ABILITY_ATTACK_STATEMENT);
+                responseView.append("\n");
+            } else {
+                Log.i("INFO", "No valid Durability given: " + hData.getAbilityAttack().toString());
+            }
         }
         else{
-            Log.i("INFO","No valid Mobility given: "+hData.getMobility().toString());
-        }
-
-        //Basic Attack
-        if(isBetween(hData.getBasicAttack(),1,3)){
-            responseView.append(Constants.LOW_BASIC_ATTACK_STATEMENT);
-            responseView.append("\n");
-        }
-        else if(isBetween(hData.getBasicAttack(),4,7)){
-            responseView.append(Constants.MED_BASIC_ATTACK_STATEMENT);
-            responseView.append("\n");
-        }
-        else if(isBetween(hData.getBasicAttack(),8,10)){
-            responseView.append(Constants.HI_BASIC_ATTACK_STATEMENT);
-            responseView.append("\n");
-        }
-        else{
-            Log.i("INFO","No valid Basic Attack given: "+hData.getBasicAttack().toString());
-        }
-
-        //Durability
-        if(isBetween(hData.getDurability(),1,3)){
-            responseView.append(Constants.LOW_DURABILITY_STATEMENT);
-            responseView.append("\n");
-        }
-        else if(isBetween(hData.getDurability(),4,7)){
-            responseView.append(Constants.MED_DURABILITY_STATEMENT);
-            responseView.append("\n");
-        }
-        else if(isBetween(hData.getDurability(),8,10)){
-            responseView.append(Constants.HI_DURABILITY_STATEMENT);
-            responseView.append("\n");
-        }
-        else{
-            Log.i("INFO","No valid Durability given: "+hData.getDurability().toString());
-        }
-
-
-        //Ability Attack
-        if(isBetween(hData.getAbilityAttack(),1,3)){
-            responseView.append(Constants.LOW_ABILITY_ATTACK_STATEMENT);
-            responseView.append("\n");
-        }
-        else if(isBetween(hData.getAbilityAttack(),4,7)){
-            responseView.append(Constants.MED_ABILITY_ATTACK_STATEMENT);
-            responseView.append("\n");
-        }
-        else if(isBetween(hData.getAbilityAttack(),8,10)){
-            responseView.append(Constants.HI_ABILITY_ATTACK_STATEMENT);
-            responseView.append("\n");
-        }
-        else {
-            Log.i("INFO", "No valid Durability given: " + hData.getAbilityAttack().toString());
+            EditText hEdit = (EditText) findViewById(R.id.heroText);
+            responseView.setText("No hero data available for: "+hEdit.getText().toString()+"\nPlease try again.");
         }
 
 

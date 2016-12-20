@@ -72,9 +72,17 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
                 JSONObject obj = null;
 
                 obj = new JSONObject(stringBuilder.toString());
+
+                Log.i("INFO", "ParagonAPIDeckInfo - doInBackground - " + "Auth Token: " + obj.getString("token"));
+                Log.i("INFO", "ParagonAPIDeckInfo - doInBackground - " + "Account ID: " + obj.getString("accountId"));
+                Log.i("INFO", "ParagonAPIDeckInfo - doInBackground - " + "Expire Time: " + obj.getString("expireTime"));
                 token = obj.getString("token");
                 accountID = obj.getString("accountId");
                 expireTime = obj.getString("expireTime");
+
+
+
+
                 url2 = new URL("https://developer-paragon.epicgames.com/v1/account/"+accountID+"/decks");
                 urlConnection2 = (HttpURLConnection) url2.openConnection();
                 urlConnection2.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
@@ -124,18 +132,19 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
                 for(int i = 0; i < deckArray.length(); i++){
                     DeckData dData = new DeckData();
                     JSONObject deck = deckArray.getJSONObject(i);
-                    Log.i("INFO", "ParagonAPIDeckInfo - onPostExecute - "+"Deck Name: " + deck.getString("name"));
-                    Log.i("INFO", "ParagonAPIDeckInfo - onPostExecute - "+"Deck ID: " + deck.getString("id"));
-                    Log.i("INFO", "ParagonAPIDeckInfo - onPostExecute - "+"Deck ID: " + deck.getJSONObject("hero").getString("name"));
+                    if(deck.has("name")) {
+                        Log.i("INFO", "ParagonAPIDeckInfo - onPostExecute - " + "Deck Name: " + deck.getString("name"));
+                        Log.i("INFO", "ParagonAPIDeckInfo - onPostExecute - " + "Deck ID: " + deck.getString("id"));
+                        Log.i("INFO", "ParagonAPIDeckInfo - onPostExecute - " + "Deck ID: " + deck.getJSONObject("hero").getString("name"));
 
 
-                    dData.setDeckID(deck.getString("id"));
-                    dData.setDeckName(deck.getString("name"));
-                    dData.setHeroName(deck.getJSONObject("hero").getString("name"));
+                        dData.setDeckID(deck.getString("id"));
+                        dData.setDeckName(deck.getString("name"));
+                        dData.setHeroName(deck.getJSONObject("hero").getString("name"));
 
 
-
-                    deckList.add(dData);
+                        deckList.add(dData);
+                    }
 
                 }
 

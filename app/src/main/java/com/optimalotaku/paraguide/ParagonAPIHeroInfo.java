@@ -110,22 +110,25 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                 default               : heroID = null;
             }
 
-            URL url = new URL( "https://developer-paragon.epicgames.com/v1/hero/" + heroID);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
-            try {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line).append("\n");
+            if(heroID != null){
+                URL url = new URL( "https://developer-paragon.epicgames.com/v1/hero/" + heroID);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    bufferedReader.close();
+                    return stringBuilder.toString();
                 }
-                bufferedReader.close();
-                return stringBuilder.toString();
+                finally{
+                    urlConnection.disconnect();
+                }
             }
-            finally{
-                urlConnection.disconnect();
-            }
+            return null;
         }
         catch(Exception e) {
             Log.e("ERROR", e.getMessage(), e);
@@ -137,8 +140,11 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
 
         if(response == null) {
             Log.i("INFO","HERO NOT FOUND");
+            heroData.setEmpty(true);
+            delegate.processHeroInfoFinish(heroData);
         }
         else {
+            heroData.setEmpty(false);
 
             //pBar.setVisibility(View.GONE);
             Log.i("INFO", response);

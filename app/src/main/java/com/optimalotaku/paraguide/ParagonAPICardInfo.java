@@ -29,6 +29,10 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
 
     public CardInfoResponse delegate = null;
 
+    public ParagonAPICardInfo(){
+
+    }
+
     @Override
     protected String doInBackground(Void... voids) {
         URL url = null;
@@ -75,8 +79,10 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                     maxEffectArray = card.getJSONArray("maxedEffects");
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Name: " + card.getString("name"));
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card ID: " + card.getString("id"));
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Image URL: " + card.getJSONObject("images").getString("medium_stats"));
                     cData.setName(card.getString("name"));
                     cData.setId(card.getString("id"));
+                    cData.setImageUrl(card.getJSONObject("images").getString("medium_stats"));
 
                     slotType = card.getString("slotType");
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Slot Type: " + card.getString("slotType"));

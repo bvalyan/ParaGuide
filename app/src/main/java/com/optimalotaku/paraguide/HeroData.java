@@ -24,6 +24,7 @@ public class HeroData {
     private HeroSkill secondarySkillTwo;
     private HeroSkill secondarySkillThree;
     private HeroSkill ultimateSkill;
+    private Boolean isEmpty;
 
 
     public String getName() {
@@ -155,18 +156,30 @@ public class HeroData {
     }
 
     public HeroSkill getUltimateSkill() {
+
         return ultimateSkill;
     }
 
     public void setUltimateSkill(HeroSkill ultimateSkill) {
+
         this.ultimateSkill = ultimateSkill;
     }
 
     public String getParagonVersion() {
+
         return paragonVersion;
     }
 
     public void setParagonVersion(String paragonVersion) {
+
         this.paragonVersion = paragonVersion;
+    }
+
+    public Boolean getEmpty() {
+        return isEmpty;
+    }
+
+    public void setEmpty(Boolean empty) {
+        isEmpty = empty;
     }
 }

@@ -1,5 +1,7 @@
 package com.optimalotaku.paraguide;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,7 @@ public class CardData {
 
     private String name;
     private String id;
+    private String imageUrl;
     public enum SlotType{
         UNKNOWN,PRIME,ACTIVE,PASSIVE,UPGRADE
     }
@@ -19,42 +22,66 @@ public class CardData {
     private List<CardEffect> maxEffectList;
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     public String getId() {
+
         return id;
     }
 
     public void setId(String id) {
+
         this.id = id;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public SlotType getSlot() {
+
         return slot;
     }
 
     public void setSlot(SlotType slot) {
+
         this.slot = slot;
     }
 
     public List<CardEffect> getEffectList() {
+
         return effectList;
     }
 
     public void setEffectList(List<CardEffect> effectList) {
+
         this.effectList = effectList;
     }
 
     public List<CardEffect> getMaxEffectList() {
+
         return maxEffectList;
     }
 
     public void setMaxEffectList(List<CardEffect> maxEffectList) {
         this.maxEffectList = maxEffectList;
+    }
+
+    public String statToHumanReadable(String stat){
+        stat = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(stat)," ");
+
+        return stat;
+
     }
 }
