@@ -27,7 +27,7 @@
         android:layout_gravity="end"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="Search"
-        android:onClick="onClick"/>
+        android:onClick="onSearch"/>
 
 
     <ImageView
@@ -55,13 +55,6 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-    <Button
-        android:text="Display My Decks"
-        android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:id="@+id/button"
-        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-        android:onClick="loginSend"/>
 
     <ScrollView
 
