@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/icon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="36dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="36dp"
+        android:id="@+id/ParaguideLogo" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        tools:text="@string/app_title"
+        android:textSize="16sp"
+        android:layout_alignTop="@+id/ParaguideLogo"
+        android:layout_toRightOf="@+id/ParaguideLogo"
+        android:layout_toEndOf="@+id/ParaguideLogo"
+        android:layout_marginTop="15dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="540px"
+        android:layout_below="@+id/ParaguideLogo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="26dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="194dp"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:layout_width="185dp"
+                    android:layout_height="145dp"
+                    android:id="@+id/heroSearch"
+                    app:srcCompat="@drawable/paragon2"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:text="Hero Search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/heroSearchText"
+                    android:layout_below="@id/heroSearch"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginStart="22dp"
+                    android:textSize="17sp"
+                    android:elevation="0dp" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:layout_width="199dp"
+                android:layout_height="148dp"
+                android:id="@+id/deckInfo"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/intellect"
+                android:scaleType="fitXY" />
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</RelativeLayout>

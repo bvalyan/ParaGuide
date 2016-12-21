@@ -95,12 +95,6 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                         JSONObject effectdisplay = effectArray.getJSONObject(j);
                         if (slotType.equals("Active")) {
                             cData.setSlot(CardData.SlotType.ACTIVE);
-
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Effect Desc: " + effectdisplay.getString("description"));
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Effect Cooldown: " + effectdisplay.getString("cooldown"));
-                            cEffect.setDescription(effectdisplay.getString("description"));
-                            cEffect.setCooldown(effectdisplay.getString("cooldown"));
-
                         }
                         else if(slotType.equals("Passive")){
                             cData.setSlot(CardData.SlotType.PASSIVE);
@@ -116,10 +110,21 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                             cData.setSlot(CardData.SlotType.UNKNOWN);
                         }
 
-                        Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Effect Stat: " + effectdisplay.getString("stat"));
-                        Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Effect Value: " + effectdisplay.getString("value"));
-                        cEffect.setDescription(effectdisplay.getString("stat"));
-                        cEffect.setCooldown(effectdisplay.getString("value"));
+                        if(effectdisplay.has("stat") && effectdisplay.has("value")) {
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Stat: " + effectdisplay.getString("stat"));
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Value: " + effectdisplay.getString("value"));
+                            cEffect.setDescription(effectdisplay.getString("stat"));
+                            cEffect.setCooldown(effectdisplay.getString("value"));
+                        }
+
+                        if(effectdisplay.has("description")) {
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Desc: " + effectdisplay.getString("description"));
+                            cEffect.setDescription(effectdisplay.getString("description"));
+                        }
+                        if(effectdisplay.has("cooldown")) {
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Cooldown: " + effectdisplay.getString("cooldown"));
+                            cEffect.setCooldown(effectdisplay.getString("cooldown"));
+                        }
 
                         cEffectList.add(cEffect);
 
