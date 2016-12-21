@@ -2,11 +2,9 @@ package com.optimalotaku.paraguide;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -15,22 +13,13 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.List;
 
 /**
  * Created by Brandon on 12/15/16.
  */
 
-public class DeckView extends AppCompatActivity {
+public class DeckView extends AppCompatActivity implements DeckInfoResponse {
 
     private String authCode;
 
@@ -45,9 +34,7 @@ public class DeckView extends AppCompatActivity {
         myWebView.getSettings().setDomStorageEnabled(true);
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
-        //SharedPreferences.Editor e = getPreferences(Context.MODE_PRIVATE).edit();
 
-        //AccountManagerFuture<Bundle> authToken = am.getAuthToken();
 
         if (authCode == null) {
 
@@ -72,7 +59,9 @@ public class DeckView extends AppCompatActivity {
                             //e.commit();
 
                             // spawn worker thread to do api calls t
-                            new PullDeck().execute();
+                            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode);
+                            setDelegate(deckInfo);
+                            deckInfo.execute();
                         }
 
                         // don't go to redirectUri
@@ -91,7 +80,8 @@ public class DeckView extends AppCompatActivity {
         } else {
 
             // have access token, so spawn worker thread to do api calls
-            new PullDeck().execute();
+            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode);
+            deckInfo.execute();
         }
 
 
@@ -112,138 +102,38 @@ public class DeckView extends AppCompatActivity {
         return sb.toString();
     }
 
-    private String encode64() {
-        String combineForBytes = Constants.CLIENT_ID + ':' + Constants.CLIENT_SECRET;
-        String encodedBytes = Base64.encodeToString(combineForBytes.getBytes(), Base64.NO_WRAP);
-        return encodedBytes.toString().trim();
+    public void endSession(View view){
+        Intent intent = new Intent(DeckView.this, MainActivity.class);
+        startActivity(intent);
     }
 
-    private class PullDeck extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... urls) {
-
-            String token;
-            String accountID;
-            String expireTime;
-            URL url = null;
-            URL url2 = null;
-            HttpURLConnection urlConnection = null;
-            HttpURLConnection urlConnection2 = null;
-            try {
-                url = new URL("https://developer-paragon.epicgames.com/v1/auth/token/" + authCode);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
-                urlConnection.addRequestProperty(Constants.AUTH_VAR, "Basic " + encode64());
-                String testEncode = encode64();
-                System.out.println(urlConnection.toString());
-
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder stringBuilder = new StringBuilder();
-                StringBuilder stringBuilder2 = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line).append("\n");
-                }
-                bufferedReader.close();
-
-                try {
-                    JSONObject obj = null;
-
-                    obj = new JSONObject(stringBuilder.toString());
-                    token = obj.getString("token");
-                    accountID = obj.getString("accountId");
-                    expireTime = obj.getString("expireTime");
-                    url2 = new URL("https://developer-paragon.epicgames.com/v1/account/"+accountID+"/decks");
-                    urlConnection2 = (HttpURLConnection) url2.openConnection();
-                    urlConnection2.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
-                    urlConnection2.addRequestProperty(Constants.AUTH_VAR, "Bearer " + token);
-
-                    BufferedReader bufferedReader2 = new BufferedReader(new InputStreamReader(urlConnection2.getInputStream()));
-
-                    String line2;
-                    while ((line2 = bufferedReader2.readLine()) != null) {
-                        stringBuilder2.append(line2).append("\n");
-                    }
-                    bufferedReader2.close();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                return stringBuilder2.toString();
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }  finally {
-                urlConnection.disconnect();
-            }
-        }
-
-
-        protected void onPostExecute(String response){
-
-            String token;
-            String accountID;
-            String expireTime;
-            String deckID = null;
-            String deckName = null;
-            String heroName = null;
-
-
-
-            TextView responseView = (TextView) findViewById(R.id.textView);
-
-            if (response == null) {
-                Log.i("INFO", "ACCOUNT ERROR");
-            } else {
-
-                Log.i("INFO", response);
-                JSONArray deckArray = null;
-
-                try {
-                    //setContentView(R.layout.activity_main);
-
-                    setContentView(R.layout.deckreadout);
-                    responseView = (TextView) findViewById(R.id.textView);
-                    deckArray = new JSONArray(response);
-                    for(int i = 0; i < deckArray.length(); i++){
-                        JSONObject deck = deckArray.getJSONObject(i);
-                        deckName = "Deck Name: " + deck.getString("name");
-                        deckID = "Deck ID: " + deck.getString("id");
-                        heroName = "Hero Name: " + deck.getJSONObject("hero").getString("name");
-                        if(i < 1){
-                            responseView.setText(deckName);}
-                        else
-                            responseView.append(deckName);
-                        responseView.append("\n");
-                        responseView.append(heroName);
-                        responseView.append("\n");
-                        responseView.append("\n");
-                    }
-
-                    InputMethodManager imm = (InputMethodManager)getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(responseView.getWindowToken(), 0);
-                    Button endButton = (Button) findViewById(R.id.button3);
-                    endButton.setVisibility(View.VISIBLE);
-
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        public void endSession(View view){
-            Intent intent = new Intent(DeckView.this, MainActivity.class);
-            startActivity(intent);
-        }
+    public void setDelegate(ParagonAPIDeckInfo deckInfo){
+        deckInfo.delegate = this;
     }
+
+    @Override
+    public void processDeckInfoFinish(List<DeckData> dDataList) {
+
+        setContentView(R.layout.deckreadout);
+        TextView responseView = (TextView) findViewById(R.id.textView);
+        String deckListStr = "";
+
+        for(DeckData deck : dDataList){
+
+            deckListStr = deckListStr + deck.getDeckName() + "\n";
+            deckListStr = deckListStr + deck.getHeroName() + "\n\n";
+
+
+        }
+
+        responseView.setText(deckListStr);
+
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(responseView.getWindowToken(), 0);
+        Button endButton = (Button) findViewById(R.id.button3);
+        endButton.setVisibility(View.VISIBLE);
+
+
+    }
+}
 

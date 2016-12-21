@@ -1,12 +1,9 @@
 package com.optimalotaku.paraguide;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +19,7 @@ import java.util.HashMap;
  * Created by Jerek on 12/14/2016.
  */
 
-public class ParagonAPIHelper extends AsyncTask<Void, Void, String> {
+public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
 
     private Exception exception;
     private int mProgressStatus = 0;
@@ -31,10 +28,10 @@ public class ParagonAPIHelper extends AsyncTask<Void, Void, String> {
     private String heroID;
     private HeroData heroData;
 
-    public AsyncResponse delegate = null;
+    public HeroInfoResponse delegate = null;
     
     
-    public ParagonAPIHelper(ProgressBar pb, String hName, HeroData hData){
+    public ParagonAPIHeroInfo(ProgressBar pb, String hName, HeroData hData){
         /*
             This constructor takes 3 parameters:
              - Progress bar object from the main class
@@ -56,7 +53,7 @@ public class ParagonAPIHelper extends AsyncTask<Void, Void, String> {
 
     protected String doInBackground(Void... urls) {
 
-        Log.i("INFO", "ParagonAPIHelper - doInBackground() hero name given: "+heroName);
+        Log.i("INFO", "ParagonAPIHeroInfo - doInBackground() hero name given: "+heroName);
 
         try {
             switch (heroName.toLowerCase()){
@@ -113,22 +110,25 @@ public class ParagonAPIHelper extends AsyncTask<Void, Void, String> {
                 default               : heroID = null;
             }
 
-            URL url = new URL( "https://developer-paragon.epicgames.com/v1/hero/" + heroID);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
-            try {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line).append("\n");
+            if(heroID != null){
+                URL url = new URL( "https://developer-paragon.epicgames.com/v1/hero/" + heroID);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    bufferedReader.close();
+                    return stringBuilder.toString();
                 }
-                bufferedReader.close();
-                return stringBuilder.toString();
+                finally{
+                    urlConnection.disconnect();
+                }
             }
-            finally{
-                urlConnection.disconnect();
-            }
+            return null;
         }
         catch(Exception e) {
             Log.e("ERROR", e.getMessage(), e);
@@ -140,8 +140,11 @@ public class ParagonAPIHelper extends AsyncTask<Void, Void, String> {
 
         if(response == null) {
             Log.i("INFO","HERO NOT FOUND");
+            heroData.setEmpty(true);
+            delegate.processHeroInfoFinish(heroData);
         }
         else {
+            heroData.setEmpty(false);
 
             //pBar.setVisibility(View.GONE);
             Log.i("INFO", response);
@@ -168,8 +171,8 @@ public class ParagonAPIHelper extends AsyncTask<Void, Void, String> {
                 heroData.setScale(obj.getString("scale"));
 
                 JSONArray jsonAffinities = obj.getJSONArray("affinities");
-                Log.i("INFO","ParagonAPIHelper - onPostExecute() - Affinity 1: "+ jsonAffinities.getString(0));
-                Log.i("INFO","ParagonAPIHelper - onPostExecute() - Affinity 2: "+ jsonAffinities.getString(1));
+                Log.i("INFO","ParagonAPIHeroInfo - onPostExecute() - Affinity 1: "+ jsonAffinities.getString(0));
+                Log.i("INFO","ParagonAPIHeroInfo - onPostExecute() - Affinity 2: "+ jsonAffinities.getString(1));
                 heroData.setAffinity1(jsonAffinities.getString(0));
                 heroData.setAffinity2(jsonAffinities.getString(1));
 
@@ -180,7 +183,7 @@ public class ParagonAPIHelper extends AsyncTask<Void, Void, String> {
                 heroData.setDurability(obj.getJSONObject("stats").getInt("Durability"));
                 heroData.setAbilityAttack(obj.getJSONObject("stats").getInt("AbilityAttack"));
 
-                Log.i("INFO","ParagonAPIHelper - onPostExecute() - ImageURL: "+ obj.getJSONObject("images").getString("icon"));
+                Log.i("INFO","ParagonAPIHeroInfo - onPostExecute() - ImageURL: "+ obj.getJSONObject("images").getString("icon"));
                 heroData.setImageIconURL(obj.getJSONObject("images").getString("icon"));
 
 
@@ -293,7 +296,7 @@ public class ParagonAPIHelper extends AsyncTask<Void, Void, String> {
             //responseView.setText(response);
         }
 
-        delegate.processFinish(heroData);
+        delegate.processHeroInfoFinish(heroData);
     }
     
     public HashMap<Integer,Double[]> getModifierMap(JSONObject skill, Integer maxLvl ){

@@ -31,7 +31,7 @@
         <activity android:name=".DeckView"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
-        <activity android:name=".cardOfTheDay"
+        <activity android:name=".HeroView"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
     </application>
