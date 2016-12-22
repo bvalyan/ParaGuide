@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -64,14 +66,20 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
             Add up the Year month and day to get a number to get a number to mod with the
             number of cards to select the card of the day
          */
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
         Calendar today = Calendar.getInstance();
-        Integer dateSum = today.YEAR + today.MONTH + today.DAY_OF_MONTH;
+        String todayStr = formatter.format(today.getTime());
+        Log.i("INFO","Today's Date: "+ todayStr);
+        String[] todayParts = todayStr.split("-");
+        Integer dateSum = Integer.parseInt(todayParts[0]) + Integer.parseInt(todayParts[1]) + Integer.parseInt(todayParts[2]);
+        Log.i("INFO","Today's Date Sum: "+dateSum.toString());
         Integer chosenCard = dateSum % cDataList.size();
+        Log.i("INFO","Today's Chosen Card Index: "+chosenCard.toString());
 
         //Grab the chosen card
         CardData cardOfTheDay = cDataList.get(chosenCard);
 
-        ImageView cotdImage = (ImageView) findViewById(R.id.cardOfTheDay);
+        ImageView cotdImage = (ImageView) findViewById(R.id.cardOfTheDayImage);
         TextView cotdText   = (TextView) findViewById(R.id.cardOfTheDayText);
 
         //Set Picture Image with Glide
