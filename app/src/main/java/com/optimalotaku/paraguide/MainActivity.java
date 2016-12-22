@@ -3,7 +3,6 @@ package com.optimalotaku.paraguide;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -91,13 +90,13 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
         cotdText.append("Card Effects:\n");
         for(CardEffect eff: cardOfTheDay.getEffectList()) {
             if(eff.getStat() != null && eff.getStatValue() != null) {
-                cotdText.append("\t" + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
+                cotdText.append("\t• " + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
             }
             if(eff.getDescription() != null){
-               cotdText.append("\t" + eff.getDescription() + "\n");
+               cotdText.append("\t• " + eff.getDescription() + "\n");
             }
             if(eff.getCooldown()!= null){
-                cotdText.append("\t" + eff.getCooldown() + "\n" );
+                cotdText.append("\t• " + eff.getCooldown() + "\n" );
             }
         }
         cotdText.append("\n\n");
@@ -105,13 +104,13 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
         cotdText.append("Max Card Effects:\n");
         for(CardEffect eff: cardOfTheDay.getMaxEffectList()) {
             if(eff.getStat() != null && eff.getStatValue() != null) {
-                cotdText.append("\t" + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
+                cotdText.append("\t• " + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
             }
             if(eff.getDescription() != null){
-                cotdText.append("\t" + eff.getDescription() + "\n");
+                cotdText.append("\t• " + eff.getDescription() + "\n");
             }
             if(eff.getCooldown()!= null){
-                cotdText.append("\t" + eff.getCooldown() + "\n" );
+                cotdText.append("\t• " + eff.getCooldown() + "\n" );
             }
         }
 
