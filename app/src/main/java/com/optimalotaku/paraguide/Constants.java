@@ -49,26 +49,26 @@ public class Constants {
 
 
     //Stat Message Constants
-    public static final String LOW_MOBILITY_STATEMENT       = "This hero is dangerously immobile. Be prepared with a backup plan and/or cards with blink if the situation gets out of hand.\n";
-    public static final String MED_MOBILITY_STATEMENT       = "This hero is somewhat immobile. While you have ways to get around, you can still be killed due to lack of escape options."
-                                                            + "Make sure to prioritize having your escape options up, especially if the fight goes south.\n";
-    public static final String HI_MOBILITY_STATEMENT        = "This hero is very mobile. You can roam the map with decent options for both engage and disengage."
+    public static final String LOW_MOBILITY_STATEMENT       = "\u2022 This hero is dangerously immobile. Be prepared with a backup plan and/or cards with blink if the situation gets out of hand.\n";
+    public static final String MED_MOBILITY_STATEMENT       = "\u2022 This hero is somewhat immobile. While you have ways to get around, you can still be killed due to lack of escape options."
+                                                            + "\u2022 Make sure to prioritize having your escape options up, especially if the fight goes south.\n";
+    public static final String HI_MOBILITY_STATEMENT        = "\u2022 This hero is very mobile. You can roam the map with decent options for both engage and disengage."
                                                             + "Utilize this mobility to maximize the potential of this hero.\n";
 
-    public static final String LOW_BASIC_ATTACK_STATEMENT   = "This hero does not specialize in basic attacks at all. Don't spend CP on anything enhancing basics."
+    public static final String LOW_BASIC_ATTACK_STATEMENT   = "\u2022 This hero does not specialize in basic attacks at all. Don't spend CP on anything enhancing basics."
                                                             + "It's probably a better idea to focus on their abilities.\n";
-    public static final String MED_BASIC_ATTACK_STATEMENT   = "This hero has an average basic attack. More than likely, you want to focus on another trait that is higher, especially in builds,"
+    public static final String MED_BASIC_ATTACK_STATEMENT   = "\u2022 This hero has an average basic attack. More than likely, you want to focus on another trait that is higher, especially in builds,"
                                                             + "but don't be afraid to use your basics.\n";
-    public static final String HI_BASIC_ATTACK_STATEMENT    = "This hero has a strong basic attack. You should make a point to focus on it in your builds, as it will be key in your success.\n";
+    public static final String HI_BASIC_ATTACK_STATEMENT    = "\u2022 This hero has a strong basic attack. You should make a point to focus on it in your builds, as it will be key in your success.\n";
 
-    public static final String LOW_DURABILITY_STATEMENT     = "This hero suffers from low durability. Be very careful to avoid unnecessary damage during fights and take advantage of other attributes.\n";
-    public static final String MED_DURABILITY_STATEMENT     = "This hero has average durability. You can take hits, but you should focus just as much on basic attacking or firing your abilities.\n";
-    public static final String HI_DURABILITY_STATEMENT      = "This hero is very durable. You should be the enagager in virtually every team fight."
+    public static final String LOW_DURABILITY_STATEMENT     = "\u2022 This hero suffers from low durability. Be very careful to avoid unnecessary damage during fights and take advantage of other attributes.\n";
+    public static final String MED_DURABILITY_STATEMENT     = "\u2022 This hero has average durability. You can take hits, but you should focus just as much on basic attacking or firing your abilities.\n";
+    public static final String HI_DURABILITY_STATEMENT      = "\u2022 This hero is very durable. You should be the enagager in virtually every team fight."
                                                             + "Build some HP or armor to fulfill the role of tanking for your team.\n";
 
-    public static final String LOW_ABILITY_ATTACK_STATEMENT = "This hero has very low ability power and should absolutely focus on other attributes."
-                                                            + "It would probably be better not to build cards solely for the purpose of boosting ability power.\n";
-    public static final String MED_ABILITY_ATTACK_STATEMENT = "This hero has average ability power. Utilize it in conjunction with other beneficial attributes to be effective.\n";
-    public static final String HI_ABILITY_ATTACK_STATEMENT  = "This hero has high ability power. Boost it with cards that increase power and"
+    public static final String LOW_ABILITY_ATTACK_STATEMENT = "\u2022 This hero has very low ability power and should absolutely focus on other attributes."
+                                                            + "\u2022 It would probably be better not to build cards solely for the purpose of boosting ability power.\n";
+    public static final String MED_ABILITY_ATTACK_STATEMENT = "\u2022 This hero has average ability power. Utilize it in conjunction with other beneficial attributes to be effective.\n";
+    public static final String HI_ABILITY_ATTACK_STATEMENT  = "\u2022 This hero has high ability power. Boost it with cards that increase power and"
                                                             + "make sure to build mana or mana regen to supplement your casting.\n";
 }

@@ -32,14 +32,11 @@
 
     <ImageView
         android:id="@+id/HeroImages"
-        android:layout_alignTop="@+id/scrollView2"
-        android:layout_toRightOf="@+id/progressBar"
-        android:layout_toEndOf="@+id/progressBar"
+
         android:layout_gravity="center"
-        android:background="@android:drawable/alert_light_frame"
-        android:layout_weight="0.28"
         android:visibility="gone"
-        android:layout_height="296dp"
+        android:layout_height="230dp"
+        android:background="@drawable/border"
         android:layout_width="230dp" />
 
     <Space
