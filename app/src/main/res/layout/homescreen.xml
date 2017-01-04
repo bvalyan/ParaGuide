@@ -52,17 +52,17 @@
             android:layout_marginTop="12dp"
             android:layout_marginLeft="12dp"
             android:layout_weight=".30"
-            app:layout_widthPercent="40%"/>
+            app:layout_widthPercent="30%"/>
 
         <TextView
             android:id="@+id/cardOfTheDayText"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
 
             android:layout_gravity="right"
-            app:layout_marginLeftPercent="50%"
-            />
+            app:layout_marginLeftPercent="40%"
+            android:textSize="12sp" />
         </android.support.percent.PercentRelativeLayout>
     </android.support.v7.widget.CardView>
 

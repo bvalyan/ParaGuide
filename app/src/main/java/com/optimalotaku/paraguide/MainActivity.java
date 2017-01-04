@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
         //Grab the chosen card
         CardData cardOfTheDay = cDataList.get(chosenCard);
 
-        ImageView cotdImage = (ImageView) findViewById(R.id.cardOfTheDayImage);
+        ImageView cotdImage = (ImageView) findViewById(R.id.cardOfTheDay);
         TextView cotdText   = (TextView) findViewById(R.id.cardOfTheDayText);
 
         //Set Picture Image with Glide
@@ -88,8 +88,10 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
         cotdText.setText("Name: "+cardOfTheDay.getName()+"\n\n");
 
         cotdText.append("Card Effects:\n");
-        for(CardEffect eff: cardOfTheDay.getEffectList()) {
+        List<CardEffect> effectList = cardOfTheDay.getEffectList();
+        for(CardEffect eff: effectList) {
             if(eff.getStat() != null && eff.getStatValue() != null) {
+                Log.i("INFO","MainActivity - processCardInfoFinish - Stat: "+eff.getStat()+" Human Readable: "+ cardOfTheDay.statToHumanReadable(eff.getStat()));
                 cotdText.append("\t• " + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
             }
             if(eff.getDescription() != null){
@@ -99,10 +101,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
                 cotdText.append("\t• " + eff.getCooldown() + "\n" );
             }
         }
-        cotdText.append("\n\n");
+        cotdText.append("\n");
 
         cotdText.append("Max Card Effects:\n");
-        for(CardEffect eff: cardOfTheDay.getMaxEffectList()) {
+        List<CardEffect> maxEffectList = cardOfTheDay.getMaxEffectList();
+        for(CardEffect eff: maxEffectList) {
             if(eff.getStat() != null && eff.getStatValue() != null) {
                 cotdText.append("\t• " + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
             }

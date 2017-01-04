@@ -113,8 +113,8 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                         if(effectdisplay.has("stat") && effectdisplay.has("value")) {
                             Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Stat: " + effectdisplay.getString("stat"));
                             Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Value: " + effectdisplay.getString("value"));
-                            cEffect.setDescription(effectdisplay.getString("stat"));
-                            cEffect.setCooldown(effectdisplay.getString("value"));
+                            cEffect.setStat(effectdisplay.getString("stat"));
+                            cEffect.setStatValue(effectdisplay.getString("value"));
                         }
 
                         if(effectdisplay.has("description")) {
@@ -140,8 +140,8 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                         if(effectdisplay.has("stat") && effectdisplay.has("value")) {
                             Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Stat: " + effectdisplay.getString("stat"));
                             Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Value: " + effectdisplay.getString("value"));
-                            cEffect.setDescription(effectdisplay.getString("stat"));
-                            cEffect.setCooldown(effectdisplay.getString("value"));
+                            cEffect.setStat(effectdisplay.getString("stat"));
+                            cEffect.setStatValue(effectdisplay.getString("value"));
                         }
 
                         if(effectdisplay.has("description")) {
