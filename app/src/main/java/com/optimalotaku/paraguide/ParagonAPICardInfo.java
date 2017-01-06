@@ -113,8 +113,8 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                         if(effectdisplay.has("stat") && effectdisplay.has("value")) {
                             Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Stat: " + effectdisplay.getString("stat"));
                             Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Value: " + effectdisplay.getString("value"));
-                            cEffect.setDescription(effectdisplay.getString("stat"));
-                            cEffect.setCooldown(effectdisplay.getString("value"));
+                            cEffect.setStat(effectdisplay.getString("stat"));
+                            cEffect.setStatValue(effectdisplay.getString("value"));
                         }
 
                         if(effectdisplay.has("description")) {
@@ -135,12 +135,23 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
 
                     for (int j = 0; j < maxEffectArray.length(); j++) {
                         CardEffect cEffect = new CardEffect();
-                        JSONObject effectdisplay = effectArray.getJSONObject(j);
+                        JSONObject effectdisplay = maxEffectArray.getJSONObject(j);
 
-                        Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Max Effect Stat: " + effectdisplay.getString("stat"));
-                        Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Max Effect Value: " + effectdisplay.getString("value"));
-                        cEffect.setDescription(effectdisplay.getString("stat"));
-                        cEffect.setCooldown(effectdisplay.getString("value"));
+                        if(effectdisplay.has("stat") && effectdisplay.has("value")) {
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Stat: " + effectdisplay.getString("stat"));
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Value: " + effectdisplay.getString("value"));
+                            cEffect.setStat(effectdisplay.getString("stat"));
+                            cEffect.setStatValue(effectdisplay.getString("value"));
+                        }
+
+                        if(effectdisplay.has("description")) {
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Desc: " + effectdisplay.getString("description"));
+                            cEffect.setDescription(effectdisplay.getString("description"));
+                        }
+                        if(effectdisplay.has("cooldown")) {
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Cooldown: " + effectdisplay.getString("cooldown"));
+                            cEffect.setCooldown(effectdisplay.getString("cooldown"));
+                        }
 
                         cMaxEffectList.add(cEffect);
 

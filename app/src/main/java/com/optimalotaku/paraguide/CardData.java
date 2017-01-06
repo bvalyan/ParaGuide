@@ -1,5 +1,7 @@
 package com.optimalotaku.paraguide;
 
+import android.util.Log;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -79,9 +81,13 @@ public class CardData {
     }
 
     public String statToHumanReadable(String stat){
-        stat = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(stat)," ");
+        String[] words = StringUtils.splitByCharacterTypeCamelCase(stat);
+        String humanReadableStat = "";
+        for(String w : words){
+            humanReadableStat = humanReadableStat+" "+w;
+        }
 
-        return stat;
+        return humanReadableStat;
 
     }
 }

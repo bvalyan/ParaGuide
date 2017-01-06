@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -59,13 +61,21 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
     @Override
     public void processCardInfoFinish(List<CardData> cDataList) {
 
+        ParagonAPIAttrReplace attrTranslator = new ParagonAPIAttrReplace();
+
         /*
             Add up the Year month and day to get a number to get a number to mod with the
             number of cards to select the card of the day
          */
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
         Calendar today = Calendar.getInstance();
-        Integer dateSum = Calendar.YEAR + Calendar.MONTH + Calendar.DAY_OF_MONTH;
+        String todayStr = formatter.format(today.getTime());
+        Log.i("INFO","Today's Date: "+ todayStr);
+        String[] todayParts = todayStr.split("-");
+        Integer dateSum = Integer.parseInt(todayParts[0]) + Integer.parseInt(todayParts[1]) + Integer.parseInt(todayParts[2]);
+        Log.i("INFO","Today's Date Sum: "+dateSum.toString());
         Integer chosenCard = dateSum % cDataList.size();
+        Log.i("INFO","Today's Chosen Card Index: "+chosenCard.toString());
 
         //Grab the chosen card
         CardData cardOfTheDay = cDataList.get(chosenCard);
@@ -80,29 +90,32 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
         cotdText.setText("Name: "+cardOfTheDay.getName()+"\n\n");
 
         cotdText.append("Card Effects:\n");
-        for(CardEffect eff: cardOfTheDay.getEffectList()) {
+        List<CardEffect> effectList = cardOfTheDay.getEffectList();
+        for(CardEffect eff: effectList) {
             if(eff.getStat() != null && eff.getStatValue() != null) {
+                Log.i("INFO","MainActivity - processCardInfoFinish - Stat: "+eff.getStat()+" Human Readable: "+ cardOfTheDay.statToHumanReadable(eff.getStat()));
                 cotdText.append("\t• " + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
             }
             if(eff.getDescription() != null){
-               cotdText.append("\t• " + eff.getDescription() + "\n");
+               cotdText.append("\t• " + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
             }
-            if(eff.getCooldown()!= null){
-                cotdText.append("\t• " + eff.getCooldown() + "\n" );
+            if(eff.getCooldown()!= null && Integer.parseInt(eff.getCooldown()) > 1){
+                cotdText.append("\t• Cooldown: " + eff.getCooldown() + "s\n" );
             }
         }
-        cotdText.append("\n\n");
+        cotdText.append("\n");
 
         cotdText.append("Max Card Effects:\n");
-        for(CardEffect eff: cardOfTheDay.getMaxEffectList()) {
+        List<CardEffect> maxEffectList = cardOfTheDay.getMaxEffectList();
+        for(CardEffect eff: maxEffectList) {
             if(eff.getStat() != null && eff.getStatValue() != null) {
                 cotdText.append("\t• " + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
             }
             if(eff.getDescription() != null){
-                cotdText.append("\t• " + eff.getDescription() + "\n");
+                cotdText.append("\t• " + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
             }
-            if(eff.getCooldown()!= null){
-                cotdText.append("\t• " + eff.getCooldown() + "\n" );
+            if(eff.getCooldown()!= null && Integer.parseInt(eff.getCooldown()) > 1){
+                cotdText.append("\t• Cooldown: " + eff.getCooldown() + "s\n" );
             }
         }
 
