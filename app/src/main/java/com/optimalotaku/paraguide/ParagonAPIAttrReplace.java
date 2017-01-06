@@ -1,28 +1,29 @@
 package com.optimalotaku.paraguide;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Created by Jerek on 1/4/2017.
  */
 
 public class ParagonAPIAttrReplace {
 
-    public static final String mpAttr = "{attr:mp}";
-    public static final String hpAttr = "{attr:hp}";
-    public static final String lfstlAttr = "{attr:lfstl}";
-    public static final String mpRegAttr = "{attr:mpreg}";
-    public static final String hpRegAttr = "{attr:hpreg}";
-    public static final String physDmgAttr = "{attr:physdmg}";
-    public static final String dmgBnsAttr = "{attr:dmgbns}";
-    public static final String enarAttr = "{attr:enar}";
-    public static final String spdAttr = "{attr:spd}";
-    public static final String endmgAttr = "{attr:endmg}";
-    public static final String shldAttr = "{attr:shld}";
-    public static final String physArAttr = "{attr:physar}";
-    public static final String atkSpdAttr = "{attr:atkspd}";
-    public static final String cdrAttr = "{attr:cdr}";
-    public static final String dmgAttr = "{attr:dmg}";
-    public static final String crtChAttr = "{attr:crtch}";
+    public String[] attrSymbList = {"{attr:mp}","{attr:hp}","{attr:lfstl}","{attr:mpreg}","{attr:hpreg}","{attr:physdmg}","{attr:dmgbns}","{attr:enar}"
+                                   ,"{attr:spd}","{attr:endmg}","{attr:shld}","{attr:physar}","{attr:atkspd}","{attr:cdr}","{attr:dmg}","{attr:crtch}"};
+
+    public String[] attrTextList = {"MP","HP","LifeSteal","MP Regen","HP Regen","Power","Damage Bonus","Ability Armor"
+                                   ,"Max Movement Speed","Power","Shields","Basic Armor","Attack Speed","Cooldown Reduction","Power","Critical Chance"};
 
 
-    
+    public ParagonAPIAttrReplace(){
+
+    };
+
+
+    public String replaceSymbolsWithText(String APIText){
+
+        String replacementTxt = StringUtils.replaceEach(APIText, attrSymbList, attrTextList);
+
+        return replacementTxt;
+    }
 }

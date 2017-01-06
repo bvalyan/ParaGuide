@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
     @Override
     public void processCardInfoFinish(List<CardData> cDataList) {
 
+        ParagonAPIAttrReplace attrTranslator = new ParagonAPIAttrReplace();
+
         /*
             Add up the Year month and day to get a number to get a number to mod with the
             number of cards to select the card of the day
@@ -95,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
                 cotdText.append("\t• " + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
             }
             if(eff.getDescription() != null){
-               cotdText.append("\t• " + eff.getDescription() + "\n");
+               cotdText.append("\t• " + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
             }
-            if(eff.getCooldown()!= null){
-                cotdText.append("\t• " + eff.getCooldown() + "\n" );
+            if(eff.getCooldown()!= null && Integer.parseInt(eff.getCooldown()) > 1){
+                cotdText.append("\t• Cooldown: " + eff.getCooldown() + "s\n" );
             }
         }
         cotdText.append("\n");
@@ -110,10 +112,10 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
                 cotdText.append("\t• " + cardOfTheDay.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
             }
             if(eff.getDescription() != null){
-                cotdText.append("\t• " + eff.getDescription() + "\n");
+                cotdText.append("\t• " + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
             }
-            if(eff.getCooldown()!= null){
-                cotdText.append("\t• " + eff.getCooldown() + "\n" );
+            if(eff.getCooldown()!= null && Integer.parseInt(eff.getCooldown()) > 1){
+                cotdText.append("\t• Cooldown: " + eff.getCooldown() + "s\n" );
             }
         }
 
