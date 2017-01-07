@@ -1,16 +1,16 @@
 package com.optimalotaku.paraguide;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -28,31 +28,38 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
 
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.homescreen);
-        getCardData();
+        setContentView(R.layout.grid_home);
+        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(new MyAdapter(this));
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            Intent intent;
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                switch(position){
+                    case 0 : Toast.makeText(MainActivity.this, "Coming Soon!",
+                            Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1 : intent = new Intent(MainActivity.this, DeckView.class);
+                                startActivity(intent);
+                        break;
+                    case 2 :Toast.makeText(MainActivity.this, "Coming Soon!",
+                            Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3 : intent = new Intent(MainActivity.this, HeroView.class);
+                              startActivity(intent);
+                        break;
+                    case 4 :Toast.makeText(MainActivity.this, "Coming Soon!",
+                            Toast.LENGTH_SHORT).show();
+                        break;
+                    case 5 :Toast.makeText(MainActivity.this, "Coming Soon!",
+                            Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
     }
 
-    public void heroClick(View view){
-        View view2 = this.getCurrentFocus();
-        if(view2 != null){
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
-        }
-
-        Intent intent = new Intent(MainActivity.this, HeroView.class);
-        startActivity(intent);
-    }
-
-
-    public void loginSend(View view){
-        View view2 = this.getCurrentFocus();
-        if(view2 != null){
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
-        }
-        Intent intent = new Intent(MainActivity.this, DeckView.class);
-        startActivity(intent);
-    }
 
     public void getCardData(){
         ParagonAPICardInfo cardInfo = new ParagonAPICardInfo();
