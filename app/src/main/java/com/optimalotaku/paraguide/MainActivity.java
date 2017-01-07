@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,11 +23,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.homescreen);
-        getCardData();
+        setContentView(R.layout.gridhome);
+        GridView gridView = (GridView)findViewById(R.id.gridview);
+        gridView.setAdapter(new MyAdapter(this));
 
     }
 
