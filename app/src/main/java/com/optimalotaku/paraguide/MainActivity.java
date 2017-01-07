@@ -23,12 +23,13 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.gridhome);
-        GridView gridView = (GridView)findViewById(R.id.gridview);
-        gridView.setAdapter(new MyAdapter(this));
 
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        setContentView(R.layout.homescreen);
+        getCardData();
     }
 
     public void heroClick(View view){
