@@ -21,3 +21,7 @@ interface DeckInfoResponse{
 interface CardInfoResponse{
     void processCardInfoFinish(List<CardData> cDataList);
 }
+
+interface PlayerInfoResponse{
+    void processPlayerInfoFinish(PlayerData pData);
+}
