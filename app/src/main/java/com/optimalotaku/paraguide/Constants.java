@@ -66,7 +66,7 @@ public class Constants {
     public static final String HI_DURABILITY_STATEMENT      = "\u2022 This hero is very durable. You should be the enagager in virtually every team fight."
                                                             + "Build some HP or armor to fulfill the role of tanking for your team.\n";
 
-    public static final String LOW_ABILITY_ATTACK_STATEMENT = "\u2022 This hero has very low ability power and should absolutely focus on other attributes."
+    public static final String LOW_ABILITY_ATTACK_STATEMENT = "\u2022 This hero has very low ability power and should absolutely focus on other attributes.\n"
                                                             + "\u2022 It would probably be better not to build cards solely for the purpose of boosting ability power.\n";
     public static final String MED_ABILITY_ATTACK_STATEMENT = "\u2022 This hero has average ability power. Utilize it in conjunction with other beneficial attributes to be effective.\n";
     public static final String HI_ABILITY_ATTACK_STATEMENT  = "\u2022 This hero has high ability power. Boost it with cards that increase power and"
