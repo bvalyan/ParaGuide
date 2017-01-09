@@ -45,7 +45,7 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse 
         mChart = (PieChart) findViewById(R.id.chart);
         // add pie chart to main layout
         //mainLayout.addView(mChart);
-        mainLayout.setBackgroundColor(Color.parseColor("#e8e8e8"));
+        mainLayout.setBackgroundColor(Color.parseColor("#ffffff"));
 
         // configure pie chart
         mChart.setUsePercentValues(true);
@@ -54,10 +54,10 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse 
 
         // enable hole and configure
 
-       // mChart.setDrawHoleEnabled(true);
-        //mChart.setHoleColorTransparent(true);
-        //mChart.setHoleRadius(7);
-        //mChart.setTransparentCircleRadius(10);
+        mChart.setDrawHoleEnabled(true);
+        mChart.setHoleColorTransparent(true);
+        mChart.setHoleRadius(7);
+        mChart.setTransparentCircleRadius(10);
 
         // enable rotation of the chart by touch
         mChart.setRotationAngle(0);
