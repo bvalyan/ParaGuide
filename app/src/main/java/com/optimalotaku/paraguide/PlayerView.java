@@ -54,8 +54,8 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
     private String[] xData = {"Wins", "Losses"};
     private int[] yData2 = new int[3]; //Keeps track of K/D/A
     private String[] xData2 = {"Kills", "Deaths", "Assists"};
-    private int[] yData3 = new int[5];
-    private String[] labels = {"Core Kills", "Tower Kills", "Hero Kills", "Deaths", "Assists"};
+    private float[] yData3 = new float[4];
+    private String[] labels = {"Avg. Tower Kills", "Avg. Hero Kills", " Avg. Deaths", "Avg. Assists"};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +75,6 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
         Description description3 = new Description();
         description1.setText("Win/Loss Analysis");
         description2.setText("Kill/Death/Assist Analysis");
-        description3.setText("ParaFlow Player Analysis");
         mChart.setUsePercentValues(true);
         mChart.setDescription(description1);
         mChart2.setDescription(description2);
@@ -246,7 +245,7 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
 
             addData(wins,matches);
             addData2(kills,deaths,assists);
-            addData3(towerKills, coreKills, kills, deaths, assists);
+            addData3(towerKills, coreKills, kills, deaths, assists, matches);
 
             View view2 = this.getCurrentFocus();
             if (view2 != null) {
@@ -381,14 +380,14 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
         mChart2.animateXY(2000,2000);
     }
 
-    private void addData3(int towerKills, int coreKills, int kills, int deaths, int assists) {//method for chart 3
+    private void addData3(int towerKills, int coreKills, int kills, int deaths, int assists, int matches) {//method for chart 3
+
 
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-        yData3[0] = towerKills;
-        yData3[1] = coreKills;
-        yData3[2] = kills;
-        yData3[3] = deaths;
-        yData3[4] = assists;
+        yData3[0] = (float)towerKills/matches;
+        yData3[1] = (float)kills/matches;
+        yData3[2] = (float)deaths/matches;
+        yData3[3] = (float)assists/matches;
 
         for (int i = 0; i < yData3.length; i++)
             yVals1.add(new BarEntry(i, yData3[i]));
