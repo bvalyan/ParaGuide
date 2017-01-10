@@ -4,13 +4,14 @@ import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Jerek on 12/19/2016.
  */
 
-public class CardData {
+public class CardData implements Serializable {
 
     private String name;
     private String id;
