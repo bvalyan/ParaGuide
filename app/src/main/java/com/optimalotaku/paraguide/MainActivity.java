@@ -18,6 +18,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements CardInfoResponse {
 
     CardData cotd;
+    GridView gridview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +26,8 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.grid_home);
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview = (GridView) findViewById(R.id.gridview);
         getCardData();
-        gridview.setAdapter(new MyAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             Intent intent;
@@ -92,6 +92,9 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
 
         //Grab the chosen card
         this.cotd = cDataList.get(chosenCard);
+
+        //Set the grid view Adapter
+        gridview.setAdapter(new MyAdapter(this,cotd.getImageBitMap()));
 
 
 

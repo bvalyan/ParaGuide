@@ -36,7 +36,7 @@ public class CardOfTheDayView extends AppCompatActivity{
         TextView cotdText   = (TextView) findViewById(R.id.cotdText);
 
         //Set Picture Image with Glide
-        Glide.with(this).load("https:" + cotd.getImageUrl()).into(cotdImage);
+        Glide.with(this).load(cotd.getImageUrl()).into(cotdImage);
 
         //Resize image to be a percentage of width of device
         Display display = getWindowManager().getDefaultDisplay();
@@ -45,7 +45,7 @@ public class CardOfTheDayView extends AppCompatActivity{
         int width = size.x;
         int height = size.y;
 
-        cotdImage.getLayoutParams().width = (int) Math.round(width * 0.7);
+        cotdImage.getLayoutParams().width = (int) Math.round(width * 0.5);
 
         cotdImage.setVisibility(View.VISIBLE);
 
@@ -56,13 +56,13 @@ public class CardOfTheDayView extends AppCompatActivity{
         for(CardEffect eff: effectList) {
             if(eff.getStat() != null && eff.getStatValue() != null) {
                 Log.i("INFO","MainActivity - processCardInfoFinish - Stat: "+eff.getStat()+" Human Readable: "+ cotd.statToHumanReadable(eff.getStat()));
-                cotdText.append("" + cotd.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
+                cotdText.append("•" + cotd.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
             }
             if(eff.getDescription() != null){
-               cotdText.append("" + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
+               cotdText.append("•" + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
             }
             if(eff.getCooldown()!= null && Integer.parseInt(eff.getCooldown()) > 1){
-                cotdText.append(" Cooldown: " + eff.getCooldown() + "s\n" );
+                cotdText.append("• Cooldown: " + eff.getCooldown() + "s\n" );
             }
         }
         cotdText.append("\n");

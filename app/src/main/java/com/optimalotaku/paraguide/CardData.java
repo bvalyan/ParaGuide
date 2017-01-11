@@ -1,5 +1,6 @@
 package com.optimalotaku.paraguide;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,9 @@ public class CardData implements Serializable {
     private String name;
     private String id;
     private String imageUrl;
+    private Bitmap imageBitMap;
+
+
     public enum SlotType{
         UNKNOWN,PRIME,ACTIVE,PASSIVE,UPGRADE
     }
@@ -79,6 +83,14 @@ public class CardData implements Serializable {
 
     public void setMaxEffectList(List<CardEffect> maxEffectList) {
         this.maxEffectList = maxEffectList;
+    }
+
+    public Bitmap getImageBitMap() {
+        return imageBitMap;
+    }
+
+    public void setImageBitMap(Bitmap imageBitMap) {
+        this.imageBitMap = imageBitMap;
     }
 
     public String statToHumanReadable(String stat){
