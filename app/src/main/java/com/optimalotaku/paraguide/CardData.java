@@ -17,7 +17,6 @@ public class CardData implements Serializable {
     private String name;
     private String id;
     private String imageUrl;
-    private Bitmap imageBitMap;
 
 
     public enum SlotType{
@@ -83,14 +82,6 @@ public class CardData implements Serializable {
 
     public void setMaxEffectList(List<CardEffect> maxEffectList) {
         this.maxEffectList = maxEffectList;
-    }
-
-    public Bitmap getImageBitMap() {
-        return imageBitMap;
-    }
-
-    public void setImageBitMap(Bitmap imageBitMap) {
-        this.imageBitMap = imageBitMap;
     }
 
     public String statToHumanReadable(String stat){

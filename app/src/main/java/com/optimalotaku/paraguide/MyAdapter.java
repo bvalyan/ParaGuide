@@ -67,6 +67,7 @@ final class MyAdapter extends BaseAdapter {
 
         if(item.drawableId == R.drawable.cotdpic){
             picture.setImageBitmap(this.cotdBitMapImg);
+            name.setText(item.name);
         }
         else {
             picture.setImageResource(item.drawableId);

@@ -1,6 +1,7 @@
 package com.optimalotaku.paraguide;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,7 +16,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements CardInfoResponse {
+public class MainActivity extends AppCompatActivity implements CardInfoResponse, ImageLoaderResponse {
 
     CardData cotd;
     GridView gridview;
@@ -74,8 +75,6 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
     //@Override
     public void processCardInfoFinish(List<CardData> cDataList) {
 
-        ParagonAPIAttrReplace attrTranslator = new ParagonAPIAttrReplace();
-
         /*
             Add up the Year month and day to get a number to get a number to mod with the
             number of cards to select the card of the day
@@ -93,11 +92,18 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse 
         //Grab the chosen card
         this.cotd = cDataList.get(chosenCard);
 
+        ImageLoader imgLoader = new ImageLoader(this.cotd);
+        imgLoader.delegate = this;
+        imgLoader.execute();
+
+
+
+    }
+
+    @Override
+    public void processImageLoaderFinish(Bitmap imgBitmap) {
         //Set the grid view Adapter
-        gridview.setAdapter(new MyAdapter(this,cotd.getImageBitMap()));
-
-
-
+        gridview.setAdapter(new MyAdapter(this,imgBitmap));
     }
 }
 

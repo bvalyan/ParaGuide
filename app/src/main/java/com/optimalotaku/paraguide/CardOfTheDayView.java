@@ -67,17 +67,20 @@ public class CardOfTheDayView extends AppCompatActivity{
         }
         cotdText.append("\n");
 
-        cotdText.append("Fully Upgraded Card Effects:\n");
+
         List<CardEffect> maxEffectList = cotd.getMaxEffectList();
-        for(CardEffect eff: maxEffectList) {
-            if(eff.getStat() != null && eff.getStatValue() != null) {
-                cotdText.append("• " + cotd.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
-            }
-            if(eff.getDescription() != null){
-                cotdText.append("• " + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
-            }
-            if(eff.getCooldown()!= null && Integer.parseInt(eff.getCooldown()) > 1){
-                cotdText.append("• Cooldown: " + eff.getCooldown() + "s\n" );
+        if(maxEffectList.size() > 0) {
+            cotdText.append("Fully Upgraded Card Effects:\n");
+            for (CardEffect eff : maxEffectList) {
+                if (eff.getStat() != null && eff.getStatValue() != null) {
+                    cotdText.append("• " + cotd.statToHumanReadable(eff.getStat()) + ": " + eff.getStatValue() + "\n");
+                }
+                if (eff.getDescription() != null) {
+                    cotdText.append("• " + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
+                }
+                if (eff.getCooldown() != null && Integer.parseInt(eff.getCooldown()) > 1) {
+                    cotdText.append("• Cooldown: " + eff.getCooldown() + "s\n");
+                }
             }
         }
         

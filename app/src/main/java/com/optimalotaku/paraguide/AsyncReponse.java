@@ -1,5 +1,7 @@
 package com.optimalotaku.paraguide;
 
+import android.graphics.Bitmap;
+
 import java.util.List;
 
 /**
@@ -24,4 +26,8 @@ interface CardInfoResponse{
 
 interface PlayerInfoResponse{
     void processPlayerInfoFinish(PlayerData pData);
+}
+
+interface ImageLoaderResponse{
+    void processImageLoaderFinish(Bitmap imgBitmap);
 }

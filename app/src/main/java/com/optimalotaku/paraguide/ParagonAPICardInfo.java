@@ -87,16 +87,7 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                     cData.setId(card.getString("id"));
                     cData.setImageUrl("http:"+card.getJSONObject("images").getString("medium_stats"));
 
-                    //Take url and convert it to a bitmap image for CotD Menu button on Home Screen
-                    Bitmap bitImg;
-                    try {
-                        URL url = new URL(cData.getImageUrl());
-                        bitImg = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                        cData.setImageBitMap(bitImg);
-                    } catch (Exception e) {
-                        Log.e("Error:", "Error: Cannot convert Image URL: "+cData.getImageUrl()+" to BitImage\n"+e.getMessage());
-                        e.printStackTrace();
-                    }
+
 
                     slotType = card.getString("slotType");
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Slot Type: " + card.getString("slotType"));
@@ -190,5 +181,6 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
         delegate.processCardInfoFinish(cardList);
 
     }
+
 }
 
