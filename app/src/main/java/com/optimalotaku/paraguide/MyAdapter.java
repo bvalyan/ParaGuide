@@ -22,8 +22,8 @@ final class MyAdapter extends BaseAdapter {
     public MyAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
-        mItems.add(new Item("Player Lookup",       R.drawable.playerlookup));
-        mItems.add(new Item("Deck Lookup",   R.drawable.decklookup));
+        mItems.add(new Item("PARAFLOW Player Analysis",       R.drawable.playerlookup));
+        mItems.add(new Item("My Deck List",   R.drawable.decklookup));
         mItems.add(new Item("Competitive Sphere", R.drawable.competitivepic));
         mItems.add(new Item("Hero Data",      R.drawable.heropic));
         mItems.add(new Item("Card of the Day", R.drawable.cotdpic));

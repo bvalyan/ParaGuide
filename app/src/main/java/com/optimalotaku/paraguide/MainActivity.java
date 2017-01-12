@@ -3,6 +3,8 @@ package com.optimalotaku.paraguide;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.HapticFeedbackConstants;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -20,13 +22,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.grid_home);
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        final GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new MyAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             Intent intent;
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
+                gridview.playSoundEffect(SoundEffectConstants.CLICK); //send feedback on main menu
+                gridview.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
                 switch(position){
                     case 0 : intent = new Intent(MainActivity.this, PlayerView.class);
                                 startActivity(intent);
