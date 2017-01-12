@@ -1,6 +1,7 @@
 package com.optimalotaku.paraguide;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,9 @@ import java.util.List;
 final class MyAdapter extends BaseAdapter {
     private final List<Item> mItems = new ArrayList<Item>();
     private final LayoutInflater mInflater;
+    private Bitmap cotdBitMapImg;
 
-    public MyAdapter(Context context) {
+    public MyAdapter(Context context, Bitmap cotdBitMapImg) {
         mInflater = LayoutInflater.from(context);
 
         mItems.add(new Item("PARAFLOW Player Analysis",       R.drawable.playerlookup));
@@ -28,6 +30,7 @@ final class MyAdapter extends BaseAdapter {
         mItems.add(new Item("Hero Data",      R.drawable.heropic));
         mItems.add(new Item("Card of the Day", R.drawable.cotdpic));
         mItems.add(new Item("News & Information", R.drawable.newspic));
+        this.cotdBitMapImg = cotdBitMapImg;
     }
 
     @Override
@@ -62,8 +65,14 @@ final class MyAdapter extends BaseAdapter {
 
         Item item = getItem(i);
 
-        picture.setImageResource(item.drawableId);
-        name.setText(item.name);
+        if(item.drawableId == R.drawable.cotdpic){
+            picture.setImageBitmap(this.cotdBitMapImg);
+            name.setText(item.name);
+        }
+        else {
+            picture.setImageResource(item.drawableId);
+            name.setText(item.name);
+        }
 
         return v;
     }

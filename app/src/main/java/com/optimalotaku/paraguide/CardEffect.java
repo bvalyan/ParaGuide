@@ -1,10 +1,12 @@
 package com.optimalotaku.paraguide;
 
+import java.io.Serializable;
+
 /**
  * Created by Jerek on 12/19/2016.
  */
 
-public class CardEffect {
+public class CardEffect implements Serializable {
 
     //Active Equipment Only
     private String description;

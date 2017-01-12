@@ -1,5 +1,7 @@
 package com.optimalotaku.paraguide;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -13,6 +15,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -82,7 +85,9 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Image URL: " + card.getJSONObject("images").getString("medium_stats"));
                     cData.setName(card.getString("name"));
                     cData.setId(card.getString("id"));
-                    cData.setImageUrl(card.getJSONObject("images").getString("medium_stats"));
+                    cData.setImageUrl("http:"+card.getJSONObject("images").getString("medium_stats"));
+
+
 
                     slotType = card.getString("slotType");
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Slot Type: " + card.getString("slotType"));
@@ -176,5 +181,6 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
         delegate.processCardInfoFinish(cardList);
 
     }
+
 }
 
