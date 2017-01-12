@@ -3,4 +3,7 @@
     <string name="app_title">PARAGUIDE</string>
     <string name="hero_link">HERO    DATA</string>
     <string name="deck_info">DECK INFO</string>
+    <string name="last">Abilities</string>
+    <string name="first">Tips</string>
+    <string name="hello_world">preview</string>
 </resources>

@@ -102,6 +102,10 @@ public class ParagonAPIPlayerInfo extends AsyncTask<Void, Void, String> {
                 pData.setAssists(playerStats.getString("heroAssists"));
                 pData.setDeaths(playerStats.getString("deathsToHero"));
                 pData.setHeroKills(playerStats.getString("heroKills"));
+                pData.setCoreKills(playerStats.getString("coreKills"));
+                pData.setTowerKills(playerStats.getString("towerKills"));
+                pData.setHeroHealing(playerStats.getString("heroHealing"));
+                pData.setSelfHealing(playerStats.getString("selfHealing"));
                 pData.setPlayerName(playerName);
                 }
             catch (JSONException e) {

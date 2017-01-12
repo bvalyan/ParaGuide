@@ -30,14 +30,6 @@
         android:onClick="onSearch"/>
 
 
-    <ImageView
-        android:id="@+id/playerHeroImages"
-
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:layout_height="230dp"
-        android:background="@drawable/border"
-        android:layout_width="230dp" />
 
     <Space
         android:layout_width="match_parent"
@@ -53,20 +45,54 @@
         android:visibility="gone" />
 
 
-    <ScrollView
-
-        android:layout_width="fill_parent"
-        android:layout_height="350dp"
-        android:layout_marginTop="1dp"
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:id="@+id/scrollView2"
-        android:layout_weight="0.72">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        app:layout_heightPercent="50%"
+        app:layout_widthPercent="90%">
+
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_heightPercent="61%"
+            app:layout_widthPercent="50%"
+
+            />
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/chart2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_heightPercent="61%"
+        app:layout_widthPercent="50%"
+        app:layout_marginLeftPercent="50%"
+        />
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_heightPercent="38%"
+            app:layout_widthPercent="100%"
+            app:layout_marginTopPercent="65%"
+            />
+
+
+
+
+    </android.support.percent.PercentRelativeLayout>
+
         <TextView
             android:id="@+id/playerresponseView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:width="0dp"/>
-    </ScrollView>
+
+
 
 
 </LinearLayout>
