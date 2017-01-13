@@ -1,8 +1,5 @@
 package com.optimalotaku.paraguide;
 
-import android.graphics.Bitmap;
-import android.util.Log;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -17,6 +14,16 @@ public class CardData implements Serializable {
     private String name;
     private String id;
     private String imageUrl;
+
+    public String getImageUrl2() {
+        return imageUrl2;
+    }
+
+    public void setImageUrl2(String imageUrl2) {
+        this.imageUrl2 = imageUrl2;
+    }
+
+    private String imageUrl2;
 
 
     public enum SlotType{

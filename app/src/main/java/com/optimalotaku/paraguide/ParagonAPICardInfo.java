@@ -1,13 +1,9 @@
 package com.optimalotaku.paraguide;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,13 +11,11 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -85,7 +79,8 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Image URL: " + card.getJSONObject("images").getString("medium_stats"));
                     cData.setName(card.getString("name"));
                     cData.setId(card.getString("id"));
-                    cData.setImageUrl("http:"+card.getJSONObject("images").getString("medium_stats"));
+                    cData.setImageUrl("http:"+card.getJSONObject("images").getString("medium"));
+                    cData.setImageUrl2("http:"+card.getJSONObject("images").getString("large"));
 
 
 

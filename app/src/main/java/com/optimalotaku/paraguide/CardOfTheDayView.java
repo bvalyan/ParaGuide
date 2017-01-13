@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,10 +35,13 @@ public class CardOfTheDayView extends AppCompatActivity{
         attrTranslator = new ParagonAPIAttrReplace();
         
         ImageView cotdImage = (ImageView) findViewById(R.id.cotdImage);
+        cotdImage.setVisibility(View.VISIBLE);
+        Animation myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
+        cotdImage.startAnimation(myFadeInAnimation);
         TextView cotdText   = (TextView) findViewById(R.id.cotdText);
 
         //Set Picture Image with Glide
-        Glide.with(this).load(cotd.getImageUrl()).into(cotdImage);
+        Glide.with(this).load(cotd.getImageUrl2()).into(cotdImage);
 
         //Resize image to be a percentage of width of device
         Display display = getWindowManager().getDefaultDisplay();
