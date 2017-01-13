@@ -107,6 +107,8 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                     break;
                 case "grux"           : heroID = Constants.GRUX_ID;
                     break;
+                case "serath"         : heroID = Constants.SERATH_ID;
+                    break;
                 default               : heroID = null;
             }
 
