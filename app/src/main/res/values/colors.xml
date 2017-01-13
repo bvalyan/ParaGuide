@@ -5,4 +5,5 @@
     <color name="colorAccent">#010613</color>
     <color name="accent_material_dark_1">#4070ff</color>
     <color name="blue">#0061ff</color>
+    <color name="black">#000000</color>
 </resources>
