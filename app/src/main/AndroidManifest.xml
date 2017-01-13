@@ -5,6 +5,7 @@
     android:versionName="1.1">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 
 
     <application
@@ -17,7 +18,7 @@
         android:supportsRtl="true"
         android:uiOptions="splitActionBarWhenNarrow"
         android:theme="@style/Theme.AppCompat">
-        <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+
 
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="stateVisible|adjustPan">

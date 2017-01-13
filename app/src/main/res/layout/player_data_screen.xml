@@ -12,15 +12,30 @@
     android:background="@android:color/background_light"
     android:theme="@style/Theme.AppCompat.para.Dialog.Alert">
 
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        app:layout_heightPercent="50%"
+        app:layout_widthPercent="100%">
 
 
     <EditText
         android:id="@+id/playerText"
+        app:layout_heightPercent="10%"
+        app:layout_widthPercent="67%"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="Enter Epic Account Name"/>
+        android:hint="Enter Epic Account Name"
+        android:textSize="15dp"/>
     <Button
+        app:layout_heightPercent="10%"
+        app:layout_marginLeftPercent="70%"
+        app:layout_widthPercent="30%"
         android:id="@+id/playerqueryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,28 +58,22 @@
         android:visibility="gone" />
 
 
-    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/mainLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        app:layout_heightPercent="50%"
-        app:layout_widthPercent="100%">
+
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/chart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_heightPercent="61%"
+            app:layout_heightPercent="51%"
+            app:layout_marginTopPercent="10%"
             app:layout_widthPercent="50%"
             />
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/chart2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_heightPercent="61%"
+        app:layout_heightPercent="51%"
+        app:layout_marginTopPercent="10%"
         app:layout_widthPercent="50%"
         app:layout_marginLeftPercent="50%"
         />
@@ -72,7 +81,7 @@
             android:id="@+id/chart3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_heightPercent="38%"
+            app:layout_heightPercent="40%"
             app:layout_widthPercent="100%"
             app:layout_marginTopPercent="65%"
             />

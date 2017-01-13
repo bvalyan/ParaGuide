@@ -27,13 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        app:layout_marginRightPercent="25%"
+        app:layout_marginRightPercent="29%"
         android:hint="Enter Hero"/>
     <Button
         android:id="@+id/queryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_marginLeftPercent="77%"
+        app:layout_marginLeftPercent="70%"
         app:layout_widthPercent="100%"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="Search"
@@ -42,12 +42,11 @@
 
     <ImageView
         android:id="@+id/HeroImages"
-        app:layout_marginLeftPercent="20%"
+        app:layout_marginLeftPercent="19%"
         app:layout_marginTopPercent="14%"
         app:layout_widthPercent="60%"
         android:layout_height="230dp"
         android:visibility="gone"
-        android:background="@drawable/border"
          />
 
 
