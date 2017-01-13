@@ -7,7 +7,7 @@ android {
         applicationId "com.optimalotaku.paraguide"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 5
+        versionCode 6
         versionName "3.10"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
