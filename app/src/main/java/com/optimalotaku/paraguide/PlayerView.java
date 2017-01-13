@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -224,7 +223,7 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
     @Override
     public void processPlayerInfoFinish(PlayerData pData) {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar2);
-        TextView responseView = (TextView) findViewById(R.id.playerresponseView);
+        //TextView responseView = (TextView) findViewById(R.id.playerresponseView);
 
 
         progressBar.setVisibility(View.GONE);

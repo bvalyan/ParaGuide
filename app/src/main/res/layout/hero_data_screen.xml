@@ -12,19 +12,29 @@
     android:background="@android:color/background_light"
     android:theme="@style/Theme.AppCompat.para.Dialog.Alert">
 
-
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layoutHERO"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        app:layout_heightPercent="100%"
+        app:layout_widthPercent="100%">
 
     <EditText
         android:id="@+id/heroText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
+        app:layout_marginRightPercent="25%"
         android:hint="Enter Hero"/>
     <Button
         android:id="@+id/queryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        app:layout_marginLeftPercent="77%"
+        app:layout_widthPercent="100%"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="Search"
         android:onClick="onSearch"/>
@@ -32,19 +42,19 @@
 
     <ImageView
         android:id="@+id/HeroImages"
-
-        android:layout_gravity="center"
-        android:visibility="gone"
+        app:layout_marginLeftPercent="20%"
+        app:layout_marginTopPercent="14%"
+        app:layout_widthPercent="60%"
         android:layout_height="230dp"
+        android:visibility="gone"
         android:background="@drawable/border"
-        android:layout_width="230dp" />
+         />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="21dp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
+        app:layout_marginLeftPercent="20%"
+        app:layout_marginTopPercent="14%"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
@@ -53,20 +63,25 @@
         android:visibility="gone" />
 
 
-    <ScrollView
 
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="350dp"
-        android:layout_marginTop="1dp"
+        android:layout_height="fill_parent"
         android:layout_gravity="center"
+        app:layout_widthPercent="92%"
+        app:layout_marginLeftPercent="4%"
+        app:layout_marginTopPercent="59%"
         android:id="@+id/scrollView2"
-        android:layout_weight="0.72">
+        android:isScrollContainer="false"
+        >
         <TextView
             android:id="@+id/responseView"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:width="0dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAlignment="textStart"
+            android:layout_gravity="start"
+            />
     </ScrollView>
-
+    </android.support.percent.PercentRelativeLayout>
 
 </LinearLayout>
