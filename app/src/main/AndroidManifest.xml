@@ -35,6 +35,9 @@
         <activity android:name=".CardOfTheDayView"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
+        <activity android:name=".newsView"
+            android:windowSoftInputMode="stateVisible|adjustPan">
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">

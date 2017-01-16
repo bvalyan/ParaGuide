@@ -1,61 +1,97 @@
 package com.optimalotaku.paraguide;
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
+import android.widget.Toast;
 
 /**
  * Created by Jerek on 12/19/2016.
  */
 
-public class HeroView extends AppCompatActivity implements HeroInfoResponse {
+public class HeroView extends ListActivity implements HeroInfoResponse {
 
+    ListView list;
+    String [] text;
+    String [] pics;
+
+    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    ArrayAdapter<String> adapter;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.hero_data_screen);
-
-    }
-
-    public void onSearch(View view) throws InterruptedException {
-
         //Gather UI Objects
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         EditText hEdit = (EditText) findViewById(R.id.heroText);
 
         //Create HeroData Object
         HeroData heroData = new HeroData();
-
-        ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo(progressBar,hEdit.getText().toString(),heroData);
+        super.onCreate(savedInstanceState);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        setContentView(R.layout.listtest);
+        newHeroPrototype heroInfo = new newHeroPrototype();
         heroInfo.delegate = this;
         heroInfo.execute();
     }
 
+    public void onSearch(View view) throws InterruptedException {
+
+
+
+
+    }
+
 
     @Override
-    public void processHeroInfoFinish(HeroData hData){
+    public void processHeroInfoFinish(final HeroData[] hData){
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         TextView responseView = (TextView) findViewById(R.id.responseView);
         ImageView picDisplay = (ImageView) findViewById(R.id.HeroImages);
 
-        progressBar.setVisibility(View.GONE);
+
+//        progressBar.setVisibility(View.GONE);
+
+         text = new String[hData.length];
+         pics = new String[hData.length];
+
+        for (int i=0; i< hData.length;i++){
+            text[i]= (hData[i].getName());
+            pics[i] = (hData[i].getImageIconURL());
+        }
+
+
+        CustomList adapter = new
+                CustomList(this, text, pics);
+        list=(ListView)findViewById(android.R.id.list);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
+                //start new activity with method that takes in name and HeroData object and displays information
+            }
+        });
 
         //Picture
-        if(hData.getImageIconURL() != null && !hData.getImageIconURL().equals("")) {
+ /*       if(hData.getImageIconURL() != null && !hData.getImageIconURL().equals("")) {
             picDisplay.setVisibility(View.VISIBLE);
             Log.i("INFO", "MainActivity - processHeroInfoFinish() - ImageURL: " + hData.getImageIconURL());
             Glide.with(this).load("https:" + hData.getImageIconURL()).into(picDisplay);
         }
+
+
 
         if(!hData.getEmpty()) {
             //Set Summary Text
@@ -119,7 +155,7 @@ public class HeroView extends AppCompatActivity implements HeroInfoResponse {
         else{
             EditText hEdit = (EditText) findViewById(R.id.heroText);
             responseView.setText("No hero data available for: "+hEdit.getText().toString()+"\nPlease try again.");
-        }
+        }*/
 
 
         View view2 = this.getCurrentFocus();

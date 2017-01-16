@@ -143,7 +143,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
         if(response == null) {
             Log.i("INFO","HERO NOT FOUND");
             heroData.setEmpty(true);
-            delegate.processHeroInfoFinish(heroData);
+            //delegate.processHeroInfoFinish(heroData);
         }
         else {
             heroData.setEmpty(false);
@@ -298,7 +298,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
             //responseView.setText(response);
         }
 
-        delegate.processHeroInfoFinish(heroData);
+        //delegate.processHeroInfoFinish(heroData);
     }
     
     public HashMap<Integer,Double[]> getModifierMap(JSONObject skill, Integer maxLvl ){

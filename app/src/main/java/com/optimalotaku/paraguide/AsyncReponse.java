@@ -10,7 +10,7 @@ import java.util.List;
 
 interface HeroInfoResponse {
 
-    void processHeroInfoFinish(HeroData hdata);
+    void processHeroInfoFinish(HeroData[] hdata);
 
 }
 

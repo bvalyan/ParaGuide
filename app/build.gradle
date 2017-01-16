@@ -7,8 +7,8 @@ android {
         applicationId "com.optimalotaku.paraguide"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 8
-        versionName "3.16"
+        versionCode 9
+        versionName "3.20"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
