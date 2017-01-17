@@ -2,7 +2,6 @@ package com.optimalotaku.paraguide;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 
 import org.json.JSONArray;
@@ -47,7 +46,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
 
     protected void onPreExecute() {
         //Show the progress bar while we load the data from EPIC's servers
-        pBar.setVisibility(View.VISIBLE);
+       // pBar.setVisibility(View.VISIBLE);
 
     }
 

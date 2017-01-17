@@ -2,6 +2,7 @@ package com.optimalotaku.paraguide;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -81,6 +82,18 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
                                     int position, long id) {
                 Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
                 //start new activity with method that takes in name and HeroData object and displays information
+                Intent i = new Intent(HeroView.this,HeroDisplayPrototype.class);
+                Bundle package1 = new Bundle();
+                package1.putString("name", text[position]);
+                package1.putString("scale", hData[position].getScale());
+                package1.putString("attack", hData[position].getAttackType());
+                package1.putInt("difficulty", hData[position].getDifficulty());
+                package1.putString("picURL", hData[position].getImageIconURL());
+                package1.putString("affinity1", hData[position].getAffinity1());
+                package1.putString("affinity2", hData[position].getAffinity2());
+                i.putExtras(package1);
+                startActivity(i);
+
             }
         });
 
