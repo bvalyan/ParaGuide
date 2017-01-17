@@ -45,12 +45,8 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
         heroInfo.execute();
     }
 
-    public void onSearch(View view) throws InterruptedException {
-
-
-
-
-    }
+    //public void onSearch(View view) throws InterruptedException {
+    //}
 
 
     @Override
@@ -92,6 +88,7 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
                 package1.putString("affinity1", hData[position].getAffinity1());
                 package1.putString("affinity2", hData[position].getAffinity2());
                 i.putExtras(package1);
+                
                 startActivity(i);
 
             }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is the fragment  to be displayed for a section associated with a tab -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.percent.PercentRelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="Lore"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top" />
+        <TextView
+            android:id="@+id/titleText"
+            app:layout_widthPercent="68%"
+            android:textAlignment="center"
+            app:layout_marginLeftPercent="15%"
+            app:layout_heightPercent="8%"
+            android:typeface="sans"/>
+        <ImageView
+        android:id="@+id/titlePic"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="30%"
+        app:layout_marginTopPercent="19%"
+        app:layout_marginLeftPercent="25%"/>
+        <ImageView
+            android:id="@+id/aff1Pic"
+            app:layout_widthPercent="10%"
+            app:layout_heightPercent="10%"
+            app:layout_marginTopPercent="5%"
+            app:layout_marginLeftPercent="38%"/>
+        <ImageView
+            android:id="@+id/aff2Pic"
+            app:layout_widthPercent="10%"
+            app:layout_heightPercent="10%"
+            app:layout_marginTopPercent="5%"
+            app:layout_marginLeftPercent="52%"/>
+        <ScrollView
+            app:layout_marginTopPercent="53%"
+            app:layout_widthPercent="100%"
+            app:layout_heightPercent="50%"
+            >
+            <TextView
+                android:id="@+id/descText"
+                app:layout_widthPercent="100%"
+                app:layout_heightPercent="100%"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </ScrollView>
+  </android.support.percent.PercentRelativeLayout>
+</LinearLayout>

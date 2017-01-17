@@ -1,67 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-     <android.support.percent.PercentRelativeLayout
-       xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:app="http://schemas.android.com/apk/res-auto"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/titleText"
-        android:paddingTop="20dp"
-        app:layout_widthPercent="68%"
-        app:layout_heightPercent="20%"
-        android:typeface="sans"/>
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-         <ImageView
-           android:id="@+id/titlePic"
-           app:layout_widthPercent="50%"
-           app:layout_heightPercent="20%"
-           app:layout_marginTopPercent="0%"
-           app:layout_marginLeftPercent="70%"/>
-    <ImageView
-        android:id="@+id/aff1Pic"
-        app:layout_widthPercent="10%"
-        app:layout_heightPercent="10%"
-        app:layout_marginTopPercent="21%"
-        app:layout_marginLeftPercent="73%"/>
-    <ImageView
-        android:id="@+id/aff2Pic"
-        app:layout_widthPercent="10%"
-        app:layout_heightPercent="12%"
-        app:layout_marginTopPercent="20%"
-        app:layout_marginLeftPercent="86%"/>
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/heroChart1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_heightPercent="30%"
-        app:layout_marginTopPercent="70%"
-        app:layout_widthPercent="35%"
-        />
-<ScrollView
-    app:layout_marginTopPercent="25%"
-    app:layout_widthPercent="100%"
-    app:layout_heightPercent="35%" >
-    <TextView
-        android:id="@+id/descText"
-        app:layout_widthPercent="100%"
-        app:layout_heightPercent="100%"
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layoutHERO"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</ScrollView>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        app:layout_heightPercent="100%"
+        app:layout_widthPercent="100%">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/heroChart2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_heightPercent="50%"
-        app:layout_marginLeftPercent="35%"
-        app:layout_marginTopPercent="70%"
-        app:layout_widthPercent="65%"
-        />
-     </android.support.percent.PercentRelativeLayout>
 
+
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </android.support.v4.view.ViewPager>
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="true"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    </android.support.percent.PercentRelativeLayout>
 </LinearLayout>
