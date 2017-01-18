@@ -66,8 +66,10 @@ public class newHeroPrototype extends AsyncTask<Void, Void, String> {
                     JSONArray jsonAffinities = arr.getJSONObject(i).getJSONArray("affinities");
                     heroStats[i].setAffinity1(jsonAffinities.getString(0));
                     heroStats[i].setAffinity2(jsonAffinities.getString(1));
-
-
+                    heroStats[i].setAbilityAttack(arr.getJSONObject(i).getJSONObject("stats").getInt("AbilityAttack"));
+                    heroStats[i].setMobility(arr.getJSONObject(i).getJSONObject("stats").getInt("Mobility"));
+                    heroStats[i].setBasicAttack(arr.getJSONObject(i).getJSONObject("stats").getInt("BasicAttack"));
+                    heroStats[i].setDurability(arr.getJSONObject(i).getJSONObject("stats").getInt("Durability"));
                 }
                 delegate.processHeroInfoFinish(heroStats);
             } catch (JSONException e) {

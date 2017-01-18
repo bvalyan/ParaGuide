@@ -87,8 +87,11 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
                 package1.putString("picURL", hData[position].getImageIconURL());
                 package1.putString("affinity1", hData[position].getAffinity1());
                 package1.putString("affinity2", hData[position].getAffinity2());
+                package1.putInt("mobility", hData[position].getMobility());
+                package1.putInt("durability", hData[position].getDurability());
+                package1.putInt("basicAttack", hData[position].getBasicAttack());
+                package1.putInt("abilityAttack", hData[position].getAbilityAttack());
                 i.putExtras(package1);
-                
                 startActivity(i);
 
             }

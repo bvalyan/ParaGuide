@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * Created by Brandon on 1/17/17.
@@ -40,8 +39,6 @@ public class HeroLoreFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_lore, container, false);
-        TextView tvLabel = (TextView) view.findViewById(R.id.tvTitle);
-        tvLabel.setText(page + " -- " + title);
         return view;
     }
 }

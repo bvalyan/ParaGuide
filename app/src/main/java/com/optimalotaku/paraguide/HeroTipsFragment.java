@@ -67,7 +67,6 @@ public class HeroTipsFragment extends Fragment {
         TextView description = (TextView) view.findViewById(R.id.descText);
         ImageView aff1 =  (ImageView) view.findViewById(R.id.aff1Pic);
         ImageView aff2 =  (ImageView) view.findViewById(R.id.aff2Pic);
-        TextView tvLabel = (TextView) view.findViewById(R.id.tvTitle);
         nameView.setTextSize(30);
         nameView.setText(name);
         Glide.with(this).load(picURL).into(heroImage);
@@ -79,7 +78,7 @@ public class HeroTipsFragment extends Fragment {
         Bitmap bitmap = null;
         Bitmap bitmap2 = null;
         description.append(difficultyRating);
-        tvLabel.setText(page + " -- " + title);
+
 
         switch (affinity1.toLowerCase()){
             case "growth":

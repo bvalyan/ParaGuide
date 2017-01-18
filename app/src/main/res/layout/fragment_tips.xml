@@ -10,7 +10,7 @@
         android:layout_height="match_parent">
     <TextView
         android:id="@+id/tvTitle"
-        android:text="Lore"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top" />
@@ -31,13 +31,13 @@
             android:id="@+id/aff1Pic"
             app:layout_widthPercent="10%"
             app:layout_heightPercent="10%"
-            app:layout_marginTopPercent="5%"
+            app:layout_marginTopPercent="8%"
             app:layout_marginLeftPercent="38%"/>
         <ImageView
             android:id="@+id/aff2Pic"
             app:layout_widthPercent="10%"
             app:layout_heightPercent="10%"
-            app:layout_marginTopPercent="5%"
+            app:layout_marginTopPercent="8%"
             app:layout_marginLeftPercent="52%"/>
         <ScrollView
             app:layout_marginTopPercent="53%"

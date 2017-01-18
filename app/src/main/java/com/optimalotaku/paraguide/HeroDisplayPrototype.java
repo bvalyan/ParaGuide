@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
+
 /**
  * Created by bvaly on 1/16/2017.
  */
@@ -26,6 +28,10 @@ public class HeroDisplayPrototype extends AppCompatActivity{
     String picURL;
     String affinity1;
     String affinity2;
+    int mobility;
+    int durability;
+    int abilityAttack;
+    int basicAttack;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -40,11 +46,16 @@ public class HeroDisplayPrototype extends AppCompatActivity{
         picURL = gifts.getString("picURL");
         affinity1 = gifts.getString("affinity1");
         affinity2 = gifts.getString("affinity2");
-
+        mobility = gifts.getInt("mobility");
+        durability = gifts.getInt("durability");
+        abilityAttack = gifts.getInt("abilityAttack");
+        basicAttack = gifts.getInt("basicAttack");
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         FragmentPagerAdapter adapterViewPager;
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
+        tabs.setViewPager(vpPager);
         vpPager.setCurrentItem(0);
 
         // Attach the page change listener inside the activity
@@ -103,7 +114,12 @@ public class HeroDisplayPrototype extends AppCompatActivity{
         // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Page " + position;
+            switch (position){
+                case 0 : return "Hero Tips";
+                case 1 : return "Hero Stats";
+                case 2 : return "Hero Lore";
+                default: return null;
+            }
         }
 
     }
