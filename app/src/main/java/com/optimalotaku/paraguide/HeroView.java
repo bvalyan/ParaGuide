@@ -91,6 +91,22 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
                 package1.putInt("durability", hData[position].getDurability());
                 package1.putInt("basicAttack", hData[position].getBasicAttack());
                 package1.putInt("abilityAttack", hData[position].getAbilityAttack());
+                package1.putString("traits", hData[position].getTraits());
+                package1.putString("primary", hData[position].getPrimarySkill().getName());
+                package1.putString("secondary1", hData[position].getSecondarySkillOne().getName());
+                package1.putString("secondary2", hData[position].getSecondarySkillTwo().getName());
+                package1.putString("secondary3", hData[position].getSecondarySkillThree().getName());
+                package1.putString("primaryDesc", hData[position].getPrimarySkill().getDesc());
+                package1.putString("secondary1Desc", hData[position].getSecondarySkillOne().getDesc());
+                package1.putString("secondary2Desc", hData[position].getSecondarySkillTwo().getDesc());
+                package1.putString("secondary3Desc", hData[position].getSecondarySkillThree().getDesc());
+                package1.putString("ultDesc", hData[position].getUltimateSkill().getDesc());
+                package1.putString("ultimate", hData[position].getUltimateSkill().getName());
+                package1.putString("primaryPic", hData[position].getPrimarySkill().getImageURL());
+                package1.putString("secondary1Pic", hData[position].getSecondarySkillOne().getImageURL());
+                package1.putString("secondary2Pic", hData[position].getSecondarySkillTwo().getImageURL());
+                package1.putString("secondary3Pic", hData[position].getSecondarySkillThree().getImageURL());
+                package1.putString("ultimatePic", hData[position].getUltimateSkill().getImageURL());
                 i.putExtras(package1);
                 startActivity(i);
 

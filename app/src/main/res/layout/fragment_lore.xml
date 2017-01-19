@@ -4,8 +4,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/tvTitle"
-        android:text="Lore"
+        android:id="@+id/lorebox"
+        android:text="COMING SOON"
+        android:textSize="35dp"
+        android:typeface="serif"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center" />

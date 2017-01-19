@@ -18,7 +18,7 @@
             android:id="@+id/titleText"
             app:layout_widthPercent="68%"
             android:textAlignment="center"
-            app:layout_marginLeftPercent="15%"
+            app:layout_marginLeftPercent="16%"
             app:layout_heightPercent="8%"
             android:typeface="sans"/>
         <ImageView
@@ -51,5 +51,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </ScrollView>
+        <TextView
+            android:text="Skills"
+            android:textAlignment="center"
+            app:layout_heightPercent="5%"
+            app:layout_marginTopPercent="82%"
+            app:layout_widthPercent="20%"
+            app:layout_marginLeftPercent="38%"
+            />
+        <ImageView
+            android:id="@+id/skillOne"
+            app:layout_widthPercent="20%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="85%"
+            />
+        <ImageView
+            android:id="@+id/skillTwo"
+            app:layout_widthPercent="20%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="85%"
+            app:layout_marginLeftPercent="25%"
+            />
+        <ImageView
+
+            android:id="@+id/skillThree"
+            app:layout_widthPercent="20%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="85%"
+            app:layout_marginLeftPercent="50%"
+            />
+        <ImageView
+            android:id="@+id/ultimate"
+            app:layout_widthPercent="20%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="85%"
+            app:layout_marginLeftPercent="75%"
+            />
   </android.support.percent.PercentRelativeLayout>
 </LinearLayout>

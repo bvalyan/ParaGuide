@@ -41,6 +41,9 @@
         <activity android:name=".HeroDisplayPrototype"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
+        <activity android:name=".SkillDisplay"
+            android:windowSoftInputMode="stateVisible|adjustPan">
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
