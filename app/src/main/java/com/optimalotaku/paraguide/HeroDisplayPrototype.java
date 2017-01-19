@@ -95,7 +95,7 @@ public class HeroDisplayPrototype extends AppCompatActivity{
             // This method will be invoked when a new page becomes selected.
             @Override
             public void onPageSelected(int position) {
-                
+
             }
 
             // This method will be invoked when the current page is scrolled

@@ -26,6 +26,8 @@ public class SkillDisplay extends AppCompatActivity{
         skillname = gifts2.getString("skillname");
         skillPic  = gifts2.getString("skillpic");
         skillDesc = gifts2.getString("skillDesc");
+        ParagonAPIAttrReplace replacer = new ParagonAPIAttrReplace();
+        skillDesc = replacer.replaceSymbolsWithText(skillDesc);
         setContentView(R.layout.skillview);
         skillTextName = (TextView) findViewById(R.id.skillname);
         skillImage = (ImageView) findViewById(R.id.skillimage);
