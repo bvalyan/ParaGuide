@@ -1,5 +1,7 @@
 package com.optimalotaku.paraguide;
 
+import android.text.SpannableString;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -31,5 +33,9 @@ public class ParagonAPIAttrReplace {
         String statReplacementTxt = StringUtils.replaceEach(attrReplacementTxt, statSymbList, statTextList);
 
         return statReplacementTxt; //Always return the last string in the series
+    }
+
+    public SpannableString replaceSymbolsWithImages(String APIText){
+        
     }
 }
