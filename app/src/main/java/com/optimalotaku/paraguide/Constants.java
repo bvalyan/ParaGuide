@@ -44,6 +44,7 @@ public class Constants {
     public static final String MURIEL_ID        = "f8fc4d76627c1121251760c28729bbff";
     public static final String SPARROW_ID       = "fb582fe82f0956269d7d656189d8b845";
     public static final String GRUX_ID          = "fc010be1a0bf295a347944e1e97ba583";
+    public static final String SERATH_ID        = "69dc74a9182154c5edefa319f1e48720";
 
 
 

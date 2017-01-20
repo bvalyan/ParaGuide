@@ -74,6 +74,7 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
         Description description3 = new Description();
         description1.setText("Win/Loss Analysis");
         description2.setText("Kill/Death/Assist Analysis");
+        description3.setText("");
         mChart.setUsePercentValues(true);
         mChart.setDescription(description1);
         mChart2.setDescription(description2);
