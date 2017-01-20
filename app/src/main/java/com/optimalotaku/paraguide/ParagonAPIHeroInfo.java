@@ -2,7 +2,6 @@ package com.optimalotaku.paraguide;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 import android.widget.ProgressBar;
 
 import org.json.JSONArray;
@@ -47,7 +46,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
 
     protected void onPreExecute() {
         //Show the progress bar while we load the data from EPIC's servers
-        pBar.setVisibility(View.VISIBLE);
+       // pBar.setVisibility(View.VISIBLE);
 
     }
 
@@ -107,6 +106,8 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                     break;
                 case "grux"           : heroID = Constants.GRUX_ID;
                     break;
+                case "serath"         : heroID = Constants.SERATH_ID;
+                    break;
                 default               : heroID = null;
             }
 
@@ -141,7 +142,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
         if(response == null) {
             Log.i("INFO","HERO NOT FOUND");
             heroData.setEmpty(true);
-            delegate.processHeroInfoFinish(heroData);
+            //delegate.processHeroInfoFinish(heroData);
         }
         else {
             heroData.setEmpty(false);
@@ -296,7 +297,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
             //responseView.setText(response);
         }
 
-        delegate.processHeroInfoFinish(heroData);
+        //delegate.processHeroInfoFinish(heroData);
     }
     
     public HashMap<Integer,Double[]> getModifierMap(JSONObject skill, Integer maxLvl ){

@@ -1,61 +1,126 @@
 package com.optimalotaku.paraguide;
 
+import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
+import android.widget.Toast;
 
 /**
  * Created by Jerek on 12/19/2016.
  */
 
-public class HeroView extends AppCompatActivity implements HeroInfoResponse {
+public class HeroView extends ListActivity implements HeroInfoResponse {
 
+    ListView list;
+    String [] text;
+    String [] pics;
+
+    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
+    ArrayAdapter<String> adapter;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.hero_data_screen);
-
-    }
-
-    public void onSearch(View view) throws InterruptedException {
-
         //Gather UI Objects
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         EditText hEdit = (EditText) findViewById(R.id.heroText);
 
         //Create HeroData Object
         HeroData heroData = new HeroData();
-
-        ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo(progressBar,hEdit.getText().toString(),heroData);
+        super.onCreate(savedInstanceState);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        setContentView(R.layout.listtest);
+        newHeroPrototype heroInfo = new newHeroPrototype();
         heroInfo.delegate = this;
         heroInfo.execute();
     }
 
+    //public void onSearch(View view) throws InterruptedException {
+    //}
+
 
     @Override
-    public void processHeroInfoFinish(HeroData hData){
+    public void processHeroInfoFinish(final HeroData[] hData){
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         TextView responseView = (TextView) findViewById(R.id.responseView);
         ImageView picDisplay = (ImageView) findViewById(R.id.HeroImages);
 
-        progressBar.setVisibility(View.GONE);
+
+//        progressBar.setVisibility(View.GONE);
+
+         text = new String[hData.length];
+         pics = new String[hData.length];
+
+        for (int i=0; i< hData.length;i++){
+            text[i]= (hData[i].getName());
+            pics[i] = (hData[i].getImageIconURL());
+        }
+
+
+        CustomList adapter = new
+                CustomList(this, text, pics);
+        list=(ListView)findViewById(android.R.id.list);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
+                //start new activity with method that takes in name and HeroData object and displays information
+                Intent i = new Intent(HeroView.this,HeroDisplayPrototype.class);
+                Bundle package1 = new Bundle();
+                package1.putString("name", text[position]);
+                package1.putString("scale", hData[position].getScale());
+                package1.putString("attack", hData[position].getAttackType());
+                package1.putInt("difficulty", hData[position].getDifficulty());
+                package1.putString("picURL", hData[position].getImageIconURL());
+                package1.putString("affinity1", hData[position].getAffinity1());
+                package1.putString("affinity2", hData[position].getAffinity2());
+                package1.putInt("mobility", hData[position].getMobility());
+                package1.putInt("durability", hData[position].getDurability());
+                package1.putInt("basicAttack", hData[position].getBasicAttack());
+                package1.putInt("abilityAttack", hData[position].getAbilityAttack());
+                package1.putString("traits", hData[position].getTraits());
+                package1.putString("primary", hData[position].getPrimarySkill().getName());
+                package1.putString("secondary1", hData[position].getSecondarySkillOne().getName());
+                package1.putString("secondary2", hData[position].getSecondarySkillTwo().getName());
+                package1.putString("secondary3", hData[position].getSecondarySkillThree().getName());
+                package1.putString("primaryDesc", hData[position].getPrimarySkill().getDesc());
+                package1.putString("secondary1Desc", hData[position].getSecondarySkillOne().getDesc());
+                package1.putString("secondary2Desc", hData[position].getSecondarySkillTwo().getDesc());
+                package1.putString("secondary3Desc", hData[position].getSecondarySkillThree().getDesc());
+                package1.putString("ultDesc", hData[position].getUltimateSkill().getDesc());
+                package1.putString("ultimate", hData[position].getUltimateSkill().getName());
+                package1.putString("primaryPic", hData[position].getPrimarySkill().getImageURL());
+                package1.putString("secondary1Pic", hData[position].getSecondarySkillOne().getImageURL());
+                package1.putString("secondary2Pic", hData[position].getSecondarySkillTwo().getImageURL());
+                package1.putString("secondary3Pic", hData[position].getSecondarySkillThree().getImageURL());
+                package1.putString("ultimatePic", hData[position].getUltimateSkill().getImageURL());
+                i.putExtras(package1);
+                startActivity(i);
+
+            }
+        });
 
         //Picture
-        if(hData.getImageIconURL() != null && !hData.getImageIconURL().equals("")) {
+ /*       if(hData.getImageIconURL() != null && !hData.getImageIconURL().equals("")) {
             picDisplay.setVisibility(View.VISIBLE);
             Log.i("INFO", "MainActivity - processHeroInfoFinish() - ImageURL: " + hData.getImageIconURL());
             Glide.with(this).load("https:" + hData.getImageIconURL()).into(picDisplay);
         }
+
+
 
         if(!hData.getEmpty()) {
             //Set Summary Text
@@ -119,7 +184,7 @@ public class HeroView extends AppCompatActivity implements HeroInfoResponse {
         else{
             EditText hEdit = (EditText) findViewById(R.id.heroText);
             responseView.setText("No hero data available for: "+hEdit.getText().toString()+"\nPlease try again.");
-        }
+        }*/
 
 
         View view2 = this.getCurrentFocus();

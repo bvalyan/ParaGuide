@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="l" parent="Theme.AppCompat.NoActionBar" >
+    <style name="l" parent="Base.Theme.AppCompat.Light.DarkActionBar" >
         <item name="android:colorAccent">@android:color/black</item>
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/colorPrimary</item>
     </style>
 
-    <style name="newtheme" parent="android:Theme.Material.Dialog.NoActionBar" >
+    <style name="newtheme" parent="Base.Theme.AppCompat.Light.DarkActionBar" >
         <item name="android:colorAccent">@color/accent_material_dark_1</item>
     </style>
 </resources>

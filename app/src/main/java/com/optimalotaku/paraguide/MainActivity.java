@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         startActivity(intent);
                         break;
                     case 5 :
-                        Toast.makeText(MainActivity.this, "Coming Soon!",
-                        Toast.LENGTH_SHORT).show();
+                        intent = new Intent(MainActivity.this, newsView.class);
+                        startActivity(intent);
                         break;
                 }
             }
