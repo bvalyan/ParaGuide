@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         Log.i("INFO","Today's Chosen Card Index: "+chosenCard.toString());
 
         //Grab the chosen card
-        this.cotd = cDataList.get(chosenCard);
+        this.cotd = cDataList.get(chosenCard+3);
 
         ImageLoader imgLoader = new ImageLoader(this.cotd);
         imgLoader.delegate = this;
