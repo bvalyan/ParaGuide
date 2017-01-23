@@ -3,6 +3,7 @@ package com.optimalotaku.paraguide;
 import android.graphics.Bitmap;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jerek on 12/15/2016.
@@ -10,7 +11,7 @@ import java.util.List;
 
 interface HeroInfoResponse {
 
-    void processHeroInfoFinish(HeroData[] hdata);
+    void processHeroInfoFinish(Map<String,HeroData> hdata);
 
 }
 

@@ -1,12 +1,13 @@
 package com.optimalotaku.paraguide;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by Jerek on 12/14/2016.
  */
 
-public class HeroSkill {
+public class HeroSkill implements Serializable {
 
     private String name;
     private String desc;

@@ -48,6 +48,8 @@ public class HeroDisplayPrototype extends AppCompatActivity{
     int abilityAttack;
     int basicAttack;
 
+    HeroData hdata;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +57,8 @@ public class HeroDisplayPrototype extends AppCompatActivity{
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Bundle gifts = getIntent().getExtras();
-        name = gifts.getString("name");
+        hdata = (HeroData) getIntent().getSerializableExtra("HeroData");
+        /*name = gifts.getString("name");
         scale = gifts.getString("attack");
         difficulty = gifts.getInt("difficulty");
         picURL = gifts.getString("picURL");
@@ -80,7 +83,7 @@ public class HeroDisplayPrototype extends AppCompatActivity{
         mobility = gifts.getInt("mobility");
         durability = gifts.getInt("durability");
         abilityAttack = gifts.getInt("abilityAttack");
-        basicAttack = gifts.getInt("basicAttack");
+        basicAttack = gifts.getInt("basicAttack");*/
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         FragmentPagerAdapter adapterViewPager;
@@ -130,9 +133,19 @@ public class HeroDisplayPrototype extends AppCompatActivity{
         public Fragment getItem(int position) {
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
-                    return HeroTipsFragment.newInstance(0, "Hero Tips", name, scale, difficulty, affinity1, affinity2, picURL, traits, primaryPic, secondary1Pic, secondary2Pic, secondary3Pic, ultimatePic, primary, secondary1, secondary2, secondary3, ultimate, primary, secondary1Desc, secondary2Desc, secondary3Desc, ultDesc);
+                    return HeroTipsFragment.newInstance(0, "Hero Tips", hdata.getName(), hdata.getScale(), hdata.getDifficulty(), hdata.getAffinity1()
+                                                         , hdata.getAffinity2(), hdata.getImageIconURL(), hdata.getTraits()
+                                                         , hdata.getPrimarySkill().getImageURL(), hdata.getSecondarySkillOne().getImageURL()
+                                                         , hdata.getSecondarySkillTwo().getImageURL(), hdata.getSecondarySkillThree().getImageURL()
+                                                         , hdata.getUltimateSkill().getImageURL(), hdata.getPrimarySkill().getName()
+                                                         , hdata.getSecondarySkillOne().getName(), hdata.getSecondarySkillTwo().getName()
+                                                         , hdata.getSecondarySkillThree().getName(), hdata.getUltimateSkill().getName()
+                                                         , hdata.getPrimarySkill().getDesc(), hdata.getSecondarySkillOne().getDesc()
+                                                         , hdata.getSecondarySkillTwo().getDesc(), hdata.getSecondarySkillThree().getDesc()
+                                                         , hdata.getUltimateSkill().getDesc());
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return HeroGraphsFragment.newInstance(1, "Hero Stats", basicAttack, abilityAttack, durability, mobility);
+                    return HeroGraphsFragment.newInstance(1, "Hero Stats", hdata.getBasicAttack(), hdata.getAbilityAttack()
+                                                           , hdata.getDurability(), hdata.getMobility());
                 case 2: // Fragment # 1 - This will show SecondFragment
                     return HeroLoreFragment.newInstance(2, "Hero Lore");
                 default:

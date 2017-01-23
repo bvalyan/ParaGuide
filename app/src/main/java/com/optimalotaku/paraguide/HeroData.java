@@ -1,10 +1,12 @@
 package com.optimalotaku.paraguide;
 
+import java.io.Serializable;
+
 /**
  * Created by Jerek on 12/14/2016.
  */
 
-public class HeroData {
+public class HeroData implements Serializable {
 
     private String paragonVersion;
     private String name;
