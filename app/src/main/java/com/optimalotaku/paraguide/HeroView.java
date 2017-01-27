@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -16,6 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Jerek on 12/19/2016.
  */
@@ -25,45 +30,50 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
     ListView list;
     String [] text;
     String [] pics;
+    FileManager fileManager;
 
-    //DEFINING A STRING ADAPTER WHICH WILL HANDLE THE DATA OF THE LISTVIEW
-    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Gather UI Objects
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        EditText hEdit = (EditText) findViewById(R.id.heroText);
-
-        //Create HeroData Object
-        HeroData heroData = new HeroData();
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.listtest);
-        newHeroPrototype heroInfo = new newHeroPrototype();
-        heroInfo.delegate = this;
-        heroInfo.execute();
+        fileManager = new FileManager(this);
+        Map<String,HeroData> heroDataMap = new HashMap<>();
+
+        try {
+            heroDataMap = fileManager.readHeroFromStorage();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(!fileManager.isLatestHeroData(heroDataMap)) {
+
+            Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
+
+            ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
+            heroInfo.delegate = this;
+            heroInfo.execute();
+        }
+        else{
+            Log.i("INFO", "HeroView - onCreate(): Hero data does exist and is current. Grabbing current data from file - hero.data ");
+            processHeroFromFile(heroDataMap);
+        }
     }
 
-    //public void onSearch(View view) throws InterruptedException {
-    //}
 
 
-    @Override
-    public void processHeroInfoFinish(final HeroData[] hData){
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        TextView responseView = (TextView) findViewById(R.id.responseView);
-        ImageView picDisplay = (ImageView) findViewById(R.id.HeroImages);
+    public void processHeroFromFile(final Map<String,HeroData> hData){
+        //Get List of hero names from Map
+        text = hData.keySet().toArray(new String[hData.size()]);
+        pics = new String[hData.keySet().toArray().length];
 
-
-//        progressBar.setVisibility(View.GONE);
-
-         text = new String[hData.length];
-         pics = new String[hData.length];
-
-        for (int i=0; i< hData.length;i++){
-            text[i]= (hData[i].getName());
-            pics[i] = (hData[i].getImageIconURL());
+        //Put the image URLs associated with each hero in a array
+        for (int i=0; i< text.length;i++){
+            HeroData hero = hData.get(text[i]);
+            pics[i] = (hero.getImageIconURL());
         }
 
 
@@ -79,113 +89,12 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
                 Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
                 //start new activity with method that takes in name and HeroData object and displays information
                 Intent i = new Intent(HeroView.this,HeroDisplayPrototype.class);
-                Bundle package1 = new Bundle();
-                package1.putString("name", text[position]);
-                package1.putString("scale", hData[position].getScale());
-                package1.putString("attack", hData[position].getAttackType());
-                package1.putInt("difficulty", hData[position].getDifficulty());
-                package1.putString("picURL", hData[position].getImageIconURL());
-                package1.putString("affinity1", hData[position].getAffinity1());
-                package1.putString("affinity2", hData[position].getAffinity2());
-                package1.putInt("mobility", hData[position].getMobility());
-                package1.putInt("durability", hData[position].getDurability());
-                package1.putInt("basicAttack", hData[position].getBasicAttack());
-                package1.putInt("abilityAttack", hData[position].getAbilityAttack());
-                package1.putString("traits", hData[position].getTraits());
-                package1.putString("primary", hData[position].getPrimarySkill().getName());
-                package1.putString("secondary1", hData[position].getSecondarySkillOne().getName());
-                package1.putString("secondary2", hData[position].getSecondarySkillTwo().getName());
-                package1.putString("secondary3", hData[position].getSecondarySkillThree().getName());
-                package1.putString("primaryDesc", hData[position].getPrimarySkill().getDesc());
-                package1.putString("secondary1Desc", hData[position].getSecondarySkillOne().getDesc());
-                package1.putString("secondary2Desc", hData[position].getSecondarySkillTwo().getDesc());
-                package1.putString("secondary3Desc", hData[position].getSecondarySkillThree().getDesc());
-                package1.putString("ultDesc", hData[position].getUltimateSkill().getDesc());
-                package1.putString("ultimate", hData[position].getUltimateSkill().getName());
-                package1.putString("primaryPic", hData[position].getPrimarySkill().getImageURL());
-                package1.putString("secondary1Pic", hData[position].getSecondarySkillOne().getImageURL());
-                package1.putString("secondary2Pic", hData[position].getSecondarySkillTwo().getImageURL());
-                package1.putString("secondary3Pic", hData[position].getSecondarySkillThree().getImageURL());
-                package1.putString("ultimatePic", hData[position].getUltimateSkill().getImageURL());
-                i.putExtras(package1);
+                HeroData chosenHero = hData.get(text[position]);
+                i.putExtra("HeroData",chosenHero);
                 startActivity(i);
 
             }
         });
-
-        //Picture
- /*       if(hData.getImageIconURL() != null && !hData.getImageIconURL().equals("")) {
-            picDisplay.setVisibility(View.VISIBLE);
-            Log.i("INFO", "MainActivity - processHeroInfoFinish() - ImageURL: " + hData.getImageIconURL());
-            Glide.with(this).load("https:" + hData.getImageIconURL()).into(picDisplay);
-        }
-
-
-
-        if(!hData.getEmpty()) {
-            //Set Summary Text
-            //Mobility
-            if (isBetween(hData.getMobility(), 1, 3)) {
-                responseView.setText(Constants.LOW_MOBILITY_STATEMENT);
-                responseView.append("\n");
-            } else if (isBetween(hData.getMobility(), 4, 7)) {
-                responseView.setText(Constants.MED_MOBILITY_STATEMENT);
-                responseView.append("\n");
-            } else if (isBetween(hData.getMobility(), 8, 10)) {
-                responseView.setText(Constants.HI_MOBILITY_STATEMENT);
-                responseView.append("\n");
-            } else {
-                Log.i("INFO", "No valid Mobility given: " + hData.getMobility().toString());
-            }
-
-            //Basic Attack
-            if (isBetween(hData.getBasicAttack(), 1, 3)) {
-                responseView.append(Constants.LOW_BASIC_ATTACK_STATEMENT);
-                responseView.append("\n");
-            } else if (isBetween(hData.getBasicAttack(), 4, 7)) {
-                responseView.append(Constants.MED_BASIC_ATTACK_STATEMENT);
-                responseView.append("\n");
-            } else if (isBetween(hData.getBasicAttack(), 8, 10)) {
-                responseView.append(Constants.HI_BASIC_ATTACK_STATEMENT);
-                responseView.append("\n");
-            } else {
-                Log.i("INFO", "No valid Basic Attack given: " + hData.getBasicAttack().toString());
-            }
-
-            //Durability
-            if (isBetween(hData.getDurability(), 1, 3)) {
-                responseView.append(Constants.LOW_DURABILITY_STATEMENT);
-                responseView.append("\n");
-            } else if (isBetween(hData.getDurability(), 4, 7)) {
-                responseView.append(Constants.MED_DURABILITY_STATEMENT);
-                responseView.append("\n");
-            } else if (isBetween(hData.getDurability(), 8, 10)) {
-                responseView.append(Constants.HI_DURABILITY_STATEMENT);
-                responseView.append("\n");
-            } else {
-                Log.i("INFO", "No valid Durability given: " + hData.getDurability().toString());
-            }
-
-
-            //Ability Attack
-            if (isBetween(hData.getAbilityAttack(), 1, 3)) {
-                responseView.append(Constants.LOW_ABILITY_ATTACK_STATEMENT);
-                responseView.append("\n");
-            } else if (isBetween(hData.getAbilityAttack(), 4, 7)) {
-                responseView.append(Constants.MED_ABILITY_ATTACK_STATEMENT);
-                responseView.append("\n");
-            } else if (isBetween(hData.getAbilityAttack(), 8, 10)) {
-                responseView.append(Constants.HI_ABILITY_ATTACK_STATEMENT);
-                responseView.append("\n");
-            } else {
-                Log.i("INFO", "No valid Durability given: " + hData.getAbilityAttack().toString());
-            }
-        }
-        else{
-            EditText hEdit = (EditText) findViewById(R.id.heroText);
-            responseView.setText("No hero data available for: "+hEdit.getText().toString()+"\nPlease try again.");
-        }*/
-
 
         View view2 = this.getCurrentFocus();
         if (view2 != null) {
@@ -194,11 +103,61 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
             imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
         }
 
+
+        try {
+            fileManager.saveHeroesToStorage(hData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    //Helper Functions
-    public static boolean isBetween( Integer x, Integer lower, Integer upper) {
-        return lower <= x && x <= upper;
+
+    @Override
+    public void processHeroInfoFinish(final Map<String,HeroData> hData){
+        //Get List of hero names from Map
+        text = hData.keySet().toArray(new String[hData.size()]);
+        pics = new String[hData.keySet().toArray().length];
+
+        //Put the image URLs associated with each hero in a array
+        for (int i=0; i< text.length;i++){
+            HeroData hero = hData.get(text[i]);
+            pics[i] = (hero.getImageIconURL());
+        }
+
+
+        CustomList adapter = new
+                CustomList(this, text, pics);
+        list=(ListView)findViewById(android.R.id.list);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
+                //start new activity with method that takes in name and HeroData object and displays information
+                Intent i = new Intent(HeroView.this,HeroDisplayPrototype.class);
+                HeroData chosenHero = hData.get(text[position]);
+                i.putExtra("HeroData",chosenHero);
+                startActivity(i);
+
+            }
+        });
+
+        View view2 = this.getCurrentFocus();
+        if (view2 != null) {
+            //hide keyboard upon return
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
+        }
+
+        try {
+            fileManager.saveHeroesToStorage(hData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

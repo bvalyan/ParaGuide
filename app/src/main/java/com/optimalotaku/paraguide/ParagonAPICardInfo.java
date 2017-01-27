@@ -16,7 +16,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Brandon on 12/19/16.
@@ -57,7 +59,9 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void onPostExecute(String response) {
 
+        Map<String,List<CardData>> cardMap = new HashMap<>();
         List<CardData> cardList = new ArrayList<>();
+        List<CardData> equipCardList = new ArrayList<>();
 
         if (response == null) {
             Log.i("INFO", "CARD DATABASE NOT FOUND!");
@@ -81,6 +85,7 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                     cData.setId(card.getString("id"));
                     cData.setImageUrl("http:"+card.getJSONObject("images").getString("medium"));
                     cData.setImageUrl2("http:"+card.getJSONObject("images").getString("large"));
+                    cData.setVersion(Constants.PARAGON_VERSION);
 
 
 
@@ -162,6 +167,10 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
 
                     cardList.add(cData);
 
+                    if(cData.getSlot() == CardData.SlotType.ACTIVE || cData.getSlot() == CardData.SlotType.PASSIVE){
+                        equipCardList.add(cData);
+                    }
+
 
                 }
 
@@ -173,7 +182,9 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
 
         }
 
-        delegate.processCardInfoFinish(cardList);
+        cardMap.put("All",cardList);
+        cardMap.put("Equip",equipCardList);
+        delegate.processCardInfoFinish(cardMap);
 
     }
 

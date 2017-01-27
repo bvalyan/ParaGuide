@@ -2,6 +2,7 @@ package com.optimalotaku.paraguide;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ public class SkillDisplay extends AppCompatActivity{
     private String skillname;
     private String skillPic;
     private String skillDesc;
+    private SpannableString ssSkillDesc;
     TextView skillTextName;
     ImageView skillImage;
     TextView skillText;
@@ -27,14 +29,14 @@ public class SkillDisplay extends AppCompatActivity{
         skillPic  = gifts2.getString("skillpic");
         skillDesc = gifts2.getString("skillDesc");
         ParagonAPIAttrReplace replacer = new ParagonAPIAttrReplace();
-        skillDesc = replacer.replaceSymbolsWithText(skillDesc);
+        ssSkillDesc = replacer.replaceSymbolsWithImages(this,skillDesc);
         setContentView(R.layout.skillview);
         skillTextName = (TextView) findViewById(R.id.skillname);
         skillImage = (ImageView) findViewById(R.id.skillimage);
         skillText = (TextView) findViewById(R.id.skillText);
         Glide.with(this).load(skillPic).into(skillImage);
         skillTextName.setText(skillname);
-        skillText.setText(skillDesc);
+        skillText.setText(ssSkillDesc);
 
     }
 }
