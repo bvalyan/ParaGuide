@@ -5,6 +5,7 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,8 +14,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.jar.JarEntry;
 
 /**
  * Created by Brandon on 1/16/17.
@@ -64,6 +68,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                     HeroData hdata = new HeroData();
                     hdata.setName(arr.getJSONObject(i).getString("name"));
                     hdata.setId(arr.getJSONObject(i).getString("id"));
+                    hdata.setVersion(Constants.PARAGON_VERSION);
                     hdata.setAttackType(arr.getJSONObject(i).getString("attack"));
                     hdata.setScale(arr.getJSONObject(i).getString("scale"));
                     hdata.setDifficulty(arr.getJSONObject(i).getInt("difficulty"));
@@ -106,9 +111,8 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                                 primary.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
                                 primary.setType(jsonSkills.getJSONObject(k).getString("type"));
                                 primary.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+                                primary.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
 
-                                //Get Modifiers By Level
-                                //primary.setModifiers(getModifierMap(jsonSkills.getJSONObject(i), maxLvl));
                                 break;
                             case "Normal":
                                 if (secondary1.getName() == null ) {
@@ -117,13 +121,13 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                                     Log.i("INFO","Setting secondary1 skill type: "+ jsonSkills.getJSONObject(k).getString("type"));
                                     Log.i("INFO","Setting secondary1 skill icon url: "+ jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
 
+
                                     secondary1.setName(jsonSkills.getJSONObject(k).getString("name"));
                                     secondary1.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
                                     secondary1.setType(jsonSkills.getJSONObject(k).getString("type"));
                                     secondary1.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+                                    secondary1.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
 
-                                    //Get Modifiers By Level
-                                    //secondary1.setModifiers(getModifierMap(jsonSkills.getJSONObject(i), maxLvl));
                                 } else if (secondary2.getName() == null) {
                                     Log.i("INFO","Setting secondary2 skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
                                     Log.i("INFO","Setting secondary2 skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
@@ -134,9 +138,8 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                                     secondary2.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
                                     secondary2.setType(jsonSkills.getJSONObject(k).getString("type"));
                                     secondary2.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+                                    secondary2.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
 
-                                    //Get Modifiers By Level
-                                    //secondary2.setModifiers(getModifierMap(jsonSkills.getJSONObject(i), maxLvl));
                                 } else {
                                     Log.i("INFO","Setting secondary3 skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
                                     Log.i("INFO","Setting secondary3 skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
@@ -147,9 +150,8 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                                     secondary3.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
                                     secondary3.setType(jsonSkills.getJSONObject(k).getString("type"));
                                     secondary3.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+                                    secondary3.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
 
-                                    //Get Modifiers By Level
-                                    //secondary3.setModifiers(getModifierMap(jsonSkills.getJSONObject(i), maxLvl));
                                 }
                                 break;
                             case "Ultimate":
@@ -162,9 +164,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                                 ultimate.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
                                 ultimate.setType(jsonSkills.getJSONObject(k).getString("type"));
                                 ultimate.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
-
-                                //Get Modifiers By Level
-                                //ultimate.setModifiers(getModifierMap(jsonSkills.getJSONObject(i), maxLvl));
+                                ultimate.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
                                 break;
                             default:
                                 Log.i("INFO", "Type: " + type + " does not exist for hero");
@@ -185,4 +185,43 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
         }
 
     }
+
+
+    public Map<String,List<String>> gatherSkillModifiers(JSONArray skillMods){
+
+        Map<String,List<String>> mods = new HashMap<>();
+
+
+        for(int i=0; i<skillMods.length(); i++){
+
+            try {
+                JSONObject mod = skillMods.getJSONObject(i);
+                Iterator<String> keys = mod.keys();
+
+                while( keys.hasNext() ) {
+                    String key = keys.next();
+                    List<String> modCol =  mods.get(key);
+                    if(modCol == null){
+                        modCol = new ArrayList<>();
+                        modCol.add(Integer.toString(mod.getInt(key)));
+                        mods.put(key,modCol);
+                    }
+                    else{
+                        modCol.add(Integer.toString(mod.getInt(key)));
+                        mods.put(key,modCol);
+                    }
+                }
+
+
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return mods;
+
+    }
+
 }

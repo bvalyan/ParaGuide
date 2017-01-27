@@ -17,6 +17,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Jerek on 1/4/2017.
@@ -30,8 +32,9 @@ public class ParagonAPIAttrReplace {
     private String[] attrTextList = {"MP","HP","LifeSteal","MP Regen","HP Regen","Power","Damage Bonus","Ability Armor"
                                    ,"Max Movement Speed","Power","Shield","Basic Armor","Attack Speed","Cooldown Reduction","Power","Critical Chance"};
 
-    private String[] statSymbList = {"{status:burn}","{status:slow}","{status:psn}","{status:bleed}"};
-    private String[] statTextList = {"Burn","Slow","Poison","Bleed"};
+    private String[] statSymbList = {"{status:burn}","{status:slow}","{status:psn}","{status:bleed}","{status:root}","{status:knockback}","{status:knockup}"
+                                    ,"{status:stun}","{status:slnc","{status:weak}"};
+    private String[] statTextList = {"Burn","Slow","Poison","Bleed","Root","Knockback","Knockup","Stun","Silence","Weakness"};
 
     private List<String> replaceList = Arrays.asList("{attr:mp}","{attr:hp}","{attr:lfstl}","{attr:mpreg}","{attr:hpreg}","{attr:physdmg}"
                                                     ,"{attr:dmgbns}","{attr:enar}","{attr:spd}","{attr:endmg}","{attr:shld}","{attr:physar}"
@@ -40,10 +43,10 @@ public class ParagonAPIAttrReplace {
 
     public ParagonAPIAttrReplace(){
 
-    };
+    }
 
 
-    public String replaceSymbolsWithText(String APIText){
+    public String replaceStatWithText(String APIText){
 
         /* Replace Status Symbols*/
         String statReplacementTxt = StringUtils.replaceEach(APIText, statSymbList, statTextList);
@@ -87,7 +90,7 @@ public class ParagonAPIAttrReplace {
 
     }
 
-    public Drawable chooseIcon(AppCompatActivity activity, String iconString){
+    private Drawable chooseIcon(AppCompatActivity activity, String iconString){
 
         Drawable icon;
 
@@ -148,6 +151,44 @@ public class ParagonAPIAttrReplace {
 
         }
 
+    }
+
+    public String replaceModifiersWithText(Map<String, List<String>> mods, String APIText){
+
+        List<Integer>strLocs = new ArrayList<>();
+        Set<String> keys = mods.keySet();
+
+        for(String key: keys){
+
+            String replaceStr = "{"+key+"}";
+
+            Log.i("INFO","replaceModifiersWithText() - attempting to replace "+ replaceStr + " with "+listToModString(mods.get(key)));
+
+            APIText  =  APIText.replace(replaceStr,listToModString(mods.get(key)));
+
+            Log.i("INFO","replaceModifiersWithText() - text after replace: "+ APIText);
+
+        }
+
+        return APIText;
+    }
+
+    public String listToModString(List<String> modList){
+
+        String SEPARATOR = "|";
+        String modStr = "";
+
+        for(String mod: modList){
+
+            modStr = modStr+mod+SEPARATOR;
+
+        }
+
+        //Remove last Separator
+        modStr = modStr.substring(0, modStr.length() - SEPARATOR.length());
+
+        return modStr;
 
     }
+
 }

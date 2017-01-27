@@ -15,7 +15,7 @@ public class Constants {
     public static final String AUTHORIZE_PATH   = "https://developer-paragon.epicgames.com/v1/auth/login/";
 
     //Paragon Version
-    public static final String PARAGON_VERSION  = "35.1";
+    public static final Double PARAGON_VERSION  = 36.2;
 
 
     //Hero Constants

@@ -22,7 +22,7 @@ interface DeckInfoResponse{
 }
 
 interface CardInfoResponse{
-    void processCardInfoFinish(List<CardData> cDataList);
+    void processCardInfoFinish(Map<String,List<CardData>> cDataMap);
 }
 
 interface PlayerInfoResponse{

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class HeroData implements Serializable {
 
-    private String paragonVersion;
+    private Double version;
     private String name;
     private String attackType;
     private String traits;
@@ -187,14 +187,14 @@ public class HeroData implements Serializable {
         this.ultimateSkill = ultimateSkill;
     }
 
-    public String getParagonVersion() {
+    public Double getVersion() {
 
-        return paragonVersion;
+        return version;
     }
 
-    public void setParagonVersion(String paragonVersion) {
+    public void setVersion(Double paragonVersion) {
 
-        this.paragonVersion = paragonVersion;
+        this.version = paragonVersion;
     }
 
     public Boolean getEmpty() {
@@ -204,4 +204,11 @@ public class HeroData implements Serializable {
     public void setEmpty(Boolean empty) {
         isEmpty = empty;
     }
+
+    public String getFileName(){
+        String fileName = name.replace(" ","_");
+
+        return fileName;
+    }
+
 }

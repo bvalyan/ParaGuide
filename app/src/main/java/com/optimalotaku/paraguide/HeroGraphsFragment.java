@@ -33,10 +33,7 @@ public class HeroGraphsFragment extends Fragment {
     // Store instance variables
     private String title;
     private int page;
-    private int basicAttack;
-    private int abilityAttack;
-    private int durability;
-    private int mobility;
+    private HeroData heroData;
     private int[] yData = new int[4];// Keeps track of basic, ability, mobility, durability
     private String[] labels = {"Basic Attack", "Ability Attack", "Durability", "Mobility"};
 
@@ -45,15 +42,12 @@ public class HeroGraphsFragment extends Fragment {
 
 
     // newInstance constructor for creating fragment with arguments
-    public static HeroGraphsFragment newInstance(int page, String title, int basicAttack, int abilityAttack, int durability, int mobility) {
+    public static HeroGraphsFragment newInstance(int page, String title, HeroData hData) {
         HeroGraphsFragment graphFrag = new HeroGraphsFragment();
         Bundle args = new Bundle();
         args.putInt("someInt", page);
         args.putString("someTitle", title);
-        args.putInt("basicAttack",basicAttack);
-        args.putInt("abilityAttack", abilityAttack);
-        args.putInt("durability", durability);
-        args.putInt("mobility", mobility);
+        args.putSerializable("heroData",hData);
         graphFrag.setArguments(args);
         return graphFrag;
     }
@@ -79,10 +73,7 @@ public class HeroGraphsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
-        basicAttack = getArguments().getInt("basicAttack");
-        abilityAttack = getArguments().getInt("abilityAttack");
-        durability = getArguments().getInt("durability");
-        mobility = getArguments().getInt("mobility");
+        heroData = (HeroData) getArguments().getSerializable("heroData");
     }
 
     public class MyValueFormatter implements IValueFormatter
@@ -146,10 +137,10 @@ public class HeroGraphsFragment extends Fragment {
 
 
 
-        yData[0] = basicAttack;
-        yData[1] = abilityAttack;
-        yData[2] = mobility;
-        yData[3] = durability;
+        yData[0] = heroData.getBasicAttack();
+        yData[1] = heroData.getAbilityAttack();
+        yData[2] = heroData.getMobility();
+        yData[3] = heroData.getDurability();
 
         LegendEntry mobility = new LegendEntry();
         LegendEntry durability = new LegendEntry();

@@ -16,74 +16,15 @@ import com.astuetz.PagerSlidingTabStrip;
  */
 
 public class HeroDisplayPrototype extends AppCompatActivity{
-    public HeroData selectedHero = new HeroData();
 
-
-    private TabsPagerAdapter mAdapter;
-
-    String name;
-    String scale;
-    int difficulty;
-    String picURL;
-    String affinity1;
-    String affinity2;
-    String traits;
-    String primaryPic;
-    String secondary1Pic;
-    String secondary2Pic;
-    String secondary3Pic;
-    String ultimatePic;
-    String primary;
-    String secondary1;
-    String secondary2;
-    String secondary3;
-    String primaryDesc;
-    String secondary1Desc;
-    String secondary2Desc;
-    String secondary3Desc;
-    String ultDesc;
-    String ultimate;
-    int mobility;
-    int durability;
-    int abilityAttack;
-    int basicAttack;
-
-    HeroData hdata;
+    private HeroData hdata;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.hero_data_ptype);
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        Bundle gifts = getIntent().getExtras();
         hdata = (HeroData) getIntent().getSerializableExtra("HeroData");
-        /*name = gifts.getString("name");
-        scale = gifts.getString("attack");
-        difficulty = gifts.getInt("difficulty");
-        picURL = gifts.getString("picURL");
-        affinity1 = gifts.getString("affinity1");
-        affinity2 = gifts.getString("affinity2");
-        traits = gifts.getString("traits");
-        primaryPic = gifts.getString("primaryPic");
-        secondary1Pic = gifts.getString("secondary1Pic");
-        secondary2Pic = gifts.getString("secondary2Pic");
-        secondary3Pic = gifts.getString("secondary3Pic");
-        primaryDesc = gifts.getString("primaryDesc");
-        secondary1Desc = gifts.getString("secondary1Desc");
-        secondary2Desc = gifts.getString("secondary2Desc");
-        secondary3Desc = gifts.getString("secondary3Desc");
-        ultDesc = gifts.getString("ultDesc");
-        primary = gifts.getString("primary");
-        secondary1 = gifts.getString("secondary1");
-        secondary2 = gifts.getString("secondary2");
-        secondary3 = gifts.getString("secondary3");
-        ultimate = gifts.getString("ultimate");
-        ultimatePic = gifts.getString("ultimatePic");
-        mobility = gifts.getInt("mobility");
-        durability = gifts.getInt("durability");
-        abilityAttack = gifts.getInt("abilityAttack");
-        basicAttack = gifts.getInt("basicAttack");*/
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         FragmentPagerAdapter adapterViewPager;
@@ -133,19 +74,9 @@ public class HeroDisplayPrototype extends AppCompatActivity{
         public Fragment getItem(int position) {
             switch (position) {
                 case 0: // Fragment # 0 - This will show FirstFragment
-                    return HeroTipsFragment.newInstance(0, "Hero Tips", hdata.getName(), hdata.getScale(), hdata.getDifficulty(), hdata.getAffinity1()
-                                                         , hdata.getAffinity2(), hdata.getImageIconURL(), hdata.getTraits()
-                                                         , hdata.getPrimarySkill().getImageURL(), hdata.getSecondarySkillOne().getImageURL()
-                                                         , hdata.getSecondarySkillTwo().getImageURL(), hdata.getSecondarySkillThree().getImageURL()
-                                                         , hdata.getUltimateSkill().getImageURL(), hdata.getPrimarySkill().getName()
-                                                         , hdata.getSecondarySkillOne().getName(), hdata.getSecondarySkillTwo().getName()
-                                                         , hdata.getSecondarySkillThree().getName(), hdata.getUltimateSkill().getName()
-                                                         , hdata.getPrimarySkill().getDesc(), hdata.getSecondarySkillOne().getDesc()
-                                                         , hdata.getSecondarySkillTwo().getDesc(), hdata.getSecondarySkillThree().getDesc()
-                                                         , hdata.getUltimateSkill().getDesc());
+                    return HeroTipsFragment.newInstance(0, "Hero Tips", hdata);
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return HeroGraphsFragment.newInstance(1, "Hero Stats", hdata.getBasicAttack(), hdata.getAbilityAttack()
-                                                           , hdata.getDurability(), hdata.getMobility());
+                    return HeroGraphsFragment.newInstance(1, "Hero Stats", hdata);
                 case 2: // Fragment # 1 - This will show SecondFragment
                     return HeroLoreFragment.newInstance(2, "Hero Lore");
                 default:

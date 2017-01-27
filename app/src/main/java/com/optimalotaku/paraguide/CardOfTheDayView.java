@@ -4,7 +4,6 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -67,7 +66,7 @@ public class CardOfTheDayView extends AppCompatActivity{
                 cotdStr = cotdStr + "• " + cotd.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n";
             }
             if(eff.getDescription() != null){
-                String apiText = attrTranslator.replaceSymbolsWithText(eff.getDescription());
+                String apiText = attrTranslator.replaceStatWithText(eff.getDescription());
                 cotdStr = cotdStr + "• "+apiText+"\n";
             }
             if(eff.getCooldown()!= null && Integer.parseInt(eff.getCooldown()) > 1){
@@ -85,7 +84,7 @@ public class CardOfTheDayView extends AppCompatActivity{
                     cotdStr = cotdStr + "• " + cotd.statToHumanReadable(eff.getStat()) + ": " + eff.getStatValue() + "\n";
                 }
                 if (eff.getDescription() != null) {
-                    String apiText = attrTranslator.replaceSymbolsWithText(eff.getDescription());
+                    String apiText = attrTranslator.replaceStatWithText(eff.getDescription());
                     cotdStr = cotdStr + "• "+apiText+"\n";
                 }
                 if (eff.getCooldown() != null && Integer.parseInt(eff.getCooldown()) > 1) {
