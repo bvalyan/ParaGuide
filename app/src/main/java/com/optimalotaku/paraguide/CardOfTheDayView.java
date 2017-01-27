@@ -3,6 +3,7 @@ package com.optimalotaku.paraguide;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -39,6 +40,7 @@ public class CardOfTheDayView extends AppCompatActivity{
         Animation myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
         cotdImage.startAnimation(myFadeInAnimation);
         TextView cotdText   = (TextView) findViewById(R.id.cotdText);
+        String cotdStr;
 
         //Set Picture Image with Glide
         Glide.with(this).load(cotd.getImageUrl2()).into(cotdImage);
@@ -54,40 +56,46 @@ public class CardOfTheDayView extends AppCompatActivity{
 
         cotdImage.setVisibility(View.VISIBLE);
 
-        cotdText.setText("Name: "+cotd.getName()+"\n\n");
+        cotdStr = "Name: "+cotd.getName()+"\n\n";
 
-        cotdText.append("Card Effects:\n\n");
+        cotdStr = cotdStr + "Card Effects:\n\n";
         List<CardEffect> effectList = cotd.getEffectList();
         for(CardEffect eff: effectList) {
             if(eff.getStat() != null && eff.getStatValue() != null) {
                 Log.i("INFO","MainActivity - processCardInfoFinish - Stat: "+eff.getStat()+" Human Readable: "+ cotd.statToHumanReadable(eff.getStat()));
-                cotdText.append("•" + cotd.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n");
+                cotdStr = cotdStr + "• " + cotd.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n";
             }
             if(eff.getDescription() != null){
-               cotdText.append("•" + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
+                String apiText = attrTranslator.replaceStatWithText(eff.getDescription());
+                cotdStr = cotdStr + "• "+apiText+"\n";
             }
             if(eff.getCooldown()!= null && Integer.parseInt(eff.getCooldown()) > 1){
-                cotdText.append("• Cooldown: " + eff.getCooldown() + "s\n" );
+                cotdStr = cotdStr + "• Cooldown: " + eff.getCooldown() + "s\n";
             }
         }
-        cotdText.append("\n");
+        cotdStr = cotdStr + "\n";
 
 
         List<CardEffect> maxEffectList = cotd.getMaxEffectList();
         if(maxEffectList.size() > 0) {
-            cotdText.append("Fully Upgraded Card Effects:\n");
+            cotdStr = cotdStr + "Fully Upgraded Card Effects:\n";
             for (CardEffect eff : maxEffectList) {
                 if (eff.getStat() != null && eff.getStatValue() != null) {
-                    cotdText.append("• " + cotd.statToHumanReadable(eff.getStat()) + ": " + eff.getStatValue() + "\n");
+                    cotdStr = cotdStr + "• " + cotd.statToHumanReadable(eff.getStat()) + ": " + eff.getStatValue() + "\n";
                 }
                 if (eff.getDescription() != null) {
-                    cotdText.append("• " + attrTranslator.replaceSymbolsWithText(eff.getDescription()) + "\n");
+                    String apiText = attrTranslator.replaceStatWithText(eff.getDescription());
+                    cotdStr = cotdStr + "• "+apiText+"\n";
                 }
                 if (eff.getCooldown() != null && Integer.parseInt(eff.getCooldown()) > 1) {
-                    cotdText.append("• Cooldown: " + eff.getCooldown() + "s\n");
+                    cotdStr = cotdStr + "• Cooldown: " + eff.getCooldown() + "s\n";
                 }
             }
         }
+
+        SpannableString ss = attrTranslator.replaceSymbolsWithImages(this,cotdStr);
+        cotdText.setText(ss);
+
         
 
 

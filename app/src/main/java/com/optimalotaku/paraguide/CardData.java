@@ -34,6 +34,8 @@ public class CardData implements Serializable {
     private List<CardEffect> effectList;
     private List<CardEffect> maxEffectList;
 
+    private Double version;
+
     public String getName() {
 
         return name;
@@ -91,6 +93,14 @@ public class CardData implements Serializable {
         this.maxEffectList = maxEffectList;
     }
 
+    public Double getVersion() {
+        return version;
+    }
+
+    public void setVersion(Double version) {
+        this.version = version;
+    }
+
     public String statToHumanReadable(String stat){
         String[] words = StringUtils.splitByCharacterTypeCamelCase(stat);
         String humanReadableStat = "";
@@ -100,5 +110,11 @@ public class CardData implements Serializable {
 
         return humanReadableStat;
 
+    }
+
+    public String getFileName(){
+        String fileName = name.replace(" ","_");
+
+        return fileName;
     }
 }
