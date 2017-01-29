@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
-import android.widget.ProgressBar;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -18,6 +17,7 @@ import com.astuetz.PagerSlidingTabStrip;
 public class HeroDisplayPrototype extends AppCompatActivity{
 
     private HeroData hdata;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

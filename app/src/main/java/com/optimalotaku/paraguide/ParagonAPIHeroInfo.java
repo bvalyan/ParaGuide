@@ -17,15 +17,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.jar.JarEntry;
 
 /**
  * Created by Brandon on 1/16/17.
  */
 
 public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
-    public HeroView delegate = null;
+    public MainActivity delegate = null;
 
 
 

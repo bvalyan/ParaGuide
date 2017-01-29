@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,24 +18,20 @@ import java.util.List;
  * Created by Brandon on 1/7/17.
  */
 
-final class MyAdapter extends BaseAdapter {
+final class MyDeckAdapter extends BaseAdapter {
     private final List<Item> mItems = new ArrayList<Item>();
     private final LayoutInflater mInflater;
     private Bitmap cotdBitMapImg;
 
-    public MyAdapter(Context context, Bitmap cotdBitMapImg) {
+    public MyDeckAdapter(Context context, String[] cotdBitMapImg, String [] cardText) {
         mInflater = LayoutInflater.from(context);
 
-        mItems.add(new Item("PARAFLOW Analysis", R.drawable.playerlookup));
-        mItems.add(new Item("My Deck List",   R.drawable.decklookup));
-        mItems.add(new Item("Competitive Sphere", R.drawable.competitivepic));
-        mItems.add(new Item("Hero Data",      R.drawable.heropic));
-        mItems.add(new Item("Card of the Day", R.drawable.cotdpic));
-        mItems.add(new Item("News & Information", R.drawable.newspic));
-        this.cotdBitMapImg = cotdBitMapImg;
+        for(int i = 0; i < cardText.length; i++){
+            Item card = new Item(cardText[i], cotdBitMapImg[i]);
+            mItems.add(card);
+        }
+
     }
-
-
 
     @Override
     public int getCount() {
@@ -47,8 +45,9 @@ final class MyAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return mItems.get(i).drawableId;
+        return 0;
     }
+
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -67,25 +66,20 @@ final class MyAdapter extends BaseAdapter {
 
         Item item = getItem(i);
 
-        if(item.drawableId == R.drawable.cotdpic){
-            picture.setImageBitmap(this.cotdBitMapImg);
-            name.setText(item.name);
-        }
-        else {
-            picture.setImageResource(item.drawableId);
-            name.setText(item.name);
-        }
+        Glide.with(viewGroup.getContext()).load("https:" + item.drawable1).into(picture);
+        name.setText(item.name);
+
 
         return v;
     }
 
     private static class Item {
         public final String name;
-        public final int drawableId;
+        public final String drawable1;
 
-        Item(String name, int drawableId) {
+        Item(String name, String drawable) {
             this.name = name;
-            this.drawableId = drawableId;
+            this.drawable1 = drawable;
         }
     }
 }
