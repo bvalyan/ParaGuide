@@ -1,19 +1,24 @@
 package com.optimalotaku.paraguide;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Brandon on 12/15/16.
@@ -22,13 +27,16 @@ import java.util.List;
 public class DeckView extends AppCompatActivity implements DeckInfoResponse {
 
     private String authCode;
+    FileManager deckManager;
+    ListView list;
+    ProgressDialog progressDialog;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         setContentView(R.layout.login);
-
+        deckManager = new FileManager(this);
         WebView myWebView = (WebView) findViewById(R.id.webview);
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setDomStorageEnabled(true);
@@ -78,8 +86,8 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
             myWebView.loadUrl(authorizationUri);
 
         } else {
-
             // have access token, so spawn worker thread to do api calls
+
             ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode);
             deckInfo.execute();
         }
@@ -112,11 +120,52 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
     }
 
     @Override
-    public void processDeckInfoFinish(List<DeckData> dDataList) {
+    public void processDeckInfoFinish(final List<DeckData> dDataList) throws IOException {
 
         setContentView(R.layout.deckreadout);
-        TextView responseView = (TextView) findViewById(R.id.textView);
+        //TextView responseView = (TextView) findViewById(R.id.textView);
+
+        //progressDialog.dismiss(); // for close the dialog bar.
+
         String deckListStr = "";
+        String heroName = null;
+        Map<String,HeroData> heroDataMap = new HashMap<>();
+
+        final String [] text = new String[dDataList.size()];
+        String [] pics = new String[dDataList.size()];
+
+        for (int i = 0; i < dDataList.size(); i++){
+            text[i] = dDataList.get(i).getDeckName();
+            heroName = dDataList.get(i).getHeroName();
+            heroDataMap = deckManager.readHeroFromStorage();
+            if (heroDataMap.containsKey(heroName)){
+                Log.i("INFO", "HERO FOUND!");
+                pics[i] = heroDataMap.get(heroName).getImageIconURL();
+            }
+        }
+
+        CustomList adapter = new
+                CustomList(this, text, pics);
+        list =(ListView)findViewById(R.id.list2);
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
+                //start new activity with method that takes in name and HeroData object and displays information
+                Intent i = new Intent(DeckView.this,DetailDeckView.class);
+                DeckData chosenDeck = dDataList.get(position);
+                //Bundle deckGoodies = new Bundle();
+                //deckGoodies.putString("deckJSONArray", chosenDeck.toString());
+                i.putExtra("deckObject", chosenDeck);
+
+                startActivity(i);
+            }
+        });
+
 
         for(DeckData deck : dDataList){
 
@@ -126,12 +175,12 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
 
         }
 
-        responseView.setText(deckListStr);
+        //responseView.setText(deckListStr);
 
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(responseView.getWindowToken(), 0);
-        Button endButton = (Button) findViewById(R.id.button3);
-        endButton.setVisibility(View.VISIBLE);
+        //imm.hideSoftInputFromWindow(responseView.getWindowToken(), 0);
+        //Button endButton = (Button) findViewById(R.id.button3);
+        //endButton.setVisibility(View.VISIBLE);
 
 
     }

@@ -20,7 +20,7 @@
            app:layout_marginLeftPercent="40%"/>
         <TextView
             android:id="@+id/skillname"
-            app:layout_heightPercent="6%"
+            app:layout_heightPercent="10%"
             android:textAlignment="center"
             android:textSize="30dp"
             android:textColor="@color/white"

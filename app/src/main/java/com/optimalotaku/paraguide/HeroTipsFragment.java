@@ -13,9 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by Brandon on 1/17/17.
  */
@@ -134,7 +131,7 @@ public class HeroTipsFragment extends Fragment {
         Glide.with(this).load(heroData.getUltimateSkill().getImageURL()).into(ultimate);
 
         description.setTextSize(18);
-        String scaling = "\u2022" + "This hero's primary attack type is " + heroData.getScale().toLowerCase() + ".\n";
+        String scaling = "\u2022" + "This hero's primary attack type is " + heroData.getAttackType().toLowerCase() + ".\n";
         String difficultyRating = "\u2022" + "This hero's difficulty is rated at a " + heroData.getDifficulty().toString() + " out of 3"+".\n";
         String traitDesc = "\u2022" + "This hero is best described as: " + heroData.getTraits() + "\n";
         description.append(scaling);

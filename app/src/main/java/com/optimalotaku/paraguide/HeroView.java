@@ -4,21 +4,14 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,27 +33,34 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.listtest);
         fileManager = new FileManager(this);
-        Map<String,HeroData> heroDataMap = new HashMap<>();
+        Intent intent = this.getIntent();
+        final Map<String,HeroData> heroDataMap = intent.getParcelableExtra("heroMap");
+        CustomList adapter = new
+                CustomList(this, text, pics);
+        list=(ListView)findViewById(android.R.id.list);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-        try {
-            heroDataMap = fileManager.readHeroFromStorage();
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
+                //start new activity with method that takes in name and HeroData object and displays information
+                Intent i = new Intent(HeroView.this,HeroDisplayPrototype.class);
+                HeroData chosenHero = heroDataMap.get(text[position]);
+                i.putExtra("HeroData",chosenHero);
+                startActivity(i);
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            }
+        });
+
+        View view2 = this.getCurrentFocus();
+        if (view2 != null) {
+            //hide keyboard upon return
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
         }
 
-        if(!fileManager.isLatestHeroData(heroDataMap)) {
-
-            Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
-
-            ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
-            heroInfo.delegate = this;
-            heroInfo.execute();
-        }
-        else{
-            Log.i("INFO", "HeroView - onCreate(): Hero data does exist and is current. Grabbing current data from file - hero.data ");
-            processHeroFromFile(heroDataMap);
-        }
     }
 
 
@@ -77,38 +77,8 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
         }
 
 
-        CustomList adapter = new
-                CustomList(this, text, pics);
-        list=(ListView)findViewById(android.R.id.list);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
-                //start new activity with method that takes in name and HeroData object and displays information
-                Intent i = new Intent(HeroView.this,HeroDisplayPrototype.class);
-                HeroData chosenHero = hData.get(text[position]);
-                i.putExtra("HeroData",chosenHero);
-                startActivity(i);
-
-            }
-        });
-
-        View view2 = this.getCurrentFocus();
-        if (view2 != null) {
-            //hide keyboard upon return
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
-        }
 
 
-        try {
-            fileManager.saveHeroesToStorage(hData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 

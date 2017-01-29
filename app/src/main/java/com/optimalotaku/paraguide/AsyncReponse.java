@@ -2,6 +2,7 @@ package com.optimalotaku.paraguide;
 
 import android.graphics.Bitmap;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ interface HeroInfoResponse {
 
 interface DeckInfoResponse{
 
-    void processDeckInfoFinish(List<DeckData> dDataList);
+    void processDeckInfoFinish(List<DeckData> dDataList) throws IOException;
 
 }
 
