@@ -34,6 +34,7 @@ public class SkillDisplay extends AppCompatActivity{
         skillTextName = (TextView) findViewById(R.id.skillname);
         skillImage = (ImageView) findViewById(R.id.skillimage);
         skillText = (TextView) findViewById(R.id.skillText);
+        skillText.setTextSize(17);
         Glide.with(this).load(skillPic).into(skillImage);
         skillTextName.setText(skillname);
         skillText.setText(ssSkillDesc);

@@ -1,16 +1,10 @@
 package com.optimalotaku.paraguide;
 
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.text.style.ImageSpan;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -175,7 +169,7 @@ public class ParagonAPIAttrReplace {
 
     public String listToModString(List<String> modList){
 
-        String SEPARATOR = "|";
+        String SEPARATOR = " | ";
         String modStr = "";
 
         for(String mod: modList){
