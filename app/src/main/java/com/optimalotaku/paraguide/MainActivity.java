@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -27,10 +26,8 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     CardData cotd;
     GridView gridview;
     FileManager fileManager;
-    String [] text;
-    String [] pics;
-    ListView list;
-    Map<String,HeroData> heroMap = new HashMap<>();
+    HashMap<String,HeroData> heroDataMap;
+    HashMap<String,List<CardData>> cDataMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +37,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         setContentView(R.layout.grid_home);
         gridview = (GridView) findViewById(R.id.gridview);
         fileManager = new FileManager(this);
+        heroDataMap = new HashMap<>();
+        cDataMap = new HashMap<>();
 
+        getHeroData();
         getCardData();
-        try {
-            getHeroData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             Intent intent;
@@ -62,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         break;
                     case 1 :
                         intent = new Intent(MainActivity.this, DeckView.class);
+                        intent.putExtra("HeroMap",heroDataMap);
                         startActivity(intent);
                         break;
                     case 2 :
@@ -70,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         break;
                     case 3 :
                         intent = new Intent(MainActivity.this, HeroView.class);
-                        intent.putExtra("heroMap", heroMap);
+                        intent.putExtra("HeroMap",heroDataMap);
                         startActivity(intent);
                         break;
                     case 4 :
@@ -87,9 +83,36 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         });
     }
 
+    public void getHeroData(){
+        fileManager = new FileManager(this);
+
+        try {
+            heroDataMap = fileManager.readHeroFromStorage();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(!fileManager.isLatestHeroData(heroDataMap)) {
+
+            Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
+
+            ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
+            heroInfo.delegate = this;
+            heroInfo.execute();
+        }
+        else{
+            Log.i("INFO", "HeroView - onCreate(): Hero data does exist and is current. Grabbing current data from file - hero.data ");
+        }
+    }
+
+    @Override
+    public void processHeroInfoFinish(final HashMap<String,HeroData> hData){
+        heroDataMap = hData;
+    }
+
 
     public void getCardData(){
-        Map<String,List<CardData>> cDataMap = new HashMap<>();
         try {
             cDataMap = fileManager.readCardsFromStorage();
 
@@ -111,34 +134,9 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         }
     }
 
-    public void getHeroData() throws IOException {
-        Map<String,HeroData> hDataMap = new HashMap<>();
-        try{
-            hDataMap = fileManager.readHeroFromStorage();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(fileManager.isLatestHeroData(hDataMap)){
-            Log.i("INFO", "FileManager - readHeroesToStorage: Hero data obtained from device successfully");
-            ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
-            heroInfo.delegate = this;
-            heroInfo.execute();
-            try {
-                fileManager.saveHeroesToStorage(hDataMap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else{
-            Log.i("INFO", "MainActivity - getCardData(): Hero data does exist and is current. Grabbing current data from file - hero.data ");
-            processHeroFromFile(hDataMap);
-        }
-    }
 
 
-
-    public void processCardInfoFromFile(Map<String,List<CardData>> cDataMap) {
+    public void processCardInfoFromFile(HashMap<String,List<CardData>> cDataMap) {
 
         /*
             Add up the Year month and day to get a number to get a number to mod with the
@@ -165,31 +163,13 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         imgLoader.execute();
     }
 
-    public void processHeroFromFile(final Map<String,HeroData> hData) throws IOException {
-        //Get List of hero names from Map
-        text = hData.keySet().toArray(new String[hData.size()]);
-        pics = new String[hData.keySet().toArray().length];
-
-        //Put the image URLs associated with each hero in a array
-        for (int i=0; i< text.length;i++){
-            HeroData hero = hData.get(text[i]);
-            pics[i] = (hero.getImageIconURL());
-        }
-
-        try {
-            fileManager.saveHeroesToStorage(hData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 
 
 
 
     //@Override
-    public void processCardInfoFinish(Map<String,List<CardData>> cDataMap) {
+    public void processCardInfoFinish(HashMap<String,List<CardData>> cDataMap) {
 
         /*
             Add up the Year month and day to get a number to get a number to mod with the
@@ -230,19 +210,6 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     public void processImageLoaderFinish(Bitmap imgBitmap) {
         //Set the grid view Adapter
         gridview.setAdapter(new MyAdapter(this,imgBitmap));
-    }
-
-    @Override
-    public void processHeroInfoFinish(Map<String, HeroData> hdata) {
-        //Get List of hero names from Map
-        text = hdata.keySet().toArray(new String[hdata.size()]);
-        pics = new String[hdata.keySet().toArray().length];
-
-        //Put the image URLs associated with each hero in a array
-        for (int i=0; i< text.length;i++){
-            HeroData hero = hdata.get(text[i]);
-            pics[i] = (hero.getImageIconURL());
-        }
     }
 }
 

@@ -129,7 +129,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
 
         String deckListStr = "";
         String heroName = null;
-        Map<String,HeroData> heroDataMap = new HashMap<>();
+        HashMap<String,HeroData> heroDataMap;
 
         final String [] text = new String[dDataList.size()];
         String [] pics = new String[dDataList.size()];
@@ -137,7 +137,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         for (int i = 0; i < dDataList.size(); i++){
             text[i] = dDataList.get(i).getDeckName();
             heroName = dDataList.get(i).getHeroName();
-            heroDataMap = deckManager.readHeroFromStorage();
+            heroDataMap = (HashMap<String,HeroData>) getIntent().getSerializableExtra("HeroMap");
             if (heroDataMap.containsKey(heroName)){
                 Log.i("INFO", "HERO FOUND!");
                 pics[i] = heroDataMap.get(heroName).getImageIconURL();

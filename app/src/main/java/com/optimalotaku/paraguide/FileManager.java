@@ -35,8 +35,8 @@ public class FileManager {
 
 
 
-    public Map<String,List<CardData>> readCardsFromStorage() throws IOException{
-        Map<String,List<CardData>> cDataMap = new HashMap<>();
+    public HashMap<String,List<CardData>> readCardsFromStorage() throws IOException{
+        HashMap<String,List<CardData>> cDataMap = new HashMap<>();
         List<CardData> cList = new ArrayList<>();
         List<CardData> equipCList = new ArrayList<>();
 
@@ -112,7 +112,7 @@ public class FileManager {
     }
 
 
-    public boolean isLatestCardData(Map<String,List<CardData>> cDataMap){
+    public boolean isLatestCardData(HashMap<String,List<CardData>> cDataMap){
 
         if(cDataMap.isEmpty() || cDataMap.get("All").isEmpty() || cDataMap.get("Equip").isEmpty()){
             Log.i("INFO", "FileManager - isLatestCardData: Card Map is empty or All Card list or Equip Card list is empty. Returning false");
@@ -134,9 +134,9 @@ public class FileManager {
     }
 
 
-    public Map<String,HeroData> readHeroFromStorage() throws IOException {
+    public HashMap<String,HeroData> readHeroFromStorage() throws IOException {
 
-        Map<String,HeroData> hDataMap = new HashMap<>();
+        HashMap<String,HeroData> hDataMap = new HashMap<>();
         //Get path of Internal Storage
         File path = context.getFilesDir();
 
@@ -179,7 +179,7 @@ public class FileManager {
 
     }
 
-    public void saveHeroesToStorage( Map<String,HeroData> hData) throws IOException {
+    public void saveHeroesToStorage( HashMap<String,HeroData> hData) throws IOException {
         File path = context.getFilesDir();
         List<HeroData> hList = new ArrayList<>();
 
@@ -206,7 +206,7 @@ public class FileManager {
 
     }
 
-    public boolean isLatestHeroData(Map<String,HeroData> heroMap){
+    public boolean isLatestHeroData(HashMap<String,HeroData> heroMap){
         if(heroMap.isEmpty()){
             Log.i("INFO", "FileManager - isLatestHeroData: Hero Map is empty. Returning false");
             return false;

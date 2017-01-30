@@ -60,7 +60,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
 
             try {
                 JSONArray arr = new JSONArray(response);
-                Map<String, HeroData> heroStats = new HashMap<>();
+                HashMap<String, HeroData> heroStats = new HashMap<>();
                 for (int i = 0; i < arr.length(); i++) {
                     Log.i("BP1", arr.getJSONObject(i).getString("name"));
                     HeroData hdata = new HeroData();

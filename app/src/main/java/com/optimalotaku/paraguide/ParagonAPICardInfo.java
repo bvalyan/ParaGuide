@@ -59,7 +59,7 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void onPostExecute(String response) {
 
-        Map<String,List<CardData>> cardMap = new HashMap<>();
+        HashMap<String,List<CardData>> cardMap = new HashMap<>();
         List<CardData> cardList = new ArrayList<>();
         List<CardData> equipCardList = new ArrayList<>();
 

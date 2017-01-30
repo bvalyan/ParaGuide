@@ -3,6 +3,7 @@ package com.optimalotaku.paraguide;
 import android.graphics.Bitmap;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
 
 interface HeroInfoResponse {
 
-    void processHeroInfoFinish(Map<String,HeroData> hdata);
+    void processHeroInfoFinish(HashMap<String,HeroData> hdata);
 
 }
 
@@ -23,7 +24,7 @@ interface DeckInfoResponse{
 }
 
 interface CardInfoResponse{
-    void processCardInfoFinish(Map<String,List<CardData>> cDataMap);
+    void processCardInfoFinish(HashMap<String,List<CardData>> cDataMap);
 }
 
 interface PlayerInfoResponse{
