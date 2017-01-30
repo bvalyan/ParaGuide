@@ -27,9 +27,9 @@
         android:gravity="start"
         app:layout_marginTopPercent="55%"
         app:layout_heightPercent="50%"
-        app:layout_widthPercent="60%"
-        app:layout_marginLeftPercent="26%"
-        android:textAlignment="textStart" />
+
+
+        android:textAlignment="center" />
 
      </android.support.percent.PercentRelativeLayout>
 </LinearLayout>
