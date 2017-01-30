@@ -64,6 +64,13 @@ public class DetailDeckView extends AppCompatActivity {
                 }
             });
 
+            final Button button2 = (Button) findViewById(R.id.editbutton);
+            button2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Coming Soon!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 public void onItemClick(AdapterView<?> parent, View v,
@@ -106,7 +113,7 @@ public class DetailDeckView extends AppCompatActivity {
                         deleteInstance.execute(deckInfo.getDeckID());
                     }
                 })
-                .setNegativeButton("Not really.", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Nope.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog,int id) {
                         dialog.cancel();
