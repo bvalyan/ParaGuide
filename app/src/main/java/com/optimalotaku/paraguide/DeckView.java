@@ -18,7 +18,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Brandon on 12/15/16.
@@ -67,7 +66,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
                             //e.commit();
 
                             // spawn worker thread to do api calls t
-                            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode);
+                            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, getApplicationContext());
                             setDelegate(deckInfo);
                             deckInfo.execute();
                         }
@@ -88,7 +87,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         } else {
             // have access token, so spawn worker thread to do api calls
 
-            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode);
+            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, getApplicationContext());
             deckInfo.execute();
         }
 

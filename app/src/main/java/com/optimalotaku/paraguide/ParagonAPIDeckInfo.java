@@ -3,7 +3,9 @@ package com.optimalotaku.paraguide;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 
@@ -33,23 +35,26 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
     String accountID;
     JSONArray minDeck;
     ProgressDialog progressDialog;
+    SharedPreferences.Editor editor;
 
 
 
-    public ParagonAPIDeckInfo(String aCode) {
+    public ParagonAPIDeckInfo(String aCode, Context context) {
          /*
             This constructor takes 1 parameters:
              - Authorization code
          */
 
         this.authCode = aCode;
+        this.mcontext = context;
 
     }
 
 
+    @Override
     protected void onPreExecute(){
-
-
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.mcontext);
+        editor = prefs.edit();
 
     }
 
@@ -95,7 +100,9 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
                 token = obj.getString("token");
                 accountID = obj.getString("accountId");
                 expireTime = obj.getString("expireTime");
-
+                editor.putString("TOKEN", token);
+                editor.putString("ACCOUNT_ID", accountID);
+                editor.apply();
 
                 url2 = new URL("https://developer-paragon.epicgames.com/v1/account/" + accountID + "/decks");
                 urlConnection2 = (HttpURLConnection) url2.openConnection();
@@ -128,12 +135,19 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
 
             for(int i = 0; i < minDeck.length(); i++) {
                 String deckID = minDeck.getJSONObject(i).getString("id");
+                BufferedReader bufferedReader3 = null;
                 URL url3 = new URL("https://developer-paragon.epicgames.com/v1/account/" + accountID + "/deck/" + deckID);
                 urlConnection3 = (HttpURLConnection) url3.openConnection();
                 urlConnection3.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
                 urlConnection3.addRequestProperty(Constants.AUTH_VAR, "Bearer " + token);
-                BufferedReader bufferedReader3 = new BufferedReader(new InputStreamReader(urlConnection3.getInputStream()));
-
+                try {
+                     bufferedReader3 = new BufferedReader(new InputStreamReader(urlConnection3.getInputStream()));
+                }
+                catch (IOException e){
+                    //If deck cannot be found it is not there. Skip it.
+                    e.printStackTrace();
+                    continue;
+                }
                 String line3;
                 while ((line3 = bufferedReader3.readLine()) != null) {
                     stringBuilder3.append(line3).append("\n");
@@ -147,6 +161,7 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {

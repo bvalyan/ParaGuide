@@ -1,12 +1,15 @@
 package com.optimalotaku.paraguide;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.HapticFeedbackConstants;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -53,6 +56,14 @@ public class DetailDeckView extends AppCompatActivity {
             final Intent intent;
             intent = new Intent(this,CardDisplay.class);
             final Map<String, List<CardData>> finalCDataMap = cDataMap;
+
+            final Button button = (Button) findViewById(R.id.deletebutton);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    deckDeletion(deckInfo.getDeckID());
+                }
+            });
+
             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 public void onItemClick(AdapterView<?> parent, View v,
@@ -75,6 +86,33 @@ public class DetailDeckView extends AppCompatActivity {
         }
 
 
+    }
+
+    protected void deckDeletion(String deckID){
+        confirmDialog();
+
+    }
+
+    private void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+
+        builder
+                .setMessage("This will delete \"" +deckInfo.getDeckName() + "\"... Are you sure?")
+                .setPositiveButton("Yeah!",  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        DeckDelete deleteInstance = new DeckDelete(getApplicationContext());
+                        deleteInstance.execute(deckInfo.getDeckID());
+                    }
+                })
+                .setNegativeButton("Not really.", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,int id) {
+                        dialog.cancel();
+                    }
+                })
+                .show();
     }
 
 }
