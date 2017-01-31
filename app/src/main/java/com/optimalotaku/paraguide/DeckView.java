@@ -66,7 +66,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
                             //e.commit();
 
                             // spawn worker thread to do api calls t
-                            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, getApplicationContext());
+                            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
                             setDelegate(deckInfo);
                             deckInfo.execute();
                         }
@@ -87,7 +87,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         } else {
             // have access token, so spawn worker thread to do api calls
 
-            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, getApplicationContext());
+            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
             deckInfo.execute();
         }
 
@@ -182,6 +182,12 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         //endButton.setVisibility(View.VISIBLE);
 
 
+    }
+    @Override
+    public void onBackPressed()
+    {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }
 

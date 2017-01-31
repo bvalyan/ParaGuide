@@ -109,8 +109,8 @@ public class DetailDeckView extends AppCompatActivity {
                 .setPositiveButton("Yeah!",  new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        DeckDelete deleteInstance = new DeckDelete(getApplicationContext());
-                        deleteInstance.execute(deckInfo.getDeckID());
+                        DeckDelete deleteInstance = new DeckDelete(DetailDeckView.this);
+                        deleteInstance.execute(deckInfo.getDeckID(), deckInfo.getDeckName());
                     }
                 })
                 .setNegativeButton("Nope.", new DialogInterface.OnClickListener() {
