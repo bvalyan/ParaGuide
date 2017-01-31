@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ final class MyDeckAdapter extends BaseAdapter {
 
         Item item = getItem(i);
 
-        Glide.with(viewGroup.getContext()).load("https:" + item.drawable1).into(picture);
+        Glide.with(viewGroup.getContext()).load("https:" + item.drawable1).diskCacheStrategy(DiskCacheStrategy.ALL).into(picture);
         name.setText(item.name);
 
 

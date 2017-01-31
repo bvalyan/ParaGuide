@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 public class CustomList extends ArrayAdapter<String>{
 
@@ -36,7 +37,7 @@ public class CustomList extends ArrayAdapter<String>{
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setTextSize(20);
         txtTitle.setText("  "+web[position]);
-        Glide.with(getContext()).load(imageId[position]).into(imageView);
+        Glide.with(getContext()).load(imageId[position]).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
 
         return rowView;
     }
