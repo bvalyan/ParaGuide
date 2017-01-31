@@ -38,6 +38,7 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
             url = new URL("https://developer-paragon.epicgames.com/v1/cards/complete");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
+            urlConnection.addRequestProperty("Accept-Language", "english");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             StringBuilder stringBuilder = new StringBuilder();
             String line;
