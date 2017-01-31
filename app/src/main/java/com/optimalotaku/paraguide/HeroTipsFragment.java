@@ -48,10 +48,10 @@ public class HeroTipsFragment extends Fragment {
             Intent i = new Intent(getActivity(),SkillDisplay.class);
             Bundle pck = new Bundle();
             ParagonAPIAttrReplace replacer = new ParagonAPIAttrReplace();
-            pck.putString("skillpic", heroData.getSecondarySkillOne().getImageURL());
-            pck.putString("skillname", heroData.getSecondarySkillOne().getName());
-            String skillDesc = replacer.replaceStatWithText(heroData.getSecondarySkillOne().getDesc());
-            skillDesc = replacer.replaceModifiersWithText(heroData.getSecondarySkillOne().getModifiers(),skillDesc);
+            pck.putString("skillpic", heroData.getAlternateSkill().getImageURL());
+            pck.putString("skillname", heroData.getAlternateSkill().getName());
+            String skillDesc = replacer.replaceStatWithText(heroData.getAlternateSkill().getDesc());
+            skillDesc = replacer.replaceModifiersWithText(heroData.getAlternateSkill().getModifiers(),skillDesc);
             pck.putString("skillDesc", skillDesc);
             i.putExtras(pck);
             startActivity(i);
@@ -63,10 +63,10 @@ public class HeroTipsFragment extends Fragment {
             Intent i = new Intent(getActivity(),SkillDisplay.class);
             Bundle pck = new Bundle();
             ParagonAPIAttrReplace replacer = new ParagonAPIAttrReplace();
-            pck.putString("skillpic", heroData.getSecondarySkillTwo().getImageURL());
-            pck.putString("skillname", heroData.getSecondarySkillTwo().getName());
-            String skillDesc = replacer.replaceStatWithText(heroData.getSecondarySkillTwo().getDesc());
-            skillDesc = replacer.replaceModifiersWithText(heroData.getSecondarySkillTwo().getModifiers(),skillDesc);
+            pck.putString("skillpic", heroData.getPrimarySkill().getImageURL());
+            pck.putString("skillname", heroData.getPrimarySkill().getName());
+            String skillDesc = replacer.replaceStatWithText(heroData.getPrimarySkill().getDesc());
+            skillDesc = replacer.replaceModifiersWithText(heroData.getPrimarySkill().getModifiers(),skillDesc);
             pck.putString("skillDesc", skillDesc);
             i.putExtras(pck);
             startActivity(i);
@@ -78,10 +78,10 @@ public class HeroTipsFragment extends Fragment {
             Intent i = new Intent(getActivity(),SkillDisplay.class);
             Bundle pck = new Bundle();
             ParagonAPIAttrReplace replacer = new ParagonAPIAttrReplace();
-            pck.putString("skillpic", heroData.getSecondarySkillThree().getImageURL());
-            pck.putString("skillname", heroData.getSecondarySkillThree().getName());
-            String skillDesc = replacer.replaceStatWithText(heroData.getSecondarySkillThree().getDesc());
-            skillDesc = replacer.replaceModifiersWithText(heroData.getSecondarySkillThree().getModifiers(),skillDesc);
+            pck.putString("skillpic", heroData.getSecondarySkill().getImageURL());
+            pck.putString("skillname", heroData.getSecondarySkill().getName());
+            String skillDesc = replacer.replaceStatWithText(heroData.getSecondarySkill().getDesc());
+            skillDesc = replacer.replaceModifiersWithText(heroData.getSecondarySkill().getModifiers(),skillDesc);
             pck.putString("skillDesc", skillDesc);
             i.putExtras(pck);
             startActivity(i);
@@ -125,9 +125,9 @@ public class HeroTipsFragment extends Fragment {
         nameView.setTextSize(30);
         nameView.setText(heroData.getName());
         Glide.with(this).load(heroData.getImageIconURL()).into(heroImage);
-        Glide.with(this).load(heroData.getSecondarySkillOne().getImageURL()).into(secSkill1);
-        Glide.with(this).load(heroData.getSecondarySkillTwo().getImageURL()).into(secSkill2);
-        Glide.with(this).load(heroData.getSecondarySkillThree().getImageURL()).into(secSkill3);
+        Glide.with(this).load(heroData.getAlternateSkill().getImageURL()).into(secSkill1);
+        Glide.with(this).load(heroData.getPrimarySkill().getImageURL()).into(secSkill2);
+        Glide.with(this).load(heroData.getSecondarySkill().getImageURL()).into(secSkill3);
         Glide.with(this).load(heroData.getUltimateSkill().getImageURL()).into(ultimate);
 
         description.setTextSize(18);
