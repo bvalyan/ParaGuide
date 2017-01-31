@@ -21,10 +21,10 @@ public class HeroData implements Serializable {
     private Integer durability;
     private Integer abilityAttack;
     private String imageIconURL;
+    private HeroSkill basicSkill;
+    private HeroSkill alternateSkill;
     private HeroSkill primarySkill;
-    private HeroSkill secondarySkillOne;
-    private HeroSkill secondarySkillTwo;
-    private HeroSkill secondarySkillThree;
+    private HeroSkill secondarySkill;
     private HeroSkill ultimateSkill;
     private Boolean isEmpty;
 
@@ -145,6 +145,22 @@ public class HeroData implements Serializable {
         this.imageIconURL = imageIconURL;
     }
 
+    public HeroSkill getBasicSkill() {
+        return basicSkill;
+    }
+
+    public void setBasicSkill(HeroSkill basicSkill) {
+        this.basicSkill = basicSkill;
+    }
+
+    public HeroSkill getAlternateSkill() {
+        return alternateSkill;
+    }
+
+    public void setAlternateSkill(HeroSkill alternateSkill) {
+        this.alternateSkill = alternateSkill;
+    }
+
     public HeroSkill getPrimarySkill() {
         return primarySkill;
     }
@@ -153,28 +169,12 @@ public class HeroData implements Serializable {
         this.primarySkill = primarySkill;
     }
 
-    public HeroSkill getSecondarySkillOne() {
-        return secondarySkillOne;
+    public HeroSkill getSecondarySkill() {
+        return secondarySkill;
     }
 
-    public void setSecondarySkillOne(HeroSkill secondarySkillOne) {
-        this.secondarySkillOne = secondarySkillOne;
-    }
-
-    public HeroSkill getSecondarySkillTwo() {
-        return secondarySkillTwo;
-    }
-
-    public void setSecondarySkillTwo(HeroSkill secondarySkillTwo) {
-        this.secondarySkillTwo = secondarySkillTwo;
-    }
-
-    public HeroSkill getSecondarySkillThree() {
-        return secondarySkillThree;
-    }
-
-    public void setSecondarySkillThree(HeroSkill secondarySkillThree) {
-        this.secondarySkillThree = secondarySkillThree;
+    public void setSecondarySkill(HeroSkill secondarySkill) {
+        this.secondarySkill = secondarySkill;
     }
 
     public HeroSkill getUltimateSkill() {

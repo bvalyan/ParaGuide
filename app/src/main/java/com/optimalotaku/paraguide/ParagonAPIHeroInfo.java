@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.jar.JarEntry;
 
 /**
  * Created by Brandon on 1/16/17.
@@ -91,16 +89,40 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                         }
                     }
                     hdata.setTraits(traits);
+                    HeroSkill basic = new HeroSkill();
+                    HeroSkill alternate = new HeroSkill();
                     HeroSkill primary = new HeroSkill();
-                    HeroSkill secondary1 = new HeroSkill();
-                    HeroSkill secondary2 = new HeroSkill();
-                    HeroSkill secondary3 = new HeroSkill();
+                    HeroSkill secondary = new HeroSkill();
                     HeroSkill ultimate = new HeroSkill();
                     JSONArray jsonSkills = arr.getJSONObject(i).getJSONArray("abilities");
                     for (int k = 0; k < jsonSkills.length(); k++) {
                         String type = jsonSkills.getJSONObject(k).getString("type");
                         Integer maxLvl = jsonSkills.getJSONObject(k).getInt("maxLevel");
                         switch (type) {
+                            case "Basic":
+                                Log.i("INFO","Setting basic skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
+                                Log.i("INFO","Setting basic skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
+                                Log.i("INFO","Setting basic skill type: "+ jsonSkills.getJSONObject(k).getString("type"));
+                                Log.i("INFO","Setting basic skill icon url: "+ jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+
+                                basic.setName(jsonSkills.getJSONObject(k).getString("name"));
+                                basic.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
+                                basic.setType(jsonSkills.getJSONObject(k).getString("type"));
+                                basic.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+                                basic.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
+                                break;
+                            case "Alternate":
+                                Log.i("INFO","Setting alternate skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
+                                Log.i("INFO","Setting alternate skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
+                                Log.i("INFO","Setting alternate skill type: "+ jsonSkills.getJSONObject(k).getString("type"));
+                                Log.i("INFO","Setting alternate skill icon url: "+ jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+
+                                alternate.setName(jsonSkills.getJSONObject(k).getString("name"));
+                                alternate.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
+                                alternate.setType(jsonSkills.getJSONObject(k).getString("type"));
+                                alternate.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+                                alternate.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
+                                break;
                             case "Primary":
                                 Log.i("INFO","Setting primary skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
                                 Log.i("INFO","Setting primary skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
@@ -112,47 +134,18 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                                 primary.setType(jsonSkills.getJSONObject(k).getString("type"));
                                 primary.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
                                 primary.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
-
                                 break;
-                            case "Normal":
-                                if (secondary1.getName() == null ) {
-                                    Log.i("INFO","Setting secondary1 skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
-                                    Log.i("INFO","Setting secondary1 skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
-                                    Log.i("INFO","Setting secondary1 skill type: "+ jsonSkills.getJSONObject(k).getString("type"));
-                                    Log.i("INFO","Setting secondary1 skill icon url: "+ jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+                            case "Secondary":
+                                Log.i("INFO","Setting secondary skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
+                                Log.i("INFO","Setting secondary skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
+                                Log.i("INFO","Setting secondary skill type: "+ jsonSkills.getJSONObject(k).getString("type"));
+                                Log.i("INFO","Setting secondary skill icon url: "+ jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
 
-
-                                    secondary1.setName(jsonSkills.getJSONObject(k).getString("name"));
-                                    secondary1.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
-                                    secondary1.setType(jsonSkills.getJSONObject(k).getString("type"));
-                                    secondary1.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
-                                    secondary1.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
-
-                                } else if (secondary2.getName() == null) {
-                                    Log.i("INFO","Setting secondary2 skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
-                                    Log.i("INFO","Setting secondary2 skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
-                                    Log.i("INFO","Setting secondary2 skill type: "+ jsonSkills.getJSONObject(k).getString("type"));
-                                    Log.i("INFO","Setting secondary2 skill icon url: "+ jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
-
-                                    secondary2.setName(jsonSkills.getJSONObject(k).getString("name"));
-                                    secondary2.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
-                                    secondary2.setType(jsonSkills.getJSONObject(k).getString("type"));
-                                    secondary2.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
-                                    secondary2.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
-
-                                } else {
-                                    Log.i("INFO","Setting secondary3 skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
-                                    Log.i("INFO","Setting secondary3 skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
-                                    Log.i("INFO","Setting secondary3 skill type: "+ jsonSkills.getJSONObject(k).getString("type"));
-                                    Log.i("INFO","Setting secondary3 skill icon url: "+ jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
-
-                                    secondary3.setName(jsonSkills.getJSONObject(k).getString("name"));
-                                    secondary3.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
-                                    secondary3.setType(jsonSkills.getJSONObject(k).getString("type"));
-                                    secondary3.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
-                                    secondary3.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
-
-                                }
+                                secondary.setName(jsonSkills.getJSONObject(k).getString("name"));
+                                secondary.setDesc(jsonSkills.getJSONObject(k).getString("shortDescription"));
+                                secondary.setType(jsonSkills.getJSONObject(k).getString("type"));
+                                secondary.setImageURL("https:"+jsonSkills.getJSONObject(k).getJSONObject("images").getString("icon"));
+                                secondary.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
                                 break;
                             case "Ultimate":
                                 Log.i("INFO","Setting ultimate skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
@@ -169,10 +162,10 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                             default:
                                 Log.i("INFO", "Type: " + type + " does not exist for hero");
                         }
+                        hdata.setBasicSkill(basic);
+                        hdata.setAlternateSkill(alternate);
                         hdata.setPrimarySkill(primary);
-                        hdata.setSecondarySkillOne(secondary1);
-                        hdata.setSecondarySkillTwo(secondary2);
-                        hdata.setSecondarySkillThree(secondary3);
+                        hdata.setSecondarySkill(secondary);
                         hdata.setUltimateSkill(ultimate);
                     }
 
