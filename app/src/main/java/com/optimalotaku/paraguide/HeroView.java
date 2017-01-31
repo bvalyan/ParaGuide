@@ -25,7 +25,7 @@ import java.util.Map;
  * Created by Jerek on 12/19/2016.
  */
 
-public class HeroView extends ListActivity implements HeroInfoResponse {
+public class HeroView extends ListActivity {
 
     ListView list;
     String [] text;
@@ -40,32 +40,9 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.listtest);
         fileManager = new FileManager(this);
-        Map<String,HeroData> heroDataMap = new HashMap<>();
-
-        try {
-            heroDataMap = fileManager.readHeroFromStorage();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(!fileManager.isLatestHeroData(heroDataMap)) {
-
-            Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
-
-            ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
-            heroInfo.delegate = this;
-            heroInfo.execute();
-        }
-        else{
-            Log.i("INFO", "HeroView - onCreate(): Hero data does exist and is current. Grabbing current data from file - hero.data ");
-            processHeroFromFile(heroDataMap);
-        }
-    }
+        final HashMap<String,HeroData> hData = (HashMap<String,HeroData>) getIntent().getSerializableExtra("HeroMap");
 
 
-
-    public void processHeroFromFile(final Map<String,HeroData> hData){
         //Get List of hero names from Map
         text = hData.keySet().toArray(new String[hData.size()]);
         pics = new String[hData.keySet().toArray().length];
@@ -103,54 +80,6 @@ public class HeroView extends ListActivity implements HeroInfoResponse {
             imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
         }
 
-
-        try {
-            fileManager.saveHeroesToStorage(hData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    @Override
-    public void processHeroInfoFinish(final Map<String,HeroData> hData){
-        //Get List of hero names from Map
-        text = hData.keySet().toArray(new String[hData.size()]);
-        pics = new String[hData.keySet().toArray().length];
-
-        //Put the image URLs associated with each hero in a array
-        for (int i=0; i< text.length;i++){
-            HeroData hero = hData.get(text[i]);
-            pics[i] = (hero.getImageIconURL());
-        }
-
-
-        CustomList adapter = new
-                CustomList(this, text, pics);
-        list=(ListView)findViewById(android.R.id.list);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
-                //start new activity with method that takes in name and HeroData object and displays information
-                Intent i = new Intent(HeroView.this,HeroDisplayPrototype.class);
-                HeroData chosenHero = hData.get(text[position]);
-                i.putExtra("HeroData",chosenHero);
-                startActivity(i);
-
-            }
-        });
-
-        View view2 = this.getCurrentFocus();
-        if (view2 != null) {
-            //hide keyboard upon return
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
-        }
 
         try {
             fileManager.saveHeroesToStorage(hData);

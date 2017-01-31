@@ -46,6 +46,9 @@
         <activity android:name=".SkillDisplay"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
+        <activity android:name=".CardDisplay"
+            android:windowSoftInputMode="stateVisible|adjustPan">
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -54,6 +57,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DetailDeckView" />
     </application>
 
 </manifest>
