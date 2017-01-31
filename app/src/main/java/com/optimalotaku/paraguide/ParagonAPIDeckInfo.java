@@ -1,13 +1,13 @@
 package com.optimalotaku.paraguide;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,28 +29,50 @@ import java.util.List;
 public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
 
     private String authCode;
+    private Context mcontext;
     public DeckInfoResponse delegate = null;
+    Activity activity;
+    String accountID;
+    JSONArray minDeck;
+    ProgressDialog progressDialog;
+    SharedPreferences.Editor editor;
 
-    public ParagonAPIDeckInfo(String aCode) {
+
+
+    public ParagonAPIDeckInfo(String aCode, Context context) {
          /*
             This constructor takes 1 parameters:
              - Authorization code
          */
 
         this.authCode = aCode;
+        this.mcontext = context;
+
+    }
+
+
+    @Override
+    protected void onPreExecute(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.mcontext);
+        editor = prefs.edit();
 
     }
 
     @Override
     protected String doInBackground(Void... urls) {
 
-        String token;
-        String accountID;
+        String token = null;
+
         String expireTime;
         URL url = null;
         URL url2 = null;
         HttpURLConnection urlConnection = null;
         HttpURLConnection urlConnection2 = null;
+        HttpURLConnection urlConnection3 = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder2 = new StringBuilder();
+        StringBuilder stringBuilder3 = new StringBuilder();
+        JSONArray deckList = new JSONArray();
         try {
             url = new URL("https://developer-paragon.epicgames.com/v1/auth/token/" + authCode);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -60,8 +82,7 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
             System.out.println(urlConnection.toString());
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            StringBuilder stringBuilder = new StringBuilder();
-            StringBuilder stringBuilder2 = new StringBuilder();
+
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line).append("\n");
@@ -79,11 +100,11 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
                 token = obj.getString("token");
                 accountID = obj.getString("accountId");
                 expireTime = obj.getString("expireTime");
+                editor.putString("TOKEN", token);
+                editor.putString("ACCOUNT_ID", accountID);
+                editor.apply();
 
-
-
-
-                url2 = new URL("https://developer-paragon.epicgames.com/v1/account/"+accountID+"/decks");
+                url2 = new URL("https://developer-paragon.epicgames.com/v1/account/" + accountID + "/decks");
                 urlConnection2 = (HttpURLConnection) url2.openConnection();
                 urlConnection2.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
                 urlConnection2.addRequestProperty(Constants.AUTH_VAR, "Bearer " + token);
@@ -95,12 +116,11 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
                     stringBuilder2.append(line2).append("\n");
                 }
                 bufferedReader2.close();
+                minDeck = new JSONArray(stringBuilder2.toString());
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            return stringBuilder2.toString();
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -108,9 +128,46 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }  finally {
-            urlConnection.disconnect();
         }
+
+
+        try {
+
+            for(int i = 0; i < minDeck.length(); i++) {
+                String deckID = minDeck.getJSONObject(i).getString("id");
+                BufferedReader bufferedReader3 = null;
+                URL url3 = new URL("https://developer-paragon.epicgames.com/v1/account/" + accountID + "/deck/" + deckID);
+                urlConnection3 = (HttpURLConnection) url3.openConnection();
+                urlConnection3.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
+                urlConnection3.addRequestProperty(Constants.AUTH_VAR, "Bearer " + token);
+                try {
+                     bufferedReader3 = new BufferedReader(new InputStreamReader(urlConnection3.getInputStream()));
+                }
+                catch (IOException e){
+                    //If deck cannot be found it is not there. Skip it.
+                    e.printStackTrace();
+                    continue;
+                }
+                String line3;
+                while ((line3 = bufferedReader3.readLine()) != null) {
+                    stringBuilder3.append(line3).append("\n");
+                    JSONObject tempDeck = new JSONObject(line3);
+                    deckList.put(tempDeck);
+                }
+                bufferedReader3.close();
+            }
+
+    } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
+            urlConnection3.disconnect();
+        }
+       return deckList.toString();
     }
 
 
@@ -128,10 +185,10 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
             try {
                 //setContentView(R.layout.heroDataScreen);
 
-                deckArray = new JSONArray(response);
-                for(int i = 0; i < deckArray.length(); i++){
+                JSONArray finalDeckArray = new JSONArray(response);
+                for(int i = 0; i < finalDeckArray.length(); i++){
                     DeckData dData = new DeckData();
-                    JSONObject deck = deckArray.getJSONObject(i);
+                    JSONObject deck = finalDeckArray.getJSONObject(i);
                     if(deck.has("name")) {
                         Log.i("INFO", "ParagonAPIDeckInfo - onPostExecute - " + "Deck Name: " + deck.getString("name"));
                         Log.i("INFO", "ParagonAPIDeckInfo - onPostExecute - " + "Deck ID: " + deck.getString("id"));
@@ -141,12 +198,14 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
                         dData.setDeckID(deck.getString("id"));
                         dData.setDeckName(deck.getString("name"));
                         dData.setHeroName(deck.getJSONObject("hero").getString("name"));
-
+                        dData.setDeckContents(deck.getString("cards"));
 
                         deckList.add(dData);
                     }
 
                 }
+
+                Log.i("INFO", "HERE");
 
 
 
@@ -156,10 +215,15 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
             }
         }
 
-        delegate.processDeckInfoFinish(deckList);
+        try {
+            delegate.processDeckInfoFinish(deckList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    private String encode64() {
+    public static String encode64() {
         String combineForBytes = Constants.CLIENT_ID + ':' + Constants.CLIENT_SECRET;
         String encodedBytes = Base64.encodeToString(combineForBytes.getBytes(), Base64.NO_WRAP);
         return encodedBytes.toString().trim();

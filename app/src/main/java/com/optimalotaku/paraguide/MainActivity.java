@@ -21,11 +21,13 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MainActivity extends AppCompatActivity implements CardInfoResponse, ImageLoaderResponse {
+public class MainActivity extends AppCompatActivity implements CardInfoResponse, ImageLoaderResponse, HeroInfoResponse {
 
     CardData cotd;
     GridView gridview;
     FileManager fileManager;
+    HashMap<String,HeroData> heroDataMap;
+    HashMap<String,List<CardData>> cDataMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,10 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         setContentView(R.layout.grid_home);
         gridview = (GridView) findViewById(R.id.gridview);
         fileManager = new FileManager(this);
+        heroDataMap = new HashMap<>();
+        cDataMap = new HashMap<>();
 
+        getHeroData();
         getCardData();
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         break;
                     case 1 :
                         intent = new Intent(MainActivity.this, DeckView.class);
+                        intent.putExtra("HeroMap",heroDataMap);
                         startActivity(intent);
                         break;
                     case 2 :
@@ -60,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         break;
                     case 3 :
                         intent = new Intent(MainActivity.this, HeroView.class);
+                        intent.putExtra("HeroMap",heroDataMap);
                         startActivity(intent);
                         break;
                     case 4 :
@@ -76,9 +83,36 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         });
     }
 
+    public void getHeroData(){
+        fileManager = new FileManager(this);
+
+        try {
+            heroDataMap = fileManager.readHeroFromStorage();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if(!fileManager.isLatestHeroData(heroDataMap)) {
+
+            Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
+
+            ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
+            heroInfo.delegate = this;
+            heroInfo.execute();
+        }
+        else{
+            Log.i("INFO", "HeroView - onCreate(): Hero data does exist and is current. Grabbing current data from file - hero.data ");
+        }
+    }
+
+    @Override
+    public void processHeroInfoFinish(final HashMap<String,HeroData> hData){
+        heroDataMap = hData;
+    }
+
 
     public void getCardData(){
-        Map<String,List<CardData>> cDataMap = new HashMap<>();
         try {
             cDataMap = fileManager.readCardsFromStorage();
 
@@ -102,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
 
 
-    public void processCardInfoFromFile(Map<String,List<CardData>> cDataMap) {
+    public void processCardInfoFromFile(HashMap<String,List<CardData>> cDataMap) {
 
         /*
             Add up the Year month and day to get a number to get a number to mod with the
@@ -135,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
 
     //@Override
-    public void processCardInfoFinish(Map<String,List<CardData>> cDataMap) {
+    public void processCardInfoFinish(HashMap<String,List<CardData>> cDataMap) {
 
         /*
             Add up the Year month and day to get a number to get a number to mod with the

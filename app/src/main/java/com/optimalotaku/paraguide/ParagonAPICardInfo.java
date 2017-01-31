@@ -18,7 +18,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Brandon on 12/19/16.
@@ -59,7 +58,7 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void onPostExecute(String response) {
 
-        Map<String,List<CardData>> cardMap = new HashMap<>();
+        HashMap<String,List<CardData>> cardMap = new HashMap<>();
         List<CardData> cardList = new ArrayList<>();
         List<CardData> equipCardList = new ArrayList<>();
 
@@ -84,7 +83,7 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                     cData.setName(card.getString("name"));
                     cData.setId(card.getString("id"));
                     cData.setImageUrl("http:"+card.getJSONObject("images").getString("medium"));
-                    cData.setImageUrl2("http:"+card.getJSONObject("images").getString("large"));
+                    cData.setImageUrl2("http:"+card.getJSONObject("images").getString("large_stats"));
                     cData.setVersion(Constants.PARAGON_VERSION);
 
 
