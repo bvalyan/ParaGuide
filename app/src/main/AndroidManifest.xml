@@ -49,6 +49,9 @@
         <activity android:name=".CardDisplay"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
+        <activity android:name=".MyCardView"
+            android:windowSoftInputMode="stateVisible|adjustPan">
+        </activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">

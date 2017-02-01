@@ -12,6 +12,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import java.io.IOException;
@@ -27,7 +29,10 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
     private String authCode;
     FileManager deckManager;
     ListView list;
+    private GridView gridview;
     ProgressDialog progressDialog;
+    String [] pics2;
+    String [] cardText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,6 +177,15 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
 
 
         }
+        Button cardButton = (Button) findViewById(R.id.cardButton);
+        cardButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DeckView.this, MyCardView.class);
+                startActivity(i);
+            }
+        });
 
         //responseView.setText(deckListStr);
 
