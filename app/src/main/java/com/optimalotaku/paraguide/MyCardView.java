@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,8 +59,18 @@ public class MyCardView extends AppCompatActivity{
             final Map<String, List<CardData>> finalCDataMap = cDataMap;
 
             for (int i = 0; i < pics2.length; i++){
-                pics2[i] = myCardList.getJSONObject(i).getJSONObject("images").getString("medium_stats");
                 cardText[i] = myCardList.getJSONObject(i).getString("name");
+            }
+
+            Arrays.sort(cardText);
+            int k = 0;
+            for (k = 0; k< cardText.length; k++){
+                for (int j = 0; j < cardText.length; j++){
+                    String compareCard = cardText[k];
+                    if(myCardList.getJSONObject(j).getString("name").equals(compareCard))
+                        pics2[k] = myCardList.getJSONObject(j).getJSONObject("images").getString("medium_stats");
+                }
+
             }
 
             MyDeckAdapter deckAdapter = new MyDeckAdapter(MyCardView.this, pics2, cardText);
