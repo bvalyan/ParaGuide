@@ -240,8 +240,7 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
             int assists = Integer.parseInt(pData.getAssists());
             int towerKills = Integer.parseInt(pData.getTowerKills());
             int coreKills = Integer.parseInt(pData.getCoreKills());
-            int healingDone = Integer.parseInt(pData.getHeroHealing());
-            int selfHealing = Integer.parseInt(pData.getSelfHealing());
+
 
             addData(wins,matches);
             addData2(kills,deaths,assists);

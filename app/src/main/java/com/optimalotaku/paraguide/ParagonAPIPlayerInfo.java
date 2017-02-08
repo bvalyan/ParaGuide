@@ -97,15 +97,15 @@ public class ParagonAPIPlayerInfo extends AsyncTask<Void, Void, String> {
 
                 playerStats = new JSONObject(response);
 
-                pData.setMatches(playerStats.getString("matchesPlayed"));
-                pData.setWins(playerStats.getString("matchWins"));
-                pData.setAssists(playerStats.getString("heroAssists"));
-                pData.setDeaths(playerStats.getString("deathsToHero"));
-                pData.setHeroKills(playerStats.getString("heroKills"));
-                pData.setCoreKills(playerStats.getString("coreKills"));
-                pData.setTowerKills(playerStats.getString("towerKills"));
-                pData.setHeroHealing(playerStats.getString("heroHealing"));
-                pData.setSelfHealing(playerStats.getString("selfHealing"));
+                pData.setMatches(playerStats.getJSONObject("pvp").getString("games_played"));
+                pData.setWins(playerStats.getJSONObject("pvp").getString("games_won"));
+                pData.setAssists(playerStats.getJSONObject("pvp").getString("assists_hero"));
+                pData.setDeaths(playerStats.getJSONObject("pvp").getString("deaths_hero"));
+                pData.setHeroKills(playerStats.getJSONObject("pvp").getString("kills_hero"));
+                pData.setCoreKills(playerStats.getJSONObject("pvp").getString("kills_core"));
+                pData.setTowerKills(playerStats.getJSONObject("pvp").getString("kills_towers"));
+                pData.setGamesLeft(playerStats.getJSONObject("pvp").getString("games_left"));
+                pData.setGamesReconnected(playerStats.getJSONObject("pvp").getString("games_reconnected"));
                 pData.setPlayerName(playerName);
                 }
             catch (JSONException e) {

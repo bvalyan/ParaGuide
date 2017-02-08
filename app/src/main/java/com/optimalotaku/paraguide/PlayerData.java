@@ -14,8 +14,25 @@ public class PlayerData {
     private String assists;
     private String coreKills;
     private String towerKills;
-    private String heroHealing;
-    private String selfHealing;
+    private String gamesLeft;
+    private String gamesReconnected;
+
+
+    public String getGamesLeft() {
+        return gamesLeft;
+    }
+
+    public void setGamesLeft(String gamesLeft) {
+        this.gamesLeft = gamesLeft;
+    }
+
+    public String getGamesReconnected() {
+        return gamesReconnected;
+    }
+
+    public void setGamesReconnected(String gamesReconnected) {
+        this.gamesReconnected = gamesReconnected;
+    }
 
     public String getCoreKills() {
         return coreKills;
@@ -31,22 +48,6 @@ public class PlayerData {
 
     public void setTowerKills(String towerKills) {
         this.towerKills = towerKills;
-    }
-
-    public String getHeroHealing() {
-        return heroHealing;
-    }
-
-    public void setHeroHealing(String heroHealing) {
-        this.heroHealing = heroHealing;
-    }
-
-    public String getSelfHealing() {
-        return selfHealing;
-    }
-
-    public void setSelfHealing(String selfHealing) {
-        this.selfHealing = selfHealing;
     }
 
     public String getPlayerName() {
