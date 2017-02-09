@@ -18,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity implements CardInfoResponse, ImageLoaderResponse, HeroInfoResponse {
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
                 switch(position){
                     case 0 :
-                        intent = new Intent(MainActivity.this, PlayerView.class);
+                        intent = new Intent(MainActivity.this, AccountSearch.class);
                         startActivity(intent);
                         break;
                     case 1 :

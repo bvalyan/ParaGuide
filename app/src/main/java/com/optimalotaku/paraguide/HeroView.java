@@ -11,7 +11,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * Created by Jerek on 12/19/2016.
@@ -33,11 +44,12 @@ public class HeroView extends ListActivity {
         setContentView(R.layout.listtest);
         fileManager = new FileManager(this);
         final HashMap<String,HeroData> hData = (HashMap<String,HeroData>) getIntent().getSerializableExtra("HeroMap");
-
-
+        
         //Get List of hero names from Map
         text = hData.keySet().toArray(new String[hData.size()]);
         pics = new String[hData.keySet().toArray().length];
+
+        Arrays.sort(text);
 
         //Put the image URLs associated with each hero in a array
         for (int i=0; i< text.length;i++){

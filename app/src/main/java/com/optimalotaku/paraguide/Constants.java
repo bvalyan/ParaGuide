@@ -46,6 +46,24 @@ public class Constants {
     public static final String GRUX_ID          = "fc010be1a0bf295a347944e1e97ba583";
     public static final String SERATH_ID        = "69dc74a9182154c5edefa319f1e48720";
 
+    public static final double currentKillMax       = 8.3;
+    public static final float currentMin            =  0;
+    public static final double currentAssistMax     = 9.0;
+    public static final double currentTowerKillMax  = 1.5;
+    public static final double currentDeathMax      = 3.75;
+    public static final double crrentinhibAssistMax =  .35;
+    public static final double currentInhibKillsMax = .45;
+    public static final double currentheroDamageMax = 12500;
+    public static final double currentMinionDamageMax = 50000;
+    public static final double currentMinionKillMax = 135;
+    public static final double currentTowerAssistMax = .90;
+    public static final double currentMaxWardKills = .90;
+    public static final double currentMaxStructDamage = 3400;
+    public static final double currentMaxTimePlayed = 5000000;
+    public static final double currentMaxGamesPlayed = 2800;
+
+
+
 
 
 

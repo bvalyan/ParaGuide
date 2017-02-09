@@ -1,16 +1,14 @@
 package com.optimalotaku.paraguide;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -35,15 +33,18 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
+import java.util.concurrent.ExecutionException;
 
 /**
- * Created by bvaly on 1/8/2017.
+ * Created by bvaly on 2/8/2017.
  */
 
-public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
+public class playerGraphFragment extends Fragment {
 
     private RelativeLayout mainLayout;
     private PieChart mChart;
@@ -55,125 +56,37 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
     private String[] xData2 = {"Kills", "Deaths", "Assists"};
     private float[] yData3 = new float[4];
     private String[] labels = {"Avg. Tower Kills", "Avg. Hero Kills", " Avg. Deaths", "Avg. Assists"};
+    PlayerData pData;
+    private int page;
+    private String title;
+    int wins;
+    int matches;
+    int kills;
+    int deaths;
+    int assists;
+    int towerKills;
+    int coreKills;
+    private String playerName;
 
-    protected void onCreate(Bundle savedInstanceState) {
+
+    public static playerGraphFragment newInstance(int page, String title, PlayerData pData, String playerName) {
+        playerGraphFragment playerFrag = new playerGraphFragment();
+        Bundle args = new Bundle();
+        args.putInt("someInt", page);
+        args.putString("someTitle", title);
+        args.putSerializable("playerData", pData);
+        args.putString("playerName", playerName);
+        playerFrag.setArguments(args);
+        return playerFrag;
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.player_data_screen);
-        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
-        mChart = (PieChart) findViewById(R.id.chart);
-        mChart2 = (PieChart) findViewById(R.id.chart2);
-        mChart3 = (BarChart) findViewById(R.id.chart3);
-        // add pie chart to main layout
-        //mainLayout.addView(mChart);
-        mainLayout.setBackgroundColor(Color.parseColor("#ffffff"));
-
-        // configure pie chart
-        Description description1 = new Description();
-        Description description2 = new Description();
-        Description description3 = new Description();
-        description1.setText("Win/Loss Analysis");
-        description2.setText("Kill/Death/Assist Analysis");
-        description3.setText("");
-        mChart.setUsePercentValues(true);
-        mChart.setDescription(description1);
-        mChart2.setDescription(description2);
-        mChart3.setDescription(description3);
-
-
-
-        // enable hole and configure
-
-        mChart.setDrawHoleEnabled(true);
-        mChart.setHoleColor(Color.TRANSPARENT);
-        mChart.setHoleRadius(17);
-        mChart.setTransparentCircleRadius(20);
-        mChart2.setDrawHoleEnabled(true);
-        mChart2.setHoleColor(Color.TRANSPARENT);
-        mChart2.setHoleRadius(17);
-        mChart2.setTransparentCircleRadius(20);
-
-        // enable rotation of the chart by touch
-        mChart.setRotationAngle(0);
-        mChart.setRotationEnabled(true);
-        mChart2.setRotationAngle(0);
-        mChart2.setRotationEnabled(true);
-
-        // set a chart value selected listener
-        mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-
-        mChart2.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
-
-        LegendEntry wins = new LegendEntry();
-        LegendEntry losses = new LegendEntry();
-        wins.label = "Wins";
-        wins.formColor = ColorTemplate.LIBERTY_COLORS[0];
-        losses.label = "losses";
-        losses.formColor = ColorTemplate.LIBERTY_COLORS[1];
-        LegendEntry kills = new LegendEntry();
-        LegendEntry deaths = new LegendEntry();
-        LegendEntry assists = new LegendEntry();
-        kills.label = "Kills";
-        kills.formColor = ColorTemplate.VORDIPLOM_COLORS[0];
-        deaths.label = "Deaths";
-        deaths.formColor = ColorTemplate.VORDIPLOM_COLORS[1];
-        assists.label = "Assists";
-        assists.formColor = ColorTemplate.VORDIPLOM_COLORS[2];
-        LegendEntry[] chart2 = {kills,deaths,assists};
-        LegendEntry[] chart1 = {wins, losses};
-
-
-        Legend legend = mChart.getLegend();
-        legend.setWordWrapEnabled(true);
-        Legend legend2 = mChart2.getLegend();
-        legend2.setWordWrapEnabled(true);
-        Legend legend3 = mChart3.getLegend();
-        legend3.setEnabled(false);
-
-
-        legend.setCustom(chart1);
-        legend2.setCustom(chart2);
-
-
-
-
-
-
-
-        mChart3.setDrawBarShadow(false);
-        mChart3.setDrawValueAboveBar(true);
-        mChart3.setDrawGridBackground(false);
-        XAxis xAxis = mChart3.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setGranularity(1f); // only intervals of 1 day
-        xAxis.setLabelCount(4);
-        YAxis leftAxis = mChart3.getAxisLeft();
-        leftAxis.setDrawGridLines(false);
-
-
+        page = getArguments().getInt("someInt", 0);
+        title = getArguments().getString("someTitle");
+        playerName = getArguments().getString("playerName");
+        pData = new PlayerData();
+        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     public class LabelFormatter implements IAxisValueFormatter {
@@ -205,59 +118,6 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
     }
 
 
-    public void onSearch(View view) throws InterruptedException {
-
-        //Gather UI Objects
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar2);
-        EditText pEdit = (EditText) findViewById(R.id.playerText);
-
-        //Create PlayerData Object
-        PlayerData playerData = new PlayerData();
-
-        ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(progressBar,pEdit.getText().toString(),playerData);
-        playerInfo.delegate = this;
-        playerInfo.execute();
-    }
-
-
-
-    @Override
-    public void processPlayerInfoFinish(PlayerData pData) {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar2);
-        //TextView responseView = (TextView) findViewById(R.id.playerresponseView);
-
-
-        progressBar.setVisibility(View.GONE);
-
-        if (pData.getMatches() != null) {
-
-
-            // add data
-            int wins = Integer.parseInt(pData.getWins());
-            int matches = Integer.parseInt(pData.getMatches());
-            int kills = Integer.parseInt(pData.getHeroKills());
-            int deaths = Integer.parseInt(pData.getDeaths());
-            int assists = Integer.parseInt(pData.getAssists());
-            int towerKills = Integer.parseInt(pData.getTowerKills());
-            int coreKills = Integer.parseInt(pData.getCoreKills());
-
-
-            addData(wins,matches);
-            addData2(kills,deaths,assists);
-            addData3(towerKills, coreKills, kills, deaths, assists, matches);
-
-            View view2 = this.getCurrentFocus();
-            if (view2 != null) {
-                //hide keyboard upon return
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
-            }
-        }
-        else{
-            Toast.makeText(PlayerView.this, "Player Not Found!!!",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void addData(int wins, int matches) {
 
@@ -448,4 +308,180 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
         mChart3.invalidate();
         mChart3.animateXY(2000,2000);
     }
-}
+
+    public void DrawData(){
+        addData(wins,matches);
+        addData2(this.kills,this.deaths,this.assists);
+        addData3(towerKills, coreKills, this.kills, this.deaths, this.assists, matches);
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_playergraph, container, false);
+        mainLayout = (RelativeLayout) view.findViewById(R.id.mainLayout);
+        mChart = (PieChart) view.findViewById(R.id.chart);
+        mChart2 = (PieChart) view.findViewById(R.id.chart2);
+        mChart3 = (BarChart) view.findViewById(R.id.chart3);
+        // add pie chart to main layout
+        //mainLayout.addView(mChart);
+        mainLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+
+        // configure pie chart
+        Description description1 = new Description();
+        Description description2 = new Description();
+        Description description3 = new Description();
+        description1.setText("Win/Loss Analysis");
+        description2.setText("Kill/Death/Assist Analysis");
+        description3.setText("");
+        mChart.setUsePercentValues(true);
+        mChart.setDescription(description1);
+        mChart2.setDescription(description2);
+        mChart3.setDescription(description3);
+        final String[] playerJSONInfo = new String[1];
+
+        try {
+            //Gather UI Objects
+            ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
+            EditText pEdit = (EditText) view.findViewById(R.id.playerText);
+
+            //Create PlayerData Object
+            PlayerData playerData = new PlayerData();
+
+            ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(progressBar, playerName, playerData);
+            playerJSONInfo[0] = playerInfo.execute().get();
+            JSONObject playerStats;
+
+            try {
+
+                playerStats = new JSONObject(playerJSONInfo[0]);
+
+                pData.setMatches(playerStats.getJSONObject("pvp").getString("games_played"));
+                pData.setWins(playerStats.getJSONObject("pvp").getString("games_won"));
+                pData.setAssists(playerStats.getJSONObject("pvp").getString("assists_hero"));
+                pData.setDeaths(playerStats.getJSONObject("pvp").getString("deaths_hero"));
+                pData.setHeroKills(playerStats.getJSONObject("pvp").getString("kills_hero"));
+                pData.setCoreKills(playerStats.getJSONObject("pvp").getString("kills_core"));
+                pData.setTowerKills(playerStats.getJSONObject("pvp").getString("kills_towers"));
+                pData.setGamesLeft(playerStats.getJSONObject("pvp").getString("games_left"));
+                pData.setGamesReconnected(playerStats.getJSONObject("pvp").getString("games_reconnected"));
+                //pData.setPlayerName(playerName);
+            } catch (JSONException e) {
+
+                e.printStackTrace();
+            }
+
+            progressBar.setVisibility(View.GONE);
+
+            if (pData.getMatches() != null) {
+
+                // add data
+                wins = Integer.parseInt(pData.getWins());
+                matches = Integer.parseInt(pData.getMatches());
+                kills = Integer.parseInt(pData.getHeroKills());
+                deaths = Integer.parseInt(pData.getDeaths());
+                assists = Integer.parseInt(pData.getAssists());
+                towerKills = Integer.parseInt(pData.getTowerKills());
+                coreKills = Integer.parseInt(pData.getCoreKills());
+
+            } else {
+                // Toast.makeText(playerGraphFragment.this, "Player Not Found!!!",
+                //       Toast.LENGTH_SHORT).show();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+        // enable hole and configure
+
+        mChart.setDrawHoleEnabled(true);
+        mChart.setHoleColor(Color.TRANSPARENT);
+        mChart.setHoleRadius(17);
+        mChart.setTransparentCircleRadius(20);
+        mChart2.setDrawHoleEnabled(true);
+        mChart2.setHoleColor(Color.TRANSPARENT);
+        mChart2.setHoleRadius(17);
+        mChart2.setTransparentCircleRadius(20);
+
+        // enable rotation of the chart by touch
+        mChart.setRotationAngle(0);
+        mChart.setRotationEnabled(true);
+        mChart2.setRotationAngle(0);
+        mChart2.setRotationEnabled(true);
+
+        // set a chart value selected listener
+        mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+
+        mChart2.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
+
+        LegendEntry win = new LegendEntry();
+        LegendEntry losses = new LegendEntry();
+        win.label = "Wins";
+        win.formColor = ColorTemplate.LIBERTY_COLORS[0];
+        losses.label = "losses";
+        losses.formColor = ColorTemplate.LIBERTY_COLORS[1];
+        LegendEntry kills = new LegendEntry();
+        LegendEntry deaths = new LegendEntry();
+        LegendEntry assists = new LegendEntry();
+        kills.label = "Kills";
+        kills.formColor = ColorTemplate.VORDIPLOM_COLORS[0];
+        deaths.label = "Deaths";
+        deaths.formColor = ColorTemplate.VORDIPLOM_COLORS[1];
+        assists.label = "Assists";
+        assists.formColor = ColorTemplate.VORDIPLOM_COLORS[2];
+        LegendEntry[] chart2 = {kills, deaths, assists};
+        LegendEntry[] chart1 = {win, losses};
+
+
+        Legend legend = mChart.getLegend();
+        legend.setWordWrapEnabled(true);
+        Legend legend2 = mChart2.getLegend();
+        legend2.setWordWrapEnabled(true);
+        Legend legend3 = mChart3.getLegend();
+        legend3.setEnabled(false);
+
+
+        legend.setCustom(chart1);
+        legend2.setCustom(chart2);
+
+        mChart3.setDrawBarShadow(false);
+        mChart3.setDrawValueAboveBar(true);
+        mChart3.setDrawGridBackground(false);
+        XAxis xAxis = mChart3.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f); // only intervals of 1 day
+        xAxis.setLabelCount(4);
+        YAxis leftAxis = mChart3.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+
+        DrawData();
+
+        return view;
+        }
+    }
+
