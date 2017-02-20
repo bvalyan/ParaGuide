@@ -1,6 +1,7 @@
 package com.optimalotaku.paraguide;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -29,9 +33,25 @@ final class MyDeckAdapter extends BaseAdapter {
 
         for(int i = 0; i < cardText.length; i++){
             Item card = new Item(cardText[i], cotdBitMapImg[i]);
+
             mItems.add(card);
         }
-
+        Collections.sort(mItems, new Comparator<Item>() {
+            @Override
+            public int compare(Item o1, Item o2) {
+                int result;
+                result = o1.name.toLowerCase().compareTo(o2.name.toLowerCase());
+                if ( result < 0){
+                    return -1;
+                }
+                else if(result == 0){
+                    return 0;
+                }
+                else{
+                    return 1;
+                }
+            }
+        });
     }
 
     @Override
@@ -48,6 +68,7 @@ final class MyDeckAdapter extends BaseAdapter {
     public long getItemId(int i) {
         return 0;
     }
+
 
 
     @Override
@@ -82,5 +103,7 @@ final class MyDeckAdapter extends BaseAdapter {
             this.name = name;
             this.drawable1 = drawable;
         }
+
+
     }
 }

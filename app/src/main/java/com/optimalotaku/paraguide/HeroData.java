@@ -1,6 +1,7 @@
 package com.optimalotaku.paraguide;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * Created by Jerek on 12/14/2016.
@@ -210,5 +211,6 @@ public class HeroData implements Serializable {
 
         return fileName;
     }
+
 
 }
