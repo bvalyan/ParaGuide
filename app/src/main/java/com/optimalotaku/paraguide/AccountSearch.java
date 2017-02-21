@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -23,6 +24,7 @@ public class AccountSearch extends AppCompatActivity {
         textSearch = (EditText) findViewById(R.id.playerText);
         final String[] newString = new String[1];
         Button search = (Button) findViewById(R.id.playerqueryButton);
+        final HashMap<String,HeroData> hData = (HashMap<String,HeroData>) getIntent().getSerializableExtra("HeroMap");
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +41,7 @@ public class AccountSearch extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                 }else{
                     Intent i = new Intent(AccountSearch.this, NewPlayerDisplay.class);
+                    i.putExtra("HeroMap",hData);
                     i.putExtra("name", textSearch.getText().toString());
                     startActivity(i);
                 }

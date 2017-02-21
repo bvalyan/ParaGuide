@@ -14,7 +14,6 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -27,17 +26,17 @@ public class PlayerTrendsFragment extends Fragment {
     // Store instance variables
     private String title;
     private int page;
-    FileManager heroManager;
-    HashMap<String,HeroData> heroDataMap;
+    HashMap<String,HeroData> hDataMap;
     PlayerData pData;
 
     // newInstance constructor for creating fragment with arguments
-    public static PlayerTrendsFragment newInstance(int page, String title, PlayerData pData) {
+    public static PlayerTrendsFragment newInstance(int page, String title, PlayerData pData, HashMap<String,HeroData> hDataMap) {
         PlayerTrendsFragment trendFrag = new PlayerTrendsFragment();
         Bundle args = new Bundle();
         args.putInt("someInt", page);
         args.putString("someTitle", title);
         args.putSerializable("playerData", pData);
+        args.putSerializable("heroDataMap",hDataMap);
         trendFrag.setArguments(args);
         return trendFrag;
     }
@@ -49,6 +48,7 @@ public class PlayerTrendsFragment extends Fragment {
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
         pData = (PlayerData) getArguments().getSerializable("playerData");
+        hDataMap = (HashMap<String,HeroData>) getArguments().getSerializable("heroDataMap");
 
 
 
@@ -64,20 +64,13 @@ public class PlayerTrendsFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_trend, container, false);
-        heroManager = new FileManager(this.getContext());
-        try {
-            heroDataMap = heroManager.readHeroFromStorage();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        final String []  text = new String[heroDataMap.size()];
-        String [] pics = new String[heroDataMap.size()];
+        final String []  text = new String[hDataMap.size()];
+        String [] pics = new String[hDataMap.size()];
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         String accountID = prefs.getString("ACCOUNT_ID", "NULL");
-        int [] scores = new int[heroDataMap.size()];
-        Set<Map.Entry<String, HeroData>> entrySet = heroDataMap.entrySet();
+        int [] scores = new int[hDataMap.size()];
+        Set<Map.Entry<String, HeroData>> entrySet = hDataMap.entrySet();
         int i = 0;
         for(Map.Entry entry : entrySet){
             HeroData tempData = new HeroData();
