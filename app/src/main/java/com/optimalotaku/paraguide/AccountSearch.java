@@ -36,7 +36,7 @@ public class AccountSearch extends AppCompatActivity {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-                if(newString[0] == null){
+                if(newString[0] == null || !newString[0].contains("accountId")){
                     Toast.makeText(AccountSearch.this, "Account not found!!!!",
                             Toast.LENGTH_LONG).show();
                 }else{
