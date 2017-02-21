@@ -3,6 +3,7 @@ package com.optimalotaku.paraguide;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.hookedonplay.decoviewlib.events.DecoEvent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -54,9 +56,19 @@ public class PlayerScoreFragment extends Fragment {
 
     }
 
-    public int CalculateParaflow(PlayerData pData){
+    public int CalculateParaflow(PlayerData pData) throws IllegalAccessException {
         double accurateScore = 0;
         int score = 0;
+
+        Field[] declaredFields = pData.getClass().getDeclaredFields();
+
+        for(Field f : declaredFields){
+            f.setAccessible(true); //Additional line
+            Object v =  f.get(pData);
+            if ((v == null  && f.isSynthetic() == false) || v == ""){
+                f.set(pData, "0");
+            }
+        }
 
         double avgKills = Double.parseDouble(pData.getHeroKills())/ Double.parseDouble(pData.getMatches());
         double avgAssists = Double.parseDouble(pData.getAssists())/Double.parseDouble(pData.getMatches());
@@ -127,7 +139,7 @@ public class PlayerScoreFragment extends Fragment {
         final DecoView arcView = (DecoView)view.findViewById(R.id.dynamicArcView);
 
         try {
-            ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(progressBar, playerName, pData);
+            ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(this.getContext(), progressBar, playerName, pData);
             String[] playerJSONInfo = new String[1];
             playerJSONInfo[0] = playerInfo.execute().get();
             JSONObject rawData = new JSONObject(playerJSONInfo[0]);
@@ -218,7 +230,12 @@ public class PlayerScoreFragment extends Fragment {
                 .setDuration(2000)
                 .build());
 
-        int finalScore = CalculateParaflow(pData);
+        int finalScore = 0;
+        try {
+            finalScore = CalculateParaflow(pData);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         String grade;
         if( finalScore > 95){
             grade = "A+";
@@ -244,8 +261,12 @@ public class PlayerScoreFragment extends Fragment {
         else if(finalScore > 59 && finalScore < 66){
             grade = "D";
         }
-        else{
+        else if(finalScore < 60 && finalScore >= 1){
             grade = "F";
+            Log.i("INFO", "" + finalScore);
+        }
+        else{
+            grade = "N/A";
         }
         arcView.addEvent(new DecoEvent.Builder(finalScore).setIndex(series1Index).setDelay(4000).build());
         gradeView.setTextSize(40);

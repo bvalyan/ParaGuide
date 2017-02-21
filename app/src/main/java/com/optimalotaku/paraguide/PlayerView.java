@@ -214,7 +214,7 @@ public class PlayerView extends AppCompatActivity implements PlayerInfoResponse{
         //Create PlayerData Object
         PlayerData playerData = new PlayerData();
 
-        ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(progressBar,pEdit.getText().toString(),playerData);
+        ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(this, progressBar,pEdit.getText().toString(),playerData);
         playerInfo.delegate = this;
         playerInfo.execute();
     }

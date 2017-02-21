@@ -1,6 +1,9 @@
 package com.optimalotaku.paraguide;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ProgressBar;
 
@@ -25,18 +28,22 @@ public class ParagonAPIPlayerInfo extends AsyncTask<Void, Void, String> {
     private PlayerData pData;
     private String playerName;
     private ProgressBar pBar;
+    SharedPreferences.Editor editor;
+    Context mcontext;
 
-    public ParagonAPIPlayerInfo(ProgressBar pb, String pName, PlayerData pData){
+    public ParagonAPIPlayerInfo(Context context ,ProgressBar pb, String pName, PlayerData pData){
         /*
-            This constructor takes 3 parameters:
+            This constructor takes 4 parameters:
              - Progress bar object from the main class
              - The name entered by the user from the UI
              - A PlayerData object that the data will be loaded into
          */
+        this.mcontext = context;
         this.pBar = pb;
         this.playerName = pName;
         this.pData = pData;
     }
+
 
     @Override
     protected String doInBackground(Void... voids) {
@@ -46,6 +53,7 @@ public class ParagonAPIPlayerInfo extends AsyncTask<Void, Void, String> {
         HttpURLConnection urlConnection3 = null;
         StringBuilder stringBuilder2 = new StringBuilder();
         StringBuilder stringBuilder3 = new StringBuilder();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.mcontext);
 
         try {
             url2 = new URL("https://developer-paragon.epicgames.com/v1/accounts/find/" + playerName);
@@ -64,6 +72,9 @@ public class ParagonAPIPlayerInfo extends AsyncTask<Void, Void, String> {
 
             obj2 = new JSONObject(foundAccountID);
             foundAccountID = obj2.getString("accountId");
+            editor = prefs.edit();
+            editor.putString("ACCOUNT_ID", foundAccountID);
+            editor.apply();
             url3 = new URL("https://developer-paragon.epicgames.com/v1/account/" + foundAccountID + "/stats");
             urlConnection3 = (HttpURLConnection) url3.openConnection();
             urlConnection3.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
