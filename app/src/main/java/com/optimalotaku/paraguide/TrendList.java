@@ -79,7 +79,7 @@ public class TrendList extends ArrayAdapter<String>{
         if( heroScore[position] > 95){
             grade = "A+";
         }
-        else if(heroScore[position] < 95 && heroScore[position] > 89){
+        else if(heroScore[position] <= 95 && heroScore[position] > 89){
             grade = "A";
         }
         else if(heroScore[position] > 85 && heroScore[position] < 90){
