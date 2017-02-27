@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-support-vector-drawable-23.4.0_a04a5156b232a8839d8276a5a532cd0ad569a44d.jar" />
+    </item>
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\Groceries\runtime\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="632bf39700c28ba66c117628dab343126ef89551">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\Groceries-runtime-unspecified_f4043b5b2fa33bd34c4a3dbf146f31c9172a20f4.jar" />
+    </item>
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-recyclerview-v7-23.4.0_8abd27018a1be600a05dd976a65a9db620b9769b.jar" />
+    </item>
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-design-23.4.0_bd1630444364e5557738b39f27839c3db5f95577.jar" />
+    </item>
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\Groceries\runtime\unspecified\jars\libs\binding-generator.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="d82f3ca98719f09b65db6aeaf450ad3bafc46e81">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\binding-generator_31599347736c38c7bd02aba48ed22cca629ceeed.jar" />
+    </item>
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-support-v4-23.4.0_3e8973a4314220faf9357f092ee3ba2016a3c6ed.jar" />
+    </item>
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\widgets-release\jars\classes.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="8a73b09319cc3945912970487ced4c7724acc97d">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\intermediates-exploded-aar-widgets-release_02e15869c0e24a8462e9d86dfe09dbccced29bf9.jar" />
+    </item>
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\internal_impl-23.4.0_304e89062a1b547d18128ea2a89a33fb0ae03650.jar" />
+    </item>
+    <item
+        jar="C:\Users\Jerek\AppData\Local\Android\android-sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\support-annotations-23.4.0_62571a74846d181dacf71b73c4c4054ac615c51e.jar" />
+    </item>
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-animated-vector-drawable-23.4.0_60e893391ba3ed7266fe585a845b748b70c8dfe2.jar" />
+    </item>
+    <item
+        jar="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        revision="25.0.2"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="D:\Users\Jerek\ParaGuide\NativeScriptTest\Groceries\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-appcompat-v7-23.4.0_e8fe322f742b69582271e3d7e42cd07ed8292053.jar" />
+    </item>
+
+</items>
