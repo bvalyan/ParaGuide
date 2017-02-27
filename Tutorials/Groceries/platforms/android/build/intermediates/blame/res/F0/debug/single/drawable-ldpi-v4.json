@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\Users\\Jerek\\ParaGuide\\NativeScriptTest\\Groceries\\platforms\\android\\build\\intermediates\\res\\merged\\F0\\debug\\drawable-ldpi-v4\\ic_menu_delete.png",
+        "source": "D:\\Users\\Jerek\\ParaGuide\\NativeScriptTest\\Groceries\\platforms\\android\\src\\main\\res\\drawable-ldpi\\ic_menu_delete.png"
+    },
+    {
+        "merged": "D:\\Users\\Jerek\\ParaGuide\\NativeScriptTest\\Groceries\\platforms\\android\\build\\intermediates\\res\\merged\\F0\\debug\\drawable-ldpi-v4\\logo.png",
+        "source": "D:\\Users\\Jerek\\ParaGuide\\NativeScriptTest\\Groceries\\platforms\\android\\src\\main\\res\\drawable-ldpi\\logo.png"
+    },
+    {
+        "merged": "D:\\Users\\Jerek\\ParaGuide\\NativeScriptTest\\Groceries\\platforms\\android\\build\\intermediates\\res\\merged\\F0\\debug\\drawable-ldpi-v4\\icon.png",
+        "source": "D:\\Users\\Jerek\\ParaGuide\\NativeScriptTest\\Groceries\\platforms\\android\\src\\main\\res\\drawable-ldpi\\icon.png"
+    }
+]
