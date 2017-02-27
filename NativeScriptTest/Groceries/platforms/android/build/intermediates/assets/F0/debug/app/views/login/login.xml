@@ -1,7 +1,0 @@
-<Page>
-    <TextField hint="Email Address" keyboardType="email" autocorrect="false" autocapitalizationType="none" />
-    <TextField hint="Password" secure="true" />
-
-    <Button text="Sign in" />
-    <Button text="Sign up for Groceries" />
-</Page>
