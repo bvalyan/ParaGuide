@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +48,17 @@ public class DetailDeckView extends AppCompatActivity {
             cDataMap = cardmanager.readCardsFromStorage();
 
             for (int i = 0; i < pics.length; i++){
-                pics[i] = cardCollection.getJSONObject(i).getJSONObject("images").getString("medium_stats");
                 cardText[i] = cardCollection.getJSONObject(i).getString("name");
+            }
+            Arrays.sort(cardText);
+            int k = 0;
+            for (k = 0; k< cardText.length; k++){
+                for (int j = 0; j < cardText.length; j++){
+                    String compareCard = cardText[k];
+                    if(cardCollection.getJSONObject(j).getString("name").equals(compareCard))
+                        pics[k] = cardCollection.getJSONObject(j).getJSONObject("images").getString("medium_stats");
+                }
+
             }
 
             MyDeckAdapter deckAdapter = new MyDeckAdapter(this, pics, cardText);
@@ -109,8 +119,8 @@ public class DetailDeckView extends AppCompatActivity {
                 .setPositiveButton("Yeah!",  new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        DeckDelete deleteInstance = new DeckDelete(getApplicationContext());
-                        deleteInstance.execute(deckInfo.getDeckID());
+                        DeckDelete deleteInstance = new DeckDelete(DetailDeckView.this);
+                        deleteInstance.execute(deckInfo.getDeckID(), deckInfo.getDeckName());
                     }
                 })
                 .setNegativeButton("Nope.", new DialogInterface.OnClickListener() {

@@ -4,22 +4,25 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * Created by Jerek on 12/19/2016.
@@ -41,11 +44,12 @@ public class HeroView extends ListActivity {
         setContentView(R.layout.listtest);
         fileManager = new FileManager(this);
         final HashMap<String,HeroData> hData = (HashMap<String,HeroData>) getIntent().getSerializableExtra("HeroMap");
-
-
+        
         //Get List of hero names from Map
         text = hData.keySet().toArray(new String[hData.size()]);
         pics = new String[hData.keySet().toArray().length];
+
+        Arrays.sort(text);
 
         //Put the image URLs associated with each hero in a array
         for (int i=0; i< text.length;i++){
@@ -63,7 +67,7 @@ public class HeroView extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
                 //start new activity with method that takes in name and HeroData object and displays information
                 Intent i = new Intent(HeroView.this,HeroDisplayPrototype.class);
                 HeroData chosenHero = hData.get(text[position]);

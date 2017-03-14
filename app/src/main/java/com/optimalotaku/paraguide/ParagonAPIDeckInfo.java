@@ -56,6 +56,10 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.mcontext);
         editor = prefs.edit();
 
+        progressDialog = new ProgressDialog(this.mcontext);
+        progressDialog.setMessage("Loading your decks.... One sec!");
+        progressDialog.show();
+
     }
 
     @Override
@@ -139,6 +143,7 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
                 URL url3 = new URL("https://developer-paragon.epicgames.com/v1/account/" + accountID + "/deck/" + deckID);
                 urlConnection3 = (HttpURLConnection) url3.openConnection();
                 urlConnection3.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
+                urlConnection3.addRequestProperty("Accept-Language", "english");
                 urlConnection3.addRequestProperty(Constants.AUTH_VAR, "Bearer " + token);
                 try {
                      bufferedReader3 = new BufferedReader(new InputStreamReader(urlConnection3.getInputStream()));
@@ -214,6 +219,7 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
                 e.printStackTrace();
             }
         }
+        progressDialog.dismiss();
 
         try {
             delegate.processDeckInfoFinish(deckList);

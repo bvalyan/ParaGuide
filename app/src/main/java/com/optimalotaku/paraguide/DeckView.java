@@ -12,8 +12,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,7 +29,10 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
     private String authCode;
     FileManager deckManager;
     ListView list;
+    private GridView gridview;
     ProgressDialog progressDialog;
+    String [] pics2;
+    String [] cardText;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +70,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
                             //e.commit();
 
                             // spawn worker thread to do api calls t
-                            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, getApplicationContext());
+                            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
                             setDelegate(deckInfo);
                             deckInfo.execute();
                         }
@@ -87,7 +91,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         } else {
             // have access token, so spawn worker thread to do api calls
 
-            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, getApplicationContext());
+            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
             deckInfo.execute();
         }
 
@@ -153,7 +157,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
                 //start new activity with method that takes in name and HeroData object and displays information
                 Intent i = new Intent(DeckView.this,DetailDeckView.class);
                 DeckData chosenDeck = dDataList.get(position);
@@ -173,6 +177,15 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
 
 
         }
+        Button cardButton = (Button) findViewById(R.id.cardButton);
+        cardButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(DeckView.this, MyCardView.class);
+                startActivity(i);
+            }
+        });
 
         //responseView.setText(deckListStr);
 
@@ -182,6 +195,12 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         //endButton.setVisibility(View.VISIBLE);
 
 
+    }
+    @Override
+    public void onBackPressed()
+    {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }
 
