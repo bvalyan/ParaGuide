@@ -32,6 +32,7 @@ public class PlayerData implements Serializable {
     private String surrenders;
 
 
+
     public String getHeroDamage() {
         return heroDamage;
     }

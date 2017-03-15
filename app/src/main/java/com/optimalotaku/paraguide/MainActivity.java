@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 switch(position){
                     case 0 :
                         intent = new Intent(MainActivity.this, AccountSearch.class);
+                        intent.putExtra("HeroMap",heroDataMap);
                         startActivity(intent);
                         break;
                     case 1 :

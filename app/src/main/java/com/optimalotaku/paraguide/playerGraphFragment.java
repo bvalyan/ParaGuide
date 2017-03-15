@@ -1,7 +1,9 @@
 package com.optimalotaku.paraguide;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -347,9 +349,11 @@ public class playerGraphFragment extends Fragment {
             //Create PlayerData Object
             PlayerData playerData = new PlayerData();
 
-            ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(progressBar, playerName, playerData);
+            ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(this.getContext(), progressBar, playerName, playerData);
             playerJSONInfo[0] = playerInfo.execute().get();
             JSONObject playerStats;
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+
 
             try {
 

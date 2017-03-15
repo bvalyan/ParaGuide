@@ -1,7 +1,6 @@
 package com.optimalotaku.paraguide;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
 /**
  * Created by Jerek on 12/14/2016.
@@ -10,7 +9,7 @@ import java.util.Comparator;
 public class HeroData implements Serializable {
 
     private Double version;
-    private String name;
+    public String name;
     private String attackType;
     private String traits;
     private String scale;
@@ -28,6 +27,7 @@ public class HeroData implements Serializable {
     private HeroSkill secondarySkill;
     private HeroSkill ultimateSkill;
     private Boolean isEmpty;
+    private String id;
 
     public String getId() {
         return id;
@@ -36,8 +36,6 @@ public class HeroData implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
-
-    private String id;
 
     public int getCount() {
         return count;

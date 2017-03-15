@@ -23,44 +23,57 @@
 
 
         <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".DeckView"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".HeroView"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".PlayerView"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".CardOfTheDayView"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".newsView"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".HeroDisplayPrototype"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".SkillDisplay"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".CardDisplay"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".MyCardView"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".NewPlayerDisplay"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".AccountSearch"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
 
         <activity
             android:name=".SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
