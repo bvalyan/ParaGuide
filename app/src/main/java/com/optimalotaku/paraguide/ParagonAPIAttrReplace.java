@@ -21,7 +21,7 @@ import java.util.Set;
 public class ParagonAPIAttrReplace {
 
     private String[] attrSymbList = {"{attr:mp}","{attr:hp}","{attr:lfstl}","{attr:mpreg}","{attr:hpreg}","{attr:physdmg}","{attr:dmgbns}","{attr:enar}"
-                                   ,"{attr:spd}","{attr:endmg}","{attr:shld}","{attr:physar}","{attr:atkspd}","{attr:cdr}","{attr:dmg}","{attr:crtch}"};
+                                   ,"{attr:spd}","{attr:endmg}","{attr:shld}","{attr:physar}","{attr:atkspd}","{attr:cdr}","{attr:dmg}","{attr:critch}"};
 
     private String[] attrTextList = {"MP","HP","LifeSteal","MP Regen","HP Regen","Power","Damage Bonus","Ability Armor"
                                    ,"Max Movement Speed","Power","Shield","Basic Armor","Attack Speed","Cooldown Reduction","Power","Critical Chance"};
@@ -32,7 +32,7 @@ public class ParagonAPIAttrReplace {
 
     private List<String> replaceList = Arrays.asList("{attr:mp}","{attr:hp}","{attr:lfstl}","{attr:mpreg}","{attr:hpreg}","{attr:physdmg}"
                                                     ,"{attr:dmgbns}","{attr:enar}","{attr:spd}","{attr:endmg}","{attr:shld}","{attr:physar}"
-                                                    ,"{attr:atkspd}","{attr:cdr}","{attr:dmg}","{attr:crtch}");
+                                                    ,"{attr:atkspd}","{attr:cdr}","{attr:dmg}","{attr:critch}");
 
 
     public ParagonAPIAttrReplace(){
@@ -136,7 +136,7 @@ public class ParagonAPIAttrReplace {
             case "{attr:dmg}":
                 icon = activity.getResources().getDrawable(R.drawable.icon_power,null);
                 return icon;
-            case "{attr:crtch}":
+            case "{attr:critch}":
                 icon = activity.getResources().getDrawable(R.drawable.icon_critical_strike_chance_128x_to_16x16,null);
                 return icon;
             default:
