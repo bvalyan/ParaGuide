@@ -14,8 +14,20 @@ public class Constants {
     public static final String REDIRECT_URI     = "https://optimalotaku.com/paraguide/";
     public static final String AUTHORIZE_PATH   = "https://developer-paragon.epicgames.com/v1/auth/login/";
 
+    //Chat Constants
+
+    public static final String PUBNUB_PUBLISH_KEY = "pub-c-0aa1963e-343a-4835-bbef-9ae72a9bbcb2";     // Replace with your publish key
+    public static final String PUBNUB_SUBSCRIBE_KEY = "sub-c-0c599104-1e2b-11e7-bd07-02ee2ddab7fe";   // Replace with your subscribe key
+
+    public static final String CHANNEL_NAME = "Paragon Academy";     // replace with more meaningful channel name
+    public static final String MULTI_CHANNEL_NAMES = "";    // ditto
+    public static final String CHAT_PASS = "dekkerisbae";
+
+    public static final String DATASTREAM_PREFS = "com.pubnub.example.android.datastream.pubnubdatastreams.DATASTREAM_PREFS";
+    public static final String DATASTREAM_UUID = "com.pubnub.example.android.datastream.pubnubdatastreams.DATASTREAM_UUID";
+
     //Paragon Version
-    public static final Double PARAGON_VERSION  = 39.0;
+    public static final Double PARAGON_VERSION  = 39.3;
 
 
 

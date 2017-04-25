@@ -70,6 +70,14 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
+        <activity android:name=".PAChatActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan">
+        </activity>
+        <activity android:name=".PALoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan">
+        </activity>
 
         <activity
             android:name=".SplashActivity"
