@@ -26,7 +26,7 @@ final class MyAdapter extends BaseAdapter {
 
         mItems.add(new Item("PARAFLOW Analysis", R.drawable.playerlookup));
         mItems.add(new Item("My Deck List",   R.drawable.decklookup));
-        mItems.add(new Item("P.A. Chat", R.drawable.competitivepic));
+        mItems.add(new Item("Agora Corps.", R.drawable.competitivepic));
         mItems.add(new Item("Hero Data",      R.drawable.heropic));
         mItems.add(new Item("Card of the Day", R.drawable.cotdpic));
         mItems.add(new Item("News & Information", R.drawable.newspic));
