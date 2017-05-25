@@ -31,7 +31,7 @@ public class NewPlayerDisplay extends AppCompatActivity {
         Intent i = this.getIntent();
         playerName = i.getStringExtra("name");
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        pData = (PlayerData) getIntent().getSerializableExtra("PlayerData");
+        //pData = (PlayerData) getIntent().getSerializableExtra("PlayerData");
         hDataMap = (HashMap<String,HeroData>) getIntent().getSerializableExtra("HeroMap");
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs2);
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager2);

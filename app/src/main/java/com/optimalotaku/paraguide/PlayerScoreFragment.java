@@ -52,8 +52,6 @@ public class PlayerScoreFragment extends Fragment {
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
         playerName = getArguments().getString("playerName");
-
-
     }
 
     public int CalculateParaflow(PlayerData pData) throws IllegalAccessException {
@@ -208,6 +206,7 @@ public class PlayerScoreFragment extends Fragment {
         nameView.setTextSize(60);
 
         seriesItem1.addArcSeriesItemListener(new SeriesItem.SeriesItemListener() {
+            // add listener for text inside of DecoView
             @Override
             public void onSeriesItemAnimationProgress(float percentComplete, float currentPosition) {
                 if (format.contains("%%")) {

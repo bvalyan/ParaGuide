@@ -28,7 +28,7 @@ public class AccountSearch extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                APIPlayerCheck check = new APIPlayerCheck();
+                APIPlayerCheck check = new APIPlayerCheck(); // call APIPlayerCheck to verify account exists
                 try {
                      newString[0] = check.execute(textSearch.getText().toString()).get();
                 } catch (InterruptedException e) {
@@ -40,7 +40,7 @@ public class AccountSearch extends AppCompatActivity {
                     Toast.makeText(AccountSearch.this, "Account not found!!!!",
                             Toast.LENGTH_LONG).show();
                 }else{
-                    Intent i = new Intent(AccountSearch.this, NewPlayerDisplay.class);
+                    Intent i = new Intent(AccountSearch.this, NewPlayerDisplay.class); //Account checks out. Load saved hero data and store name to intent for stat processing
                     i.putExtra("HeroMap",hData);
                     i.putExtra("name", textSearch.getText().toString());
                     startActivity(i);
