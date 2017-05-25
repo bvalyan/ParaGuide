@@ -131,11 +131,6 @@ public class playerGraphFragment extends Fragment {
         for (int i = 0; i < yData.length; i++)
             yVals1.add(new PieEntry(yData[i], i));
 
-        ArrayList<String> xVals = new ArrayList<String>();
-
-        for (int i = 0; i < xData.length; i++)
-            xVals.add(xData[i]);
-
         // create pie data set
         PieDataSet dataSet = new PieDataSet(yVals1, "Match Distribution");
         dataSet.setSliceSpace(1);
