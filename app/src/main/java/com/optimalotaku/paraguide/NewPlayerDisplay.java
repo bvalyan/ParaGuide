@@ -16,6 +16,8 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.HashMap;
+
 /**
  * Created by bvaly on 2/8/2017.
  */
@@ -23,6 +25,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 public class NewPlayerDisplay extends AppCompatActivity {
 
     private PlayerData pData;
+    private HashMap<String,HeroData> hDataMap;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -39,6 +42,7 @@ public class NewPlayerDisplay extends AppCompatActivity {
         playerName = i.getStringExtra("name");
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         pData = (PlayerData) getIntent().getSerializableExtra("PlayerData");
+        hDataMap = (HashMap<String,HeroData>) getIntent().getSerializableExtra("HeroMap");
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs2);
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager2);
         FragmentPagerAdapter adapterViewPager;
@@ -132,7 +136,7 @@ public class NewPlayerDisplay extends AppCompatActivity {
                 case 1: // Fragment # 0 - This will show FirstFragment different title
                     return PlayerScoreFragment.newInstance(1, "Player Score", pData, playerName);
                 case 2: // Fragment # 1 - This will show SecondFragment
-                    return PlayerTrendsFragment.newInstance(2, "Player Trends", pData);
+                    return PlayerTrendsFragment.newInstance(2, "Player Trends", pData,hDataMap);
                 default:
                     return null;
             }
