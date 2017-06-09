@@ -31,7 +31,7 @@ public class APIPlayerCheck extends AsyncTask<String, Void, String>{
             while ((line2 = bufferedReader2.readLine()) != null) {
                 stringBuilder2.append(line2);
             }
-            bufferedReader2.close();
+            bufferedReader2.close(); //search for player data
             String foundAccountID = stringBuilder2.toString();
 
             return foundAccountID;
