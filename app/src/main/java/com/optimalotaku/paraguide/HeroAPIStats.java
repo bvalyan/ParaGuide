@@ -24,9 +24,7 @@ public class HeroAPIStats extends AsyncTask<String, Void, String> {
     }
 
     protected void onPreExecute(){
-        progressDialog = new ProgressDialog(mcontext);
-        progressDialog.setMessage("Calculating Hero Proficiency.... One sec!");
-        progressDialog.show();
+
     }
     @Override
     protected String doInBackground(String... Strings) {
@@ -53,7 +51,6 @@ public class HeroAPIStats extends AsyncTask<String, Void, String> {
                 stringBuilder3.append(line3).append("\n");
             }
             bufferedReader3.close();
-            progressDialog.dismiss();
         } catch (MalformedURLException e1) {
             e1.printStackTrace();
         } catch (IOException e1) {

@@ -87,6 +87,9 @@ public class PlayerTrendsFragment extends Fragment {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
+            } catch(NullPointerException e){
+                scores[i] = 0; //catch exception for empty stats
+                e.printStackTrace();
             }
             i++;
         }
