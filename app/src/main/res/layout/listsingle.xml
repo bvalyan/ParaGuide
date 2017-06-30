@@ -42,8 +42,9 @@
 
                     <TextView
                         android:id="@+id/titleTextView"
-                        android:layout_width="160dp"
+                        android:layout_width="240dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="0dp"
                         android:padding="16dp"
                         android:textSize="@dimen/text_size"
                         android:textColor="#FFFFFF"
@@ -55,11 +56,11 @@
                     <ImageView
                         android:id="@+id/affinity1ImageView"
                         android:layout_width="@dimen/icon_width"
-                        android:layout_height="@dimen/icon_height"
+                        android:layout_height="60dip"
                         android:layout_marginLeft="29dp"
                         android:padding="@dimen/icon_padding"
                         android:gravity="center_horizontal"
-                        android:layout_weight=".9"
+                        android:layout_weight=".5"
                         />
 
                     <ImageView
@@ -68,7 +69,7 @@
                         android:layout_height="@dimen/icon_height"
                         android:padding="@dimen/icon_padding"
                         android:gravity="center_horizontal"
-                        android:layout_weight=".9"
+                        android:layout_weight=".5"
                         />
 
 
@@ -90,6 +91,8 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/icon_height"
                 android:layout_weight="1"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
                 android:padding="@dimen/icon_padding"
                 />
             <ImageView
@@ -97,13 +100,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="@dimen/icon_height"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
                 android:padding="@dimen/icon_padding"
                 />
             <ImageView
                 android:id="@+id/skill3View"
                 android:layout_width="0dp"
+                android:layout_gravity="center"
                 android:layout_height="@dimen/icon_height"
                 android:layout_weight="1"
+                android:layout_marginBottom="5dp"
                 android:padding="@dimen/icon_padding"
                 />
             <ImageView
@@ -111,6 +118,8 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/icon_height"
                 android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
                 android:padding="@dimen/icon_padding"
                 />
         </LinearLayout>

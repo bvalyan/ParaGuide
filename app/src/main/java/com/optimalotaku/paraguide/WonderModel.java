@@ -13,6 +13,81 @@ public class WonderModel {
     int affinity2;
     String skill1pic;
     String skill2pic;
+    String skill3pic;
+    String skill4pic;
+    String skill1desc;
+    String skill2desc;
+    String skill3desc;
+    String skill4desc;
+    String skill1name;
+    String skill2name;
+    String skill3name;
+    String skill4name;
+
+
+    public String getSkill4name() {
+        return skill4name;
+    }
+
+    public void setSkill4name(String skill4name) {
+        this.skill4name = skill4name;
+    }
+
+    public String getSkill1name() {
+        return skill1name;
+    }
+
+    public void setSkill1name(String skill1name) {
+        this.skill1name = skill1name;
+    }
+
+    public String getSkill2name() {
+        return skill2name;
+    }
+
+    public void setSkill2name(String skill2name) {
+        this.skill2name = skill2name;
+    }
+
+    public String getSkill3name() {
+        return skill3name;
+    }
+
+    public void setSkill3name(String skill3name) {
+        this.skill3name = skill3name;
+    }
+
+    public String getSkill1desc() {
+        return skill1desc;
+    }
+
+    public void setSkill1desc(String skill1desc) {
+        this.skill1desc = skill1desc;
+    }
+
+    public String getSkill2desc() {
+        return skill2desc;
+    }
+
+    public void setSkill2desc(String skill2desc) {
+        this.skill2desc = skill2desc;
+    }
+
+    public String getSkill3desc() {
+        return skill3desc;
+    }
+
+    public void setSkill3desc(String skill3desc) {
+        this.skill3desc = skill3desc;
+    }
+
+    public String getSkill4desc() {
+        return skill4desc;
+    }
+
+    public void setSkill4desc(String skill4desc) {
+        this.skill4desc = skill4desc;
+    }
 
     public int getAffinity1() {
         return affinity1;
@@ -61,9 +136,6 @@ public class WonderModel {
     public void setSkill4pic(String skill4pic) {
         this.skill4pic = skill4pic;
     }
-
-    String skill3pic;
-    String skill4pic;
 
     public int getIsturned() {
         return isturned;

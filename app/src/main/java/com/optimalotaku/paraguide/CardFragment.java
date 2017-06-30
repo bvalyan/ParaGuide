@@ -85,7 +85,7 @@ public class CardFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(final MyViewHolder holder, int position) {
+        public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
             holder.titleTextView.setText(list.get(position).getCardName());
             Glide.with(getActivity()).load(list.get(position).getImageURL()).into(holder.coverImageView);
@@ -95,6 +95,59 @@ public class CardFragment extends Fragment {
             Glide.with(getActivity()).load(list.get(position).getSkill2pic()).into(holder.skill2view);
             Glide.with(getActivity()).load(list.get(position).getSkill3pic()).into(holder.skill3view);
             Glide.with(getActivity()).load(list.get(position).getSkill4pic()).into(holder.skill4view);
+
+            holder.skill1view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(),SkillDisplay.class);
+                    Bundle pck = new Bundle();
+                    pck.putString("skillpic", list.get(position).getSkill1pic());
+                    pck.putString("skillname", list.get(position).getSkill1name());
+                    pck.putString("skillDesc", list.get(position).getSkill1desc());
+                    i.putExtras(pck);
+                    startActivity(i);
+                }
+            });
+
+            holder.skill2view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(),SkillDisplay.class);
+                    Bundle pck = new Bundle();
+                    pck.putString("skillpic", list.get(position).getSkill2pic());
+                    pck.putString("skillname", list.get(position).getSkill2name());
+                    pck.putString("skillDesc", list.get(position).getSkill2desc());
+                    i.putExtras(pck);
+                    startActivity(i);
+                }
+            });
+
+            holder.skill3view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(),SkillDisplay.class);
+                    Bundle pck = new Bundle();
+                    pck.putString("skillpic", list.get(position).getSkill3pic());
+                    pck.putString("skillname", list.get(position).getSkill3name());
+                    pck.putString("skillDesc", list.get(position).getSkill3desc());
+                    i.putExtras(pck);
+                    startActivity(i);
+                }
+            });
+
+            holder.skill4view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(),SkillDisplay.class);
+                    Bundle pck = new Bundle();
+                    pck.putString("skillpic", list.get(position).getSkill4pic());
+                    pck.putString("skillname", list.get(position).getSkill4name());
+                    pck.putString("skillDesc", list.get(position).getSkill4desc());
+                    i.putExtras(pck);
+                    startActivity(i);
+                }
+            });
+
 
         }
 
@@ -178,9 +231,12 @@ public class CardFragment extends Fragment {
             });
 
 
+            };
+
+
 
         }
-    }
+
 
     public void initializeList() {
         listitems.clear();
@@ -188,14 +244,33 @@ public class CardFragment extends Fragment {
         Iterator it = map.entrySet().iterator();
         while (it.hasNext()) {
             WonderModel item = new WonderModel();
+            ParagonAPIAttrReplace replacer = new ParagonAPIAttrReplace();
             Map.Entry pair = (Map.Entry)it.next();
             item.setCardName(pair.getKey().toString());
             HeroData singledata = (HeroData) pair.getValue();
             item.setSkill1pic(singledata.getPrimarySkill().getImageURL());
+            item.setSkill1name(singledata.getPrimarySkill().getName());
+            String skillDesc = replacer.replaceStatWithText(singledata.getPrimarySkill().getDesc());
+            skillDesc = replacer.replaceModifiersWithText(singledata.getPrimarySkill().getModifiers(),skillDesc);
+            item.setSkill1desc(skillDesc);
             item.setSkill2pic(singledata.getSecondarySkill().getImageURL());
+            item.setSkill2name(singledata.getSecondarySkill().getName());
+            skillDesc = replacer.replaceStatWithText(singledata.getSecondarySkill().getDesc());
+            skillDesc = replacer.replaceModifiersWithText(singledata.getSecondarySkill().getModifiers(),skillDesc);
+            item.setSkill2desc(skillDesc);
             item.setSkill3pic(singledata.getAlternateSkill().getImageURL());
+            item.setSkill3name(singledata.getAlternateSkill().getName());
+            skillDesc = replacer.replaceStatWithText(singledata.getAlternateSkill().getDesc());
+            skillDesc = replacer.replaceModifiersWithText(singledata.getAlternateSkill().getModifiers(),skillDesc);
+            item.setSkill3desc(skillDesc);
             item.setSkill4pic(singledata.getUltimateSkill().getImageURL());
+            item.setSkill4name(singledata.getUltimateSkill().getName());
+            skillDesc = replacer.replaceStatWithText(singledata.getUltimateSkill().getDesc());
+            skillDesc = replacer.replaceModifiersWithText(singledata.getUltimateSkill().getModifiers(),skillDesc);
+            item.setSkill4desc(skillDesc);
+
             item.setImageURL(singledata.getImageIconURL());
+
             String affinity1 = singledata.getAffinity1();
             String affinity2 = singledata.getAffinity2();
             switch (affinity1.toLowerCase()){

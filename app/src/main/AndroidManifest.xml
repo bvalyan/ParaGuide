@@ -52,6 +52,7 @@
         </activity>
         <activity android:name=".SkillDisplay"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Dialog"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".CardDisplay"
