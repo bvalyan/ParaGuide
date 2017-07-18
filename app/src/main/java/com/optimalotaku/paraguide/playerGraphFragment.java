@@ -1,9 +1,7 @@
 package com.optimalotaku.paraguide;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,11 +128,6 @@ public class playerGraphFragment extends Fragment {
 
         for (int i = 0; i < yData.length; i++)
             yVals1.add(new PieEntry(yData[i], i));
-
-        ArrayList<String> xVals = new ArrayList<String>();
-
-        for (int i = 0; i < xData.length; i++)
-            xVals.add(xData[i]);
 
         // create pie data set
         PieDataSet dataSet = new PieDataSet(yVals1, "Match Distribution");
@@ -349,10 +342,11 @@ public class playerGraphFragment extends Fragment {
             //Create PlayerData Object
             PlayerData playerData = new PlayerData();
 
+            //make call to player info, get response to chart
             ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(this.getContext(), progressBar, playerName, playerData);
             playerJSONInfo[0] = playerInfo.execute().get();
             JSONObject playerStats;
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+            //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
 
 
             try {
@@ -378,7 +372,7 @@ public class playerGraphFragment extends Fragment {
 
             if (pData.getMatches() != null) {
 
-                // add data
+                // add data to local variables
                 wins = Integer.parseInt(pData.getWins());
                 matches = Integer.parseInt(pData.getMatches());
                 kills = Integer.parseInt(pData.getHeroKills());

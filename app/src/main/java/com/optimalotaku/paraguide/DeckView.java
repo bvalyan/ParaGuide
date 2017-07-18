@@ -69,7 +69,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
                             //e.putString(SHPREF_KEY_ACCESS_TOKEN, accessToken);
                             //e.commit();
 
-                            // spawn worker thread to do api calls t
+                            // spawn worker thread to do api calls
                             ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
                             setDelegate(deckInfo);
                             deckInfo.execute();

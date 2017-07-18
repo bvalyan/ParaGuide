@@ -148,6 +148,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                                 secondary.setModifiers(gatherSkillModifiers(jsonSkills.getJSONObject(k).getJSONArray("modifiersByLevel")));
                                 break;
                             case "Ultimate":
+                            case "UNKNOWN": //Added extra case because of Wukong
                                 Log.i("INFO","Setting ultimate skill name: "+ jsonSkills.getJSONObject(k).getString("name"));
                                 Log.i("INFO","Setting ultimate skill desc: "+ jsonSkills.getJSONObject(k).getString("shortDescription"));
                                 Log.i("INFO","Setting ultimate skill type: "+ jsonSkills.getJSONObject(k).getString("type"));
