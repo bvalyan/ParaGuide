@@ -27,8 +27,7 @@ public class Constants {
     public static final String DATASTREAM_UUID = "com.pubnub.example.android.datastream.pubnubdatastreams.DATASTREAM_UUID";
 
     //Paragon Version
-    public static final Double PARAGON_VERSION  = 40.31; // Actual version 40.3, updated for Wukong patch
-
+    public static final Double PARAGON_VERSION  = 41.0;
 
 
     public static final double currentKillMax       = 8.3;
