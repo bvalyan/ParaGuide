@@ -6,6 +6,8 @@ package com.optimalotaku.paraguide;
         import android.os.Bundle;
         import android.support.annotation.Nullable;
         import android.support.v4.app.Fragment;
+        import android.support.v4.app.FragmentManager;
+        import android.support.v4.view.ViewCompat;
         import android.support.v7.widget.LinearLayoutManager;
         import android.support.v7.widget.RecyclerView;
         import android.support.v7.widget.Toolbar;
@@ -95,6 +97,26 @@ public class CardFragment extends Fragment {
             Glide.with(getActivity()).load(list.get(position).getSkill2pic()).into(holder.skill2view);
             Glide.with(getActivity()).load(list.get(position).getSkill3pic()).into(holder.skill3view);
             Glide.with(getActivity()).load(list.get(position).getSkill4pic()).into(holder.skill4view);
+
+            holder.coverImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    newHeroFragment nextFrag= new newHeroFragment();
+                    Bundle bundle = new Bundle();
+
+                    bundle.putInt("difficulty", list.get(position).getDifficulty());
+                    bundle.putInt("physPower", list.get(position).getPhysicalPower());
+                    bundle.putInt("abPower", list.get(position).getAbilitypower());
+                    bundle.putInt("mobility", list.get(position).getMobility());
+                    bundle.putInt("durability", list.get(position).getDurability());
+                    bundle.putString("imageurl", list.get(position).getImageURL());
+                    nextFrag.setArguments(bundle);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentContainer, nextFrag)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
 
             holder.skill1view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -248,6 +270,11 @@ public class CardFragment extends Fragment {
             Map.Entry pair = (Map.Entry)it.next();
             item.setCardName(pair.getKey().toString());
             HeroData singledata = (HeroData) pair.getValue();
+            item.setDifficulty(singledata.getDifficulty());
+            item.setMobility(singledata.getMobility());
+            item.setDurability(singledata.getDurability());
+            item.setPhysicalPower(singledata.getBasicAttack());
+            item.setAbilitypower(singledata.getAbilityAttack());
             item.setSkill1pic(singledata.getPrimarySkill().getImageURL());
             item.setSkill1name(singledata.getPrimarySkill().getName());
             String skillDesc = replacer.replaceStatWithText(singledata.getPrimarySkill().getDesc());

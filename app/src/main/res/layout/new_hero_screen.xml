@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/hero_portrait"
+        android:layout_width="match_parent"
+        app:layout_heightPercent="40%"
+        />
+
+    <ProgressBar
+        android:id="@+id/difficulty_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        app:layout_widthPercent="90%"
+        app:layout_marginLeftPercent="4.6%"
+        app:layout_marginTopPercent="47%"
+        app:layout_heightPercent="9%"
+ />
+    <TextView
+        android:id="@+id/difficulty_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Difficulty"
+        android:textAlignment="center"
+        android:textSize="21dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_below="@id/difficulty_bar"/>
+    <ProgressBar
+        android:id="@+id/ability_power_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        app:layout_widthPercent="39%"
+        app:layout_marginTopPercent="10%"
+        android:layout_below="@id/difficulty_text"
+        app:layout_marginLeftPercent="7.2%"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="Ability Power"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_marginLeftPercent="17.5%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ability_power_bar"/>
+    <ProgressBar
+        android:id="@+id/physical_power_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        app:layout_widthPercent="39%"
+        app:layout_marginTopPercent="10%"
+        android:layout_below="@id/difficulty_text"
+        app:layout_marginLeftPercent="53.5%"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="Physical Power"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_marginLeftPercent="62.5%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/physical_power_bar"/>
+    <ProgressBar
+        android:id="@+id/durability_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        app:layout_widthPercent="39%"
+        app:layout_marginTopPercent="25%"
+        android:layout_below="@id/difficulty_text"
+        app:layout_marginLeftPercent="53.5%"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="Durability"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_marginLeftPercent="67.5%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/durability_bar"/>
+    <ProgressBar
+        android:id="@+id/mobility_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        app:layout_widthPercent="39%"
+        app:layout_marginTopPercent="25%"
+        android:layout_below="@id/difficulty_text"
+        app:layout_marginLeftPercent="7.2%"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="Mobility"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_marginLeftPercent="21.3%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mobility_bar"/>
+
+
+</android.support.percent.PercentRelativeLayout>

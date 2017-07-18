@@ -136,7 +136,7 @@ public class TrendList extends ArrayAdapter<String>{
         txtTitle.setTextColor(Color.WHITE);
         txtTitle.setText("  "+web[position]);
 
-        Glide.with(getContext()).load(imageId[position]).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
+        Glide.with(getContext()).load(imageId[position]).into(imageView);
         score.addEvent(new DecoEvent.Builder(heroScore[position]).setIndex(series1Index).setDelay(1).build());
 
         return rowView;

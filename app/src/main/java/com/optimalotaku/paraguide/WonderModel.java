@@ -23,6 +23,11 @@ public class WonderModel {
     String skill2name;
     String skill3name;
     String skill4name;
+    public int difficulty;
+    int mobility;
+    int durability;
+    int physicalPower;
+    int abilityPower;
 
 
     public String getSkill4name() {
@@ -167,6 +172,46 @@ public class WonderModel {
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public int getMobility() {
+        return mobility;
+    }
+
+    public void setMobility(int mobility) {
+        this.mobility = mobility;
+    }
+
+    public int getDurability() {
+        return durability;
+    }
+
+    public void setDurability(int durability) {
+        this.durability = durability;
+    }
+
+    public int getPhysicalPower() {
+        return physicalPower;
+    }
+
+    public void setPhysicalPower(int physicalPower) {
+        this.physicalPower = physicalPower;
+    }
+
+    public int getAbilitypower() {
+        return abilityPower;
+    }
+
+    public void setAbilitypower(int abilitypower) {
+        this.abilityPower = abilitypower;
     }
 }
 

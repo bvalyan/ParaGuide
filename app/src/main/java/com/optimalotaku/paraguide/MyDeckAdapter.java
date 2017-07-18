@@ -88,7 +88,7 @@ final class MyDeckAdapter extends BaseAdapter {
 
         Item item = getItem(i);
 
-        Glide.with(viewGroup.getContext()).load("https:" + item.drawable1).diskCacheStrategy(DiskCacheStrategy.ALL).into(picture);
+        Glide.with(viewGroup.getContext()).load("https:" + item.drawable1).into(picture);
         name.setText(item.name);
 
 
