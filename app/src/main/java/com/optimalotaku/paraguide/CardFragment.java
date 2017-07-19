@@ -1,29 +1,23 @@
 package com.optimalotaku.paraguide;
 
-        import android.content.ContentResolver;
-        import android.content.Intent;
-        import android.net.Uri;
-        import android.os.Bundle;
-        import android.support.annotation.Nullable;
-        import android.support.v4.app.Fragment;
-        import android.support.v4.app.FragmentManager;
-        import android.support.v4.view.ViewCompat;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.support.v7.widget.Toolbar;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import android.widget.Toast;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import com.bumptech.glide.Glide;
+import com.bumptech.glide.Glide;
 
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.Iterator;
-        import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 public class CardFragment extends Fragment {
@@ -110,6 +104,7 @@ public class CardFragment extends Fragment {
                     bundle.putInt("mobility", list.get(position).getMobility());
                     bundle.putInt("durability", list.get(position).getDurability());
                     bundle.putString("imageurl", list.get(position).getImageURL());
+                    bundle.putString("name", list.get(position).getCardName());
                     nextFrag.setArguments(bundle);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.fragmentContainer, nextFrag)
@@ -253,11 +248,10 @@ public class CardFragment extends Fragment {
             });
 
 
-            };
+            }
 
 
-
-        }
+    }
 
 
     public void initializeList() {
