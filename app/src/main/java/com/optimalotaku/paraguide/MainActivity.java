@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,8 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
@@ -50,13 +53,16 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     private static final String PREFERENCES_FILE = "mymaterialapp_settings";
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-
+    ScalableVideoView videoview;
     private boolean mUserLearnedDrawer;
     private boolean mFromSavedInstanceState;
     private int mCurrentSelectedPosition;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
+    int stopPosition;
+    Animation in;
+    Animation buttonIN;
 
     private void setUpToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -99,12 +105,53 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     }
 
     @Override
+    public void onPause() {
+        Log.d("pause", "onPause called");
+        super.onPause();
+        stopPosition = videoview.getCurrentPosition(); //stopPosition is an int
+        videoview.pause();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("resume", "onResume called");
+        videoview.seekTo(stopPosition);
+        videoview.start(); //Or use resume() if it doesn't work. I'm not sure
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.drawer_layout);
-        VideoView videoview = (VideoView) findViewById(R.id.paragon_vid);
+        videoview = (ScalableVideoView) findViewById(R.id.paragon_vid);
+        videoview.setVideoSize(1500,500);
+        videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+                mp.setVolume(0,0);
+            }
+        });
+        in = new AlphaAnimation(0.0f, 1.0f);
+        in.setDuration(7000);
+        buttonIN = new AlphaAnimation(0.0f, 1.0f);
+        buttonIN.setDuration(8000);
+        TextView title = (TextView) findViewById(R.id.title_5);
+        title.startAnimation(in);
+        Button analyze = (Button) findViewById(R.id.analyze_button);
+        analyze.setOnClickListener(new View.OnClickListener() {
+            Intent intent;
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(MainActivity.this, AccountSearch.class);
+                intent.putExtra("HeroMap",heroDataMap);
+                startActivity(intent);
+            }
+        });
+        analyze.startAnimation(buttonIN);
+        //videoview.setDisplayMode(ScalableVideoView.DisplayMode.FULL_SCREEN);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.trailer);
         videoview.setVideoURI(uri);
         videoview.start();
@@ -147,16 +194,36 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
                 menuItem.setChecked(true);
 
+                Intent intent;
+
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_item_1:
-                        Snackbar.make(mContentFrame, "Item One",
-                                Snackbar.LENGTH_SHORT).show();
+                        intent = new Intent(MainActivity.this, AccountSearch.class);
+                        intent.putExtra("HeroMap",heroDataMap);
+                        startActivity(intent);
                         mCurrentSelectedPosition = 0;
                         return true;
                     case R.id.navigation_item_2:
-                        Snackbar.make(mContentFrame, "Item Two",
-                                Snackbar.LENGTH_SHORT).show();
+                        intent = new Intent(MainActivity.this, CardOfTheDayView.class);
+                        intent.putExtra("CardOfTheDay",cotd);
+                        startActivity(intent);
                         mCurrentSelectedPosition = 1;
+                        return true;
+                    case R.id.navigation_item_3:
+                        intent = new Intent(MainActivity.this, DeckView.class);
+                        intent.putExtra("HeroMap",heroDataMap);
+                        startActivity(intent);
+                        mCurrentSelectedPosition = 2;
+                        return true;
+                    case R.id.navigation_item_4:
+                        intent = new Intent(MainActivity.this, newsView.class);
+                        startActivity(intent);
+                        mCurrentSelectedPosition = 3;
+                        return true;
+                    case R.id.navigation_item_5:
+                        intent = new Intent(MainActivity.this, HeroView.class);
+                        intent.putExtra("HeroMap",heroDataMap);
+                        startActivity(intent);
                         return true;
                     default:
                         return true;

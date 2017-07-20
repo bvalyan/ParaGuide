@@ -6,15 +6,17 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/competitivepic"
+        android:background="@drawable/heropic"
         android:scaleType="centerCrop" />
 
     <TextView
         style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="16dp"
+        android:layout_gravity="top"
+        android:visibility="invisible"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="1dp"
         android:text="PARAGUIDE"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed"
