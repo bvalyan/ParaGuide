@@ -1,5 +1,6 @@
 package com.optimalotaku.paraguide;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -75,6 +76,7 @@ public class playerGraphFragment extends Fragment {
     int towerKills;
     int coreKills;
     private String playerName;
+    ProgressDialog dialog;
 
 
     public static playerGraphFragment newInstance(int page, String title, PlayerData pData, String playerName) {
@@ -360,8 +362,12 @@ public class playerGraphFragment extends Fragment {
             PlayerData playerData = new PlayerData();
 
             //make call to player info, get response to chart
+
+
             ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(this.getContext(), progressBar, playerName, playerData);
+
             playerJSONInfo[0] = playerInfo.execute().get();
+
             JSONObject playerStats;
             //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
 
@@ -635,7 +641,6 @@ public class playerGraphFragment extends Fragment {
         arcView.addEvent(new DecoEvent.Builder(finalScore).setIndex(series1Index).setDelay(4000).build());
         gradeView.setTextSize(40);
         gradeView.setText(grade);
-
 
         return view;
         }

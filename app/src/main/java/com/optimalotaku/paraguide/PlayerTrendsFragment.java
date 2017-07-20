@@ -9,9 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,6 +71,10 @@ public class PlayerTrendsFragment extends Fragment {
         int [] scores = new int[hDataMap.size()];
         Set<Map.Entry<String, HeroData>> entrySet = hDataMap.entrySet();
         int i = 0;
+        HeroReview[] reviewPacket = new HeroReview[hDataMap.size()];
+        for (int j = 0; j < hDataMap.size(); j += 1) {
+            reviewPacket[j] = new HeroReview();
+        }
         for(Map.Entry entry : entrySet){
             HeroData tempData = new HeroData();
             text[i] = entry.getKey().toString();
@@ -93,10 +94,14 @@ public class PlayerTrendsFragment extends Fragment {
                 scores[i] = 0; //catch exception for empty stats
                 e.printStackTrace();
             }
+            reviewPacket[i].setPic(pics[i]);
+            reviewPacket[i].setText(text[i]);
+            reviewPacket[i].setScore(scores[i]);
+            //create heroreview object here to save all aspects. change adapter to take in this object
             i++;
         }
 
-        TrendList adapter = new TrendList(this.getActivity(), text, pics, scores);
+        TrendList adapter = new TrendList(this.getActivity(), reviewPacket);
         RecyclerView list = (RecyclerView) view.findViewById(R.id.list3);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
         list.setAdapter(adapter);

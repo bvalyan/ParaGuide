@@ -1,5 +1,6 @@
 package com.optimalotaku.paraguide;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -30,6 +31,7 @@ public class ParagonAPIPlayerInfo extends AsyncTask<Void, Void, String> {
     private ProgressBar pBar;
     SharedPreferences.Editor editor;
     Context mcontext;
+    ProgressDialog dialog;
 
     public ParagonAPIPlayerInfo(Context context ,ProgressBar pb, String pName, PlayerData pData){
         /*
@@ -42,11 +44,20 @@ public class ParagonAPIPlayerInfo extends AsyncTask<Void, Void, String> {
         this.pBar = pb;
         this.playerName = pName;
         this.pData = pData;
+        dialog = new ProgressDialog(this.mcontext);
     }
+
+    @Override
+    protected void onPreExecute(){
+        dialog.setMessage("CRUNCHing the numbers..... get it?");
+        dialog.show();
+    }
+
 
 
     @Override
     protected String doInBackground(Void... voids) {
+
         URL url2 = null;
         URL url3 = null;
         HttpURLConnection urlConnection2 = null;
@@ -98,6 +109,10 @@ public class ParagonAPIPlayerInfo extends AsyncTask<Void, Void, String> {
 }
 
     protected void onPostExecute(String response){
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+
         if (response == null) {
             Log.i("INFO", "PLAYER LOOKUP ERROR");
         }

@@ -12,16 +12,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
+
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class TrendList extends RecyclerView.Adapter<TrendList.ViewHolder> {
 
@@ -33,12 +34,19 @@ public class TrendList extends RecyclerView.Adapter<TrendList.ViewHolder> {
 
 
     public TrendList(Activity context,
-                     String[] web, String[] imageId, int [] scores) {
-        this.context = context;
-        this.web = web;
-        this.imageId = imageId;
-        this.heroScore = scores;
+                     HeroReview[] reviewPacket) {
 
+        Arrays.sort(reviewPacket, new HeroComparator());
+        this.context = context;
+        this.web = new String[reviewPacket.length];
+        this.imageId = new String[reviewPacket.length];
+        this.heroScore = new int[reviewPacket.length];
+        for(int i = 0; i < reviewPacket.length; i++){
+            this.web[i] = reviewPacket[i].getText();
+            this.imageId[i] = reviewPacket[i].getPic();
+            this.heroScore[i] = reviewPacket[i].getScore();
+
+        }
     }
 
     @Override
@@ -174,6 +182,13 @@ public class TrendList extends RecyclerView.Adapter<TrendList.ViewHolder> {
             gradeNumber = (TextView) itemView.findViewById(R.id.scorePercent);
             gradeLetter = (TextView) itemView.findViewById(R.id.gradePercent);
 
+        }
+    }
+
+    class HeroComparator implements Comparator<HeroReview> {
+        @Override
+        public int compare(HeroReview a, HeroReview b) {
+            return a.getText().compareToIgnoreCase(b.getText());
         }
     }
 }

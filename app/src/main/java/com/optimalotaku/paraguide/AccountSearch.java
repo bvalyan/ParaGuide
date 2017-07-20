@@ -1,5 +1,6 @@
 package com.optimalotaku.paraguide;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 
 public class AccountSearch extends AppCompatActivity {
     private EditText textSearch;
+    ProgressDialog dialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +30,13 @@ public class AccountSearch extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 APIPlayerCheck check = new APIPlayerCheck(); // call APIPlayerCheck to verify account exists
                 try {
+                    dialog = new ProgressDialog(v.getContext());
+                    dialog.setMessage("CRUNCHing the numbers..... get it?");
+                    dialog.show();
                      newString[0] = check.execute(textSearch.getText().toString()).get();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -43,6 +50,9 @@ public class AccountSearch extends AppCompatActivity {
                     Intent i = new Intent(AccountSearch.this, NewPlayerDisplay.class); //Account checks out. Load saved hero data and store name to intent for stat processing
                     i.putExtra("HeroMap",hData);
                     i.putExtra("name", textSearch.getText().toString());
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                     startActivity(i);
                 }
 
