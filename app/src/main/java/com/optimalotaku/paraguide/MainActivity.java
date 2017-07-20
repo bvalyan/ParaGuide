@@ -18,18 +18,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
-import android.view.HapticFeedbackConstants;
 import android.view.MenuItem;
-import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.io.IOException;
@@ -109,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.drawer_layout);
         VideoView videoview = (VideoView) findViewById(R.id.paragon_vid);
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.test);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.trailer);
         videoview.setVideoURI(uri);
         videoview.start();
         //gridview = (GridView) findViewById(R.id.gridview);
