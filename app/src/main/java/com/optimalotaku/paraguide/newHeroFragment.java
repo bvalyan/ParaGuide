@@ -66,7 +66,7 @@ public class newHeroFragment extends android.support.v4.app.Fragment{
         ImageView coverView = (ImageView) view.findViewById(R.id.hero_portrait);
 
         name.setText(this.name);
-        difficultyBar.setProgress(difficulty*25, true);
+        difficultyBar.setProgress(difficulty, true);
         mobilityBar.setProgress(mobility*10, true);
         durabilityBar.setProgress(durability*10, true);
         physicalBar.setProgress(physicalPower*10, true);

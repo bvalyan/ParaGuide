@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,26 +97,9 @@ public class PlayerTrendsFragment extends Fragment {
         }
 
         TrendList adapter = new TrendList(this.getActivity(), text, pics, scores);
-        ListView list = (ListView) view.findViewById(R.id.list3);
+        RecyclerView list = (RecyclerView) view.findViewById(R.id.list3);
+        list.setLayoutManager(new LinearLayoutManager(getContext()));
         list.setAdapter(adapter);
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(view.getContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
-                //start new activity with method that takes in name and HeroData object and displays information
-                //Intent i = new Intent(DeckView.this,DetailDeckView.class);
-                //DeckData chosenDeck = dDataList.get(position);
-                //Bundle deckGoodies = new Bundle();
-                //deckGoodies.putString("deckJSONArray", chosenDeck.toString());
-                //i.putExtra("deckObject", chosenDeck);
-
-                //startActivity(i);
-            }
-        });
-
         return view;
     }
 
