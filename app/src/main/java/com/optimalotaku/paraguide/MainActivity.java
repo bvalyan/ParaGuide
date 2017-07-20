@@ -9,19 +9,28 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.HapticFeedbackConstants;
+import android.view.MenuItem;
 import android.view.SoundEffectConstants;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -38,18 +47,145 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     HashMap<String,HeroData> heroDataMap;
     HashMap<String,List<CardData>> cDataMap;
     ProgressDialog progress;
+    private Toolbar mToolbar;
+    private DrawerLayout mDrawerLayout;
+    NavigationView mNavigationView;
+    FrameLayout mContentFrame;
+    private static final String PREFERENCES_FILE = "mymaterialapp_settings";
+    private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
+    private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
+
+    private boolean mUserLearnedDrawer;
+    private boolean mFromSavedInstanceState;
+    private int mCurrentSelectedPosition;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle drawerToggle;
+
+    private void setUpToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+
+
+    private void setupDrawerLayout() {
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.setDrawerListener(drawerToggle);
+    }
+
+    public static void saveSharedSetting(Context ctx, String settingName, String settingValue) {
+        SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(settingName, settingValue);
+        editor.apply();
+    }
+
+    public static String readSharedSetting(Context ctx, String settingName, String defaultValue) {
+        SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
+        return sharedPref.getString(settingName, defaultValue);
+    }
+
+    private void setUpNavDrawer() {
+        if (mToolbar != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                }
+            });
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.grid_home);
-        gridview = (GridView) findViewById(R.id.gridview);
+        setContentView(R.layout.drawer_layout);
+        VideoView videoview = (VideoView) findViewById(R.id.paragon_vid);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.test);
+        videoview.setVideoURI(uri);
+        videoview.start();
+        //gridview = (GridView) findViewById(R.id.gridview);
         fileManager = new FileManager(this);
         heroDataMap = new HashMap<>();
         cDataMap = new HashMap<>();
 
+        setUpToolbar();
+
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.nav_drawer);
+
+        mUserLearnedDrawer = Boolean.valueOf(readSharedSetting(this, PREF_USER_LEARNED_DRAWER, "false"));
+
+        mDrawerLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+
+                mDrawerToggle.syncState();
+
+            }
+
+        });
+
+        setupDrawerLayout();
+
+        if (savedInstanceState != null) {
+            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
+            mFromSavedInstanceState = true;
+        }
+
+        setUpNavDrawer();
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                menuItem.setChecked(true);
+
+                switch (menuItem.getItemId()) {
+                    case R.id.navigation_item_1:
+                        Snackbar.make(mContentFrame, "Item One",
+                                Snackbar.LENGTH_SHORT).show();
+                        mCurrentSelectedPosition = 0;
+                        return true;
+                    case R.id.navigation_item_2:
+                        Snackbar.make(mContentFrame, "Item Two",
+                                Snackbar.LENGTH_SHORT).show();
+                        mCurrentSelectedPosition = 1;
+                        return true;
+                    default:
+                        return true;
+                }
+            }
+        });
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
 
         progress = ProgressDialog.show(this, "Loading",
                 "Checking for new Card/Hero data...", true);
@@ -60,11 +196,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         progress.dismiss();
         AppRater.app_launched(this);
 
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      /*  gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             Intent intent;
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                gridview.playSoundEffect(SoundEffectConstants.CLICK); //send feedback on main menu
+                gridview.playSoundEffect(SoundEffectConstants.CLICK); //send feedback on main drawer
                 gridview.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
                 switch(position){
@@ -100,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         break;
                 }
             }
-        });
+        });*/
     }
 
     public void getHeroData(){
@@ -229,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     @Override
     public void processImageLoaderFinish(Bitmap imgBitmap) {
         //Set the grid view Adapter
-        gridview.setAdapter(new MyAdapter(this,imgBitmap));
+       // gridview.setAdapter(new MyAdapter(this,imgBitmap));
     }
 
 }
@@ -325,5 +461,6 @@ class AppRater {
         dialog.setContentView(ll);
         dialog.show();
     }
+
 }
 

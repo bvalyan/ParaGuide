@@ -81,7 +81,7 @@ public class MyCardView extends AppCompatActivity{
 
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
-                    gridview.playSoundEffect(SoundEffectConstants.CLICK); //send feedback on main menu
+                    gridview.playSoundEffect(SoundEffectConstants.CLICK); //send feedback on main drawer
                     gridview.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     Toast.makeText(getApplicationContext(), "You Clicked " +cardText[+ position], Toast.LENGTH_SHORT).show();
 
