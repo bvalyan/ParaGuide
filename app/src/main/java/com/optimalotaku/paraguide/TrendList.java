@@ -167,6 +167,7 @@ public class TrendList extends RecyclerView.Adapter<TrendList.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
 
+            setIsRecyclable(false);
             trendchart1 = (DecoView) itemView.findViewById(R.id.dynamicArcView2);
             heroImage = (ImageView) itemView.findViewById(R.id.img);
             heroText = (TextView) itemView.findViewById(R.id.txt);

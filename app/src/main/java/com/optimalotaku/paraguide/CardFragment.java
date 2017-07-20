@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -67,16 +69,21 @@ public class CardFragment extends Fragment {
     public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         private ArrayList<WonderModel> list;
 
+
+
         public MyAdapter(ArrayList<WonderModel> Data) {
             list = Data;
+            Collections.sort(list, new WonderComparator());
         }
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
             // create a new view
+
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.listsingle, parent, false);
             MyViewHolder holder = new MyViewHolder(view);
+
             return holder;
         }
 
@@ -251,6 +258,13 @@ public class CardFragment extends Fragment {
             }
 
 
+    }
+
+    class WonderComparator implements Comparator<WonderModel>{
+            @Override
+            public int compare(WonderModel a, WonderModel b) {
+                return a.getCardName().compareToIgnoreCase(b.getCardName());
+            }
     }
 
 
