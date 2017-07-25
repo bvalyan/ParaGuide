@@ -34,9 +34,6 @@ public class AccountSearch extends AppCompatActivity {
 
                 APIPlayerCheck check = new APIPlayerCheck(); // call APIPlayerCheck to verify account exists
                 try {
-                    dialog = new ProgressDialog(v.getContext());
-                    dialog.setMessage("CRUNCHing the numbers..... get it?");
-                    dialog.show();
                      newString[0] = check.execute(textSearch.getText().toString()).get();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -50,9 +47,6 @@ public class AccountSearch extends AppCompatActivity {
                     Intent i = new Intent(AccountSearch.this, NewPlayerDisplay.class); //Account checks out. Load saved hero data and store name to intent for stat processing
                     i.putExtra("HeroMap",hData);
                     i.putExtra("name", textSearch.getText().toString());
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
                     startActivity(i);
                 }
 
