@@ -11,7 +11,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -29,7 +28,6 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -389,31 +387,42 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             number of cards to select the card of the day
          */
 
+        Integer chosenCard = 0;
         List<CardData> cDataList = cDataMap.get("Equip");
 
-        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
-        Calendar today = Calendar.getInstance();
-        String todayStr = formatter.format(today.getTime());
-        Log.i("INFO","Today's Date: "+ todayStr);
-        String[] todayParts = todayStr.split("-");
-        Integer dateSum = Integer.parseInt(todayParts[0]) + Integer.parseInt(todayParts[1]) + Integer.parseInt(todayParts[2]);
-        Log.i("INFO","Today's Date Sum: "+dateSum.toString());
-        Integer chosenCard = dateSum % cDataList.size();
-        Log.i("INFO","Today's Chosen Card Index: "+chosenCard.toString());
-
-        //Grab the chosen card
-        this.cotd = cDataList.get(chosenCard);
-
         try {
-            fileManager.saveCardsToStorage(cDataMap.get("All"));
-        } catch (IOException e) {
-            e.printStackTrace();
+            SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
+            Calendar today = Calendar.getInstance();
+            String todayStr = formatter.format(today.getTime());
+            Log.i("INFO", "Today's Date: " + todayStr);
+            String[] todayParts = todayStr.split("-");
+            Integer dateSum = Integer.parseInt(todayParts[0]) + Integer.parseInt(todayParts[1]) + Integer.parseInt(todayParts[2]);
+            Log.i("INFO", "Today's Date Sum: " + dateSum.toString());
+            chosenCard = dateSum % cDataList.size();
+            Log.i("INFO", "Today's Chosen Card Index: " + chosenCard.toString());
         }
 
+        catch (ArithmeticException a){
+            chosenCard = 1;
+            Log.e("CARDERROR", a.getMessage());
+        }
 
-        ImageLoader imgLoader = new ImageLoader(this.cotd);
-        imgLoader.delegate = this;
-        imgLoader.execute();
+            //Grab the chosen card
+            this.cotd = cDataList.get(chosenCard);
+
+            try {
+                fileManager.saveCardsToStorage(cDataMap.get("All"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            ImageLoader imgLoader = new ImageLoader(this.cotd);
+            imgLoader.delegate = this;
+            imgLoader.execute();
+
+
+
 
 
 

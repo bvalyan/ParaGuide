@@ -26,20 +26,81 @@
         android:layout_below="@id/cotdImage"
         app:cardCornerRadius="8dp"
         android:layout_height="270dp">
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <TextView
         android:text="TextView"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cotdText"
-        android:textSize="15sp"
+        android:textAlignment="center"
+        android:id="@+id/cotdTitle"
+        android:textSize="26sp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="start"
-        app:layout_marginTopPercent="55%"
-        app:layout_heightPercent="50%"
 
-        android:textAlignment="center" />
+        />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:text="Effects"
+                android:textStyle="bold"
+                android:layout_below="@id/cotdTitle"
+                android:layout_alignLeft="@id/cotdTitle"
+                android:layout_alignRight="@id/cotdTitle"
+                android:textAlignment="center"
+                android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_below="@id/cotdTitle"
+            android:id="@+id/cotdeff"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:text="Cooldown"
+                android:visibility="invisible"
+                android:id="@+id/cdtitle"
+                android:textStyle="bold"
+                android:layout_below="@id/cotdeff"
+                android:layout_alignLeft="@id/cotdTitle"
+                android:layout_alignRight="@id/cotdTitle"
+                android:textAlignment="center"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cotd_cd"
+                android:layout_below="@+id/cotdeff"/>
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/efftitle"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:text="Extra Effects"
+                android:textStyle="bold"
+                android:layout_below="@id/cotd_cd"
+                android:layout_alignLeft="@id/cotdTitle"
+                android:layout_alignRight="@id/cotdTitle"
+                android:textAlignment="center"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cotd_full_eff"
+                android:layout_below="@id/cotd_cd"/>
+        </RelativeLayout>
+
     </android.support.v7.widget.CardView>
 
      </android.support.percent.PercentRelativeLayout>

@@ -39,8 +39,16 @@ public class CardOfTheDayView extends AppCompatActivity{
         cotdImage.setVisibility(View.VISIBLE);
         Animation myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fadein);
         cotdImage.startAnimation(myFadeInAnimation);
-        TextView cotdText   = (TextView) findViewById(R.id.cotdText);
-        String cotdStr;
+        TextView cotdTitle   = (TextView) findViewById(R.id.cotdTitle);
+        TextView cotdEff = (TextView) findViewById(R.id.cotdeff);
+        TextView cotdCD = (TextView) findViewById(R.id.cotd_cd);
+        TextView cotdFullEff = (TextView) findViewById(R.id.cotd_full_eff);
+        TextView effecttitle = (TextView) findViewById(R.id.efftitle);
+        TextView cdTitle = (TextView) findViewById(R.id.cdtitle);
+        String cotdTitle1;
+        String cotdEff2 = new String();
+        String cotdCooldown = new String();
+        String cotdFullEffect = new String();
 
         //Set Picture Image with Glide
         Glide.with(this).load(cotd.getImageUrl2()).into(cotdImage);
@@ -56,45 +64,49 @@ public class CardOfTheDayView extends AppCompatActivity{
 
         cotdImage.setVisibility(View.VISIBLE);
 
-        cotdStr = "Name: "+cotd.getName()+"\n\n";
+        cotdTitle1 = cotd.getName();
 
-        cotdStr = cotdStr + "Card Effects:\n\n";
+
         List<CardEffect> effectList = cotd.getEffectList();
         for(CardEffect eff: effectList) {
             if(eff.getStat() != null && eff.getStatValue() != null) {
                 Log.i("INFO","MainActivity - processCardInfoFinish - Stat: "+eff.getStat()+" Human Readable: "+ cotd.statToHumanReadable(eff.getStat()));
-                cotdStr = cotdStr + "• " + cotd.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n";
+                cotdEff2 = cotdEff2 + "• " + cotd.statToHumanReadable(eff.getStat()) +": "+eff.getStatValue()+"\n";
             }
             if(eff.getDescription() != null){
                 String apiText = attrTranslator.replaceStatWithText(eff.getDescription());
-                cotdStr = cotdStr + "• "+apiText+"\n";
+                cotdEff2 = cotdEff2 + "• "+apiText+"\n";
             }
             if(eff.getCooldown()!= null && Integer.parseInt(eff.getCooldown()) > 1){
-                cotdStr = cotdStr + "• Cooldown: " + eff.getCooldown() + "s\n";
+                cdTitle.setVisibility(View.VISIBLE);
+                cotdCooldown =  eff.getCooldown();
             }
         }
-        cotdStr = cotdStr + "\n";
 
 
         List<CardEffect> maxEffectList = cotd.getMaxEffectList();
         if(maxEffectList.size() > 0) {
-            cotdStr = cotdStr + "Fully Upgraded Card Effects:\n";
+            effecttitle.setVisibility(View.VISIBLE);
             for (CardEffect eff : maxEffectList) {
                 if (eff.getStat() != null && eff.getStatValue() != null) {
-                    cotdStr = cotdStr + "• " + cotd.statToHumanReadable(eff.getStat()) + ": " + eff.getStatValue() + "\n";
+                    cotdFullEffect =   "• " + cotd.statToHumanReadable(eff.getStat()) + ": " + eff.getStatValue() + "\n";
                 }
                 if (eff.getDescription() != null) {
                     String apiText = attrTranslator.replaceStatWithText(eff.getDescription());
-                    cotdStr = cotdStr + "• "+apiText+"\n";
+                    cotdFullEffect = cotdFullEffect + "• "+apiText+"\n";
                 }
                 if (eff.getCooldown() != null && Integer.parseInt(eff.getCooldown()) > 1) {
-                    cotdStr = cotdStr + "• Cooldown: " + eff.getCooldown() + "s\n";
+                    cotdFullEffect = cotdFullEffect + "• Cooldown: " + eff.getCooldown() + "s\n";
                 }
             }
         }
 
-        SpannableString ss = attrTranslator.replaceSymbolsWithImages(this,cotdStr);
-        cotdText.setText(ss);
+        SpannableString ss = attrTranslator.replaceSymbolsWithImages(this,cotdFullEffect);
+        SpannableString ss2 = attrTranslator.replaceSymbolsWithImages(this,cotdEff2);
+        cotdTitle.setText(cotdTitle1);
+        cotdEff.setText(ss2);
+        cotdCD.setText(cotdCooldown);
+        cotdFullEff.setText(ss);
 
         
 

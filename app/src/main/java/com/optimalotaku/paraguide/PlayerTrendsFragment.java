@@ -116,26 +116,98 @@ public class PlayerTrendsFragment extends Fragment {
 
         PlayerData pHData = new PlayerData();
 
-        pHData.setMatches(rawData.getJSONObject("pvp").optString("games_played"));
-        pHData.setWins(rawData.getJSONObject("pvp").optString("games_won"));
-        pHData.setAssists(rawData.getJSONObject("pvp").optString("assists_hero"));
-        pHData.setDeaths(rawData.getJSONObject("pvp").optString("deaths_hero"));
-        pHData.setHeroKills(rawData.getJSONObject("pvp").optString("kills_hero"));
-        pHData.setInhibKills(rawData.getJSONObject("pvp").optString("kills_inhibitors"));
-        pHData.setInhibAssists(rawData.getJSONObject("pvp").optString("assists_inhibitor"));
-        pHData.setCoreKills(rawData.getJSONObject("pvp").optString("kills_core"));
-        pHData.setTowerKills(rawData.getJSONObject("pvp").optString("kills_towers"));
-        pHData.setTowerAssists(rawData.getJSONObject("pvp").optString("assists_towers"));
+        try{
+        pHData.setMatches(rawData.getJSONObject("pvp").optString("games_played"));}
+        catch(JSONException matchex){
+            pHData.setMatches("0");
+        }
+        try{
+        pHData.setWins(rawData.getJSONObject("pvp").optString("games_won"));}
+        catch (JSONException winex){
+            pHData.setWins("0");
+        }
+        try{
+        pHData.setAssists(rawData.getJSONObject("pvp").optString("assists_hero"));}
+        catch(JSONException assistex){
+            pHData.setAssists("0");
+        }
+        try{
+        pHData.setDeaths(rawData.getJSONObject("pvp").optString("deaths_hero"));}
+        catch(JSONException deathex){
+            pHData.setDeaths("0");
+        }
+        try{
+        pHData.setHeroKills(rawData.getJSONObject("pvp").optString("kills_hero"));}
+        catch (JSONException herokillex){
+            pHData.setHeroKills("0");
+        }
+        try{
+        pHData.setInhibKills(rawData.getJSONObject("pvp").optString("kills_inhibitors"));}
+        catch (JSONException inhibkillex){
+            pHData.setInhibKills("0");
+        }
+        try{
+        pHData.setInhibAssists(rawData.getJSONObject("pvp").optString("assists_inhibitor"));}
+        catch (JSONException inhibassistex){
+            pHData.setInhibAssists("0");
+        }
+        try{
+        pHData.setCoreKills(rawData.getJSONObject("pvp").optString("kills_core"));}
+        catch(JSONException corekillex){
+            pHData.setCoreKills("0");
+        }
+        try{
+        pHData.setTowerKills(rawData.getJSONObject("pvp").optString("kills_towers"));}
+        catch (JSONException towerkillex){
+            pHData.setTowerKills("0");
+        }
+        try{
+        pHData.setTowerAssists(rawData.getJSONObject("pvp").optString("assists_towers"));}
+        catch(JSONException towerassistex){
+            pHData.setTowerAssists("0");
+        }
         //pData.setGamesLeft(rawData.getJSONObject("pvp").optString("games_left"));
         // pData.setGamesReconnected(rawData.getJSONObject("pvp").optString("games_reconnected"));
-        pHData.setWardKills(rawData.getJSONObject("pvp").optString("kills_wards"));
-        pHData.setStructureDamage(rawData.getJSONObject("pvp").optString("damage_done_structures"));
-        pHData.setHeroDamage(rawData.getJSONObject("pvp").optString("damage_done_hero"));
-        pHData.setMinionDamage(rawData.getJSONObject("pvp").optString("damage_done_minons"));
-        pHData.setMinionKills(rawData.getJSONObject("pvp").optString("kills_minions"));
-        pHData.setTimeePlayed(rawData.getJSONObject("pvp").optString("time_played"));
-        pHData.setSurrenders(rawData.getJSONObject("pvp").optString("surrender_votes_started"));
-        pHData.setXp(rawData.getJSONObject("total").optString("xp"));
+        try{
+        pHData.setWardKills(rawData.getJSONObject("pvp").optString("kills_wards"));}
+        catch (JSONException wardkillex){
+            pHData.setWardKills("0");
+        }
+        try{
+        pHData.setStructureDamage(rawData.getJSONObject("pvp").optString("damage_done_structures"));}
+        catch(JSONException structdamex){
+            pHData.setStructureDamage("0");
+        }
+        try{
+        pHData.setHeroDamage(rawData.getJSONObject("pvp").optString("damage_done_hero"));}
+        catch (JSONException herodamex){
+            pHData.setHeroDamage("0");
+        }
+        try{
+        pHData.setMinionDamage(rawData.getJSONObject("pvp").optString("damage_done_minons"));}
+        catch (JSONException miniondamex){
+            pHData.setMinionDamage("0");
+        }
+        try{
+        pHData.setMinionKills(rawData.getJSONObject("pvp").optString("kills_minions"));}
+        catch(JSONException minionkillex){
+            pHData.setMinionKills("0");
+        }
+        try{
+        pHData.setTimeePlayed(rawData.getJSONObject("pvp").optString("time_played"));}
+        catch(JSONException timeplayedex){
+            pHData.setTimeePlayed("0");
+        }
+        try{
+        pHData.setSurrenders(rawData.getJSONObject("pvp").optString("surrender_votes_started"));}
+        catch(JSONException surrex){
+            pHData.setSurrenders("0");
+        }
+        try{
+        pHData.setXp(rawData.getJSONObject("total").optString("xp"));}
+        catch (JSONException xpex){
+            pHData.setXp("0");
+        }
 
 
         int score = scoreOnly.CalculateParaflow(pHData);
