@@ -8,14 +8,12 @@
         <item
             android:id="@+id/navigation_item_2"
             android:title="Card of the Day" />
+
         <item
             android:id="@+id/navigation_item_3"
-            android:title="Deck Viewer" />
-        <item
-            android:id="@+id/navigation_item_4"
             android:title="Paragon News" />
         <item
-            android:id="@+id/navigation_item_5"
+            android:id="@+id/navigation_item_4"
             android:title="Hero Data" />
     </group>
 

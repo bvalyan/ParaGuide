@@ -125,7 +125,8 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
     @Override
     public void processDeckInfoFinish(final List<DeckData> dDataList) throws IOException {
 
-        setContentView(R.layout.deckreadout);
+        Intent in = new Intent(DeckView.this, MyCardView.class);
+        startActivity(in);
         //TextView responseView = (TextView) findViewById(R.id.textView);
 
         //progressDialog.dismiss(); // for close the dialog bar.
@@ -147,7 +148,8 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
             }
         }
 
-        CustomList adapter = new
+
+        /*CustomList adapter = new
                 CustomList(this, text, pics);
         list =(ListView)findViewById(R.id.list2);
         list.setAdapter(adapter);
@@ -186,7 +188,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
                 startActivity(i);
             }
         });
-
+*/
         //responseView.setText(deckListStr);
 
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

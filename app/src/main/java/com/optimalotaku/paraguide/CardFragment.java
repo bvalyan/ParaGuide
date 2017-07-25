@@ -306,7 +306,7 @@ public class CardFragment extends Fragment {
 
             item.setImageURL(singledata.getImageIconURL());
 
-            String affinity1 = singledata.getAffinity1();
+           /* String affinity1 = singledata.getAffinity1();
             String affinity2 = singledata.getAffinity2();
             switch (affinity1.toLowerCase()){
                 case "order" : item.setAffinity1(R.drawable.order_affinity_icon);
@@ -333,7 +333,7 @@ public class CardFragment extends Fragment {
                 case "growth" : item.setAffinity2(R.drawable.growth_affinity_icon);
                     break;
             }
-            //it.remove(); // avoids a ConcurrentModificationException
+            //it.remove(); // avoids a ConcurrentModificationException*/
             listitems.add(item);
         }
     }

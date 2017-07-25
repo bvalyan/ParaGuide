@@ -210,17 +210,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         mCurrentSelectedPosition = 1;
                         return true;
                     case R.id.navigation_item_3:
-                        intent = new Intent(MainActivity.this, DeckView.class);
-                        intent.putExtra("HeroMap",heroDataMap);
-                        startActivity(intent);
-                        mCurrentSelectedPosition = 2;
-                        return true;
-                    case R.id.navigation_item_4:
                         intent = new Intent(MainActivity.this, newsView.class);
                         startActivity(intent);
                         mCurrentSelectedPosition = 3;
                         return true;
-                    case R.id.navigation_item_5:
+                    case R.id.navigation_item_4:
                         intent = new Intent(MainActivity.this, HeroView.class);
                         intent.putExtra("HeroMap",heroDataMap);
                         startActivity(intent);
