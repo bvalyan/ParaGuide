@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.drawer_layout);
         videoview = (ScalableVideoView) findViewById(R.id.paragon_vid);
-        videoview.setVideoSize(1500,500);
         videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
