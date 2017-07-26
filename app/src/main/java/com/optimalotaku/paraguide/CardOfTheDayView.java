@@ -87,6 +87,7 @@ public class CardOfTheDayView extends AppCompatActivity{
         List<CardEffect> maxEffectList = cotd.getMaxEffectList();
         if(maxEffectList.size() > 0) {
             effecttitle.setVisibility(View.VISIBLE);
+            cotdFullEff.setVisibility(View.VISIBLE);
             for (CardEffect eff : maxEffectList) {
                 if (eff.getStat() != null && eff.getStatValue() != null) {
                     cotdFullEffect =   "• " + cotd.statToHumanReadable(eff.getStat()) + ": " + eff.getStatValue() + "\n";

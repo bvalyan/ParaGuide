@@ -82,6 +82,7 @@ public class CardDisplay extends AppCompatActivity{
 
         List<CardEffect> maxEffectList = cotd.getMaxEffectList();
         if(maxEffectList.size() > 0) {
+            cotdFullEff.setVisibility(View.VISIBLE);
             effecttitle.setVisibility(View.VISIBLE);
             for (CardEffect eff : maxEffectList) {
                 if (eff.getStat() != null && eff.getStatValue() != null) {

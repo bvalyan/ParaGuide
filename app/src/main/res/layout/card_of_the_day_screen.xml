@@ -41,6 +41,7 @@
 
         />
             <TextView
+                android:id="@+id/minefftitle"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:text="Effects"
@@ -52,19 +53,19 @@
                 android:layout_height="wrap_content" />
 
         <TextView
-            android:layout_below="@id/cotdTitle"
+            android:layout_below="@id/minefftitle"
             android:id="@+id/cotdeff"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="0dp"/>
 
             <TextView
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:text="Cooldown"
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:id="@+id/cdtitle"
                 android:textStyle="bold"
                 android:layout_below="@id/cotdeff"
@@ -76,16 +77,17 @@
             <TextView
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:id="@+id/cotd_cd"
                 android:layout_below="@+id/cotdeff"/>
 
             <TextView
-                android:visibility="invisible"
+                android:visibility="gone"
                 android:id="@+id/efftitle"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
-                android:text="Extra Effects"
+                android:text="Fully Upgraded Effects"
                 android:textStyle="bold"
                 android:layout_below="@id/cotd_cd"
                 android:layout_alignLeft="@id/cotdTitle"
@@ -96,9 +98,10 @@
             <TextView
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:id="@+id/cotd_full_eff"
-                android:layout_below="@id/cotd_cd"/>
+                android:layout_below="@id/efftitle"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
