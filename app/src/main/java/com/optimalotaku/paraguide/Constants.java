@@ -13,6 +13,7 @@ public class Constants {
     public static final String AUTH_VAR         = "Authorization";
     public static final String REDIRECT_URI     = "https://optimalotaku.com/paraguide/";
     public static final String AUTHORIZE_PATH   = "https://developer-paragon.epicgames.com/v1/auth/login/";
+    public static final String LOGOUT_PATH      = "https://developer-paragon.epicgames.com/v1/auth/logout/";
 
     //Chat Constants
 

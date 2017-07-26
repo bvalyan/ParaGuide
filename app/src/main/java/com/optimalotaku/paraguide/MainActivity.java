@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -184,6 +185,21 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
         setUpNavDrawer();
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        final SharedPreferences.Editor e = getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
+        final SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
+        String isSignedIn = prefs.getString("signedIn", "null");
+        Menu menu = mNavigationView.getMenu();
+        if(!isSignedIn.equals("null")){
+            for (int menuItemIndex = 0; menuItemIndex < menu.size(); menuItemIndex++) {
+                MenuItem menuItem= menu.getItem(menuItemIndex);
+                if(menuItem.getItemId() == R.id.signinbutton){
+                    menuItem.setVisible(false);
+                }
+                if (menuItem.getItemId() == R.id.signoutbutton){
+                    menuItem.setVisible(true);
+                }
+            }
+        }
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -194,17 +210,34 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 Intent intent;
 
                 switch (menuItem.getItemId()) {
+                    case R.id.signoutbutton:
+                        intent = new Intent(MainActivity.this,DeckView.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("HeroMap",heroDataMap);
+                        bundle.putBoolean("logout", true);
+                        e.remove("signedIn");
+                        e.apply();
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        mCurrentSelectedPosition = 0;
+                        return true;
+                    case R.id.signinbutton:
+                        intent = new Intent(MainActivity.this,DeckView.class);
+                        intent.putExtra("HeroMap",heroDataMap);
+                        startActivity(intent);
+                        mCurrentSelectedPosition = 0;
+                        return true;
                     case R.id.navigation_item_1:
                         intent = new Intent(MainActivity.this, AccountSearch.class);
                         intent.putExtra("HeroMap",heroDataMap);
                         startActivity(intent);
-                        mCurrentSelectedPosition = 0;
+                        mCurrentSelectedPosition = 1;
                         return true;
                     case R.id.navigation_item_2:
                         intent = new Intent(MainActivity.this, CardOfTheDayView.class);
                         intent.putExtra("CardOfTheDay",cotd);
                         startActivity(intent);
-                        mCurrentSelectedPosition = 1;
+                        mCurrentSelectedPosition = 2;
                         return true;
                     case R.id.navigation_item_3:
                         intent = new Intent(MainActivity.this, newsView.class);
@@ -215,6 +248,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         intent = new Intent(MainActivity.this, HeroView.class);
                         intent.putExtra("HeroMap",heroDataMap);
                         startActivity(intent);
+                        mCurrentSelectedPosition = 4;
                         return true;
                     default:
                         return true;

@@ -1,18 +1,22 @@
 package com.optimalotaku.paraguide;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -38,6 +42,8 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        Bundle extras = getIntent().getExtras();
+        boolean logout = extras.getBoolean("logout");
         setContentView(R.layout.login);
         deckManager = new FileManager(this);
         WebView myWebView = (WebView) findViewById(R.id.webview);
@@ -47,11 +53,36 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         myWebView.getSettings().setUseWideViewPort(true);
 
 
-        if (authCode == null) {
+
+        if (logout) {
+
+            myWebView.setWebViewClient(new WebViewClient() {
+                SharedPreferences.Editor e = getPreferences(Context.MODE_PRIVATE).edit();
+
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                    return true;
+                }
+            });
+            String deauthorizationUri = mReturnDeAuthorizationRequestUri();
+            myWebView.loadUrl(deauthorizationUri);
+            myWebView.clearCache(true);
+            CookieSyncManager.createInstance(this);
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            Intent i = new Intent(DeckView.this, MainActivity.class);
+            startActivity(i);
+        }
+        SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
+        authCode = prefs.getString("signedIn", null);
+
+        if (authCode == null && logout == false) {
 
             // need to get access token with OAuth2.0
 
             // set up webview for OAuth2 login
+
             myWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -65,14 +96,34 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
 
                             authCode = mExtractToken(url);
 
-                            //SharedPreferences.Editor e = getPreferences(Context.MODE_PRIVATE).edit();
-                            //e.putString(SHPREF_KEY_ACCESS_TOKEN, accessToken);
-                            //e.commit();
+                            SharedPreferences.Editor e = getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
+                            e.putString("signedIn", authCode);
+                            e.apply();
 
                             // spawn worker thread to do api calls
-                            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
-                            setDelegate(deckInfo);
-                            deckInfo.execute();
+                            //ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
+                            //setDelegate(deckInfo);
+                            //deckInfo.execute();
+
+                            AlertDialog.Builder builder;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                builder = new AlertDialog.Builder(DeckView.this, android.R.style.Theme_Material_Dialog_Alert);
+                            } else {
+                                builder = new AlertDialog.Builder(DeckView.this);
+                            }
+                            builder.setTitle("Signed In! Welcome to Paraguide!")
+                                    .setMessage("Are you sure you want to delete this entry?")
+                                    .setPositiveButton("Thanks!", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+
+                            Intent i = new Intent(DeckView.this, MainActivity.class);
+                            startActivity(i);
+                            //
+
                         }
 
                         // don't go to redirectUri
@@ -91,8 +142,8 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         } else {
             // have access token, so spawn worker thread to do api calls
 
-            ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
-            deckInfo.execute();
+            //ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
+            //deckInfo.execute();
         }
 
 
@@ -109,6 +160,12 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
     private String mReturnAuthorizationRequestUri() {
         StringBuilder sb = new StringBuilder();
         sb.append(Constants.AUTHORIZE_PATH);
+        sb.append(Constants.CLIENT_ID);
+        return sb.toString();
+    }
+    private String mReturnDeAuthorizationRequestUri() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Constants.LOGOUT_PATH);
         sb.append(Constants.CLIENT_ID);
         return sb.toString();
     }
