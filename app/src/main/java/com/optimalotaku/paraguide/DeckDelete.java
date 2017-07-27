@@ -1,13 +1,10 @@
 package com.optimalotaku.paraguide;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.view.ContextThemeWrapper;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -66,21 +63,6 @@ public class DeckDelete extends AsyncTask<String,Void,Integer>{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            i = new Intent(this.mcontext, DeckView.class);
-            i.putExtra("HeroMap",heroDataMap);
-            AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this.mcontext, R.style.myDialog));
-            builder
-                    .setMessage("\""+ deckName + "\" is gone!")
-                    .setTitle("Deck Deleted!")
-                    .setPositiveButton("Got it!",  new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            mcontext.startActivity(i);
-                            
-                        }
-                    })
-                    .show();
 
         }
     }

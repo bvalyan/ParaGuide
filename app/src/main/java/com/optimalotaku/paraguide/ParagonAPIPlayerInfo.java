@@ -84,7 +84,7 @@ public class ParagonAPIPlayerInfo extends AsyncTask<Void, Void, String> {
             obj2 = new JSONObject(foundAccountID);
             foundAccountID = obj2.getString("accountId");
             editor = prefs.edit();
-            editor.putString("ACCOUNT_ID", foundAccountID);
+            editor.putString("N_ACCOUNT_ID", foundAccountID);
             editor.apply();
             url3 = new URL("https://developer-paragon.epicgames.com/v1/account/" + foundAccountID + "/stats");
             urlConnection3 = (HttpURLConnection) url3.openConnection();

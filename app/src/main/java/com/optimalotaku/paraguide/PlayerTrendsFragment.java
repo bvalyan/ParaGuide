@@ -67,7 +67,7 @@ public class PlayerTrendsFragment extends Fragment {
         final String []  text = new String[hDataMap.size()];
         String [] pics = new String[hDataMap.size()];
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-        String accountID = prefs.getString("ACCOUNT_ID", "NULL");
+        String accountID = prefs.getString("N_ACCOUNT_ID", "NULL");
         int [] scores = new int[hDataMap.size()];
         Set<Map.Entry<String, HeroData>> entrySet = hDataMap.entrySet();
         int i = 0;

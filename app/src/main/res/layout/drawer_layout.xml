@@ -5,19 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <WebView
+        android:id="@+id/login_page"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar" />
+
 
         <RelativeLayout
             android:id="@+id/nav_contentframe"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:background="@android:color/background_dark"
+
             >
             <com.optimalotaku.paraguide.ScalableVideoView
                 android:id="@+id/paragon_vid"
@@ -48,9 +52,21 @@
                 android:fontFamily="sans-serif-condensed"
                 tools:layout_editor_absoluteY="256dp"
                 tools:layout_editor_absoluteX="70dp" />
+
+            <TextView
+                android:id="@+id/personalized_greeting"
+                android:layout_marginTop="14dp"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_5"
+                android:fontFamily="sans-serif-condensed"/>
+
+            <include layout="@layout/toolbar" />
+
             <Button
                 android:id="@+id/analyze_button"
-
                 android:layout_width="200dp"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_height="60dp"

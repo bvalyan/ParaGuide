@@ -1,34 +1,35 @@
 package com.optimalotaku.paraguide;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Brandon on 12/15/16.
  */
 
-public class DeckView extends AppCompatActivity implements DeckInfoResponse {
+public class TokenManager extends AppCompatActivity{
 
     private String authCode;
     FileManager deckManager;
@@ -53,7 +54,6 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         myWebView.getSettings().setUseWideViewPort(true);
 
 
-
         if (logout) {
 
             myWebView.setWebViewClient(new WebViewClient() {
@@ -71,7 +71,9 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
             CookieSyncManager.createInstance(this);
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.removeAllCookie();
-            Intent i = new Intent(DeckView.this, MainActivity.class);
+            Toast.makeText(getApplicationContext(), "Signed out!",
+                    Toast.LENGTH_LONG).show();
+            Intent i = new Intent(TokenManager.this, MainActivity.class);
             startActivity(i);
         }
         SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
@@ -101,15 +103,15 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
                             e.apply();
 
                             // spawn worker thread to do api calls
-                            //ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
+                            //ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, TokenManager.this);
                             //setDelegate(deckInfo);
                             //deckInfo.execute();
 
-                            AlertDialog.Builder builder;
+                          /*  AlertDialog.Builder builder;
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                builder = new AlertDialog.Builder(DeckView.this, android.R.style.Theme_Material_Dialog_Alert);
+                                builder = new AlertDialog.Builder(TokenManager.this, android.R.style.Theme_Material_Dialog_Alert);
                             } else {
-                                builder = new AlertDialog.Builder(DeckView.this);
+                                builder = new AlertDialog.Builder(TokenManager.this);
                             }
                             builder.setTitle("Signed In! Welcome to Paraguide!")
                                     .setMessage("Are you sure you want to delete this entry?")
@@ -118,9 +120,11 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
                                         }
                                     })
                                     .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .show();
+                                    .show();*/
 
-                            Intent i = new Intent(DeckView.this, MainActivity.class);
+                            Toast.makeText(getApplicationContext(), "Signed in!",
+                                    Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(TokenManager.this, MainActivity.class);
                             startActivity(i);
                             //
 
@@ -142,12 +146,41 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
         } else {
             // have access token, so spawn worker thread to do api calls
 
-            //ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, DeckView.this);
+            //ParagonAPIDeckInfo deckInfo = new ParagonAPIDeckInfo(authCode, TokenManager.this);
             //deckInfo.execute();
         }
 
 
         //myWebView.loadUrl("http://www.example.com");
+    }
+
+    public void checkToken(Context context) throws ExecutionException, InterruptedException, ParseException {
+        SharedPreferences prefs = context.getSharedPreferences("authInfo", MODE_PRIVATE);
+        String expireDate = prefs.getString("EXPIRE_TIME", "null");
+
+        if(expireDate.equals("null")){// if we don't have a token, go get one!
+            getToken(context);
+            expireDate = prefs.getString("EXPIRE_TIME", "null");
+        }
+        else{ //check to make sure token hasnt expired. If it has, go get a new one!
+            GregorianCalendar calendar = new GregorianCalendar();
+            DateFormat format = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" );
+            Date date = format.parse(expireDate);
+            calendar.setTime(date);
+            Calendar now = new GregorianCalendar();
+            int compare = calendar.compareTo(now);
+            if(compare < 0){
+                Log.e("TOKEN","Gotta get tokens!");
+                getToken(context);
+            }
+        }
+    }
+
+    public void getToken(Context context) throws ExecutionException, InterruptedException {
+        SharedPreferences prefs = context.getSharedPreferences("authInfo", MODE_PRIVATE);
+        authCode = prefs.getString("signedIn", null);
+        ParagonAPITokenJob obtainToken = new ParagonAPITokenJob(authCode, context);
+        obtainToken.execute();
     }
 
     private String mExtractToken(String url) {
@@ -171,39 +204,11 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
     }
 
     public void endSession(View view){
-        Intent intent = new Intent(DeckView.this, MainActivity.class);
+        Intent intent = new Intent(TokenManager.this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void setDelegate(ParagonAPIDeckInfo deckInfo){
-        deckInfo.delegate = this;
-    }
 
-    @Override
-    public void processDeckInfoFinish(final List<DeckData> dDataList) throws IOException {
-
-        Intent in = new Intent(DeckView.this, MyCardView.class);
-        startActivity(in);
-        //TextView responseView = (TextView) findViewById(R.id.textView);
-
-        //progressDialog.dismiss(); // for close the dialog bar.
-
-        String deckListStr = "";
-        String heroName = null;
-        HashMap<String,HeroData> heroDataMap;
-
-        final String [] text = new String[dDataList.size()];
-        String [] pics = new String[dDataList.size()];
-
-        for (int i = 0; i < dDataList.size(); i++){
-            text[i] = dDataList.get(i).getDeckName();
-            heroName = dDataList.get(i).getHeroName();
-            heroDataMap = (HashMap<String,HeroData>) getIntent().getSerializableExtra("HeroMap");
-            if (heroDataMap.containsKey(heroName)){
-                Log.i("INFO", "HERO FOUND!");
-                pics[i] = heroDataMap.get(heroName).getImageIconURL();
-            }
-        }
 
 
         /*CustomList adapter = new
@@ -218,7 +223,7 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
                                     int position, long id) {
                 //Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
                 //start new activity with method that takes in name and HeroData object and displays information
-                Intent i = new Intent(DeckView.this,DetailDeckView.class);
+                Intent i = new Intent(TokenManager.this,DetailDeckView.class);
                 DeckData chosenDeck = dDataList.get(position);
                 //Bundle deckGoodies = new Bundle();
                 //deckGoodies.putString("deckJSONArray", chosenDeck.toString());
@@ -241,20 +246,20 @@ public class DeckView extends AppCompatActivity implements DeckInfoResponse {
 
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(DeckView.this, MyCardView.class);
+                Intent i = new Intent(TokenManager.this, MyCardView.class);
                 startActivity(i);
             }
         });
 */
         //responseView.setText(deckListStr);
 
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         //imm.hideSoftInputFromWindow(responseView.getWindowToken(), 0);
         //Button endButton = (Button) findViewById(R.id.button3);
         //endButton.setVisibility(View.VISIBLE);
 
 
-    }
+
     @Override
     public void onBackPressed()
     {

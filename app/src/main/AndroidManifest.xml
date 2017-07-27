@@ -19,14 +19,16 @@
         android:hardwareAccelerated="false"
         android:supportsRtl="true"
         android:uiOptions="splitActionBarWhenNarrow"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.MyParaTheme">
+
+       >
 
 
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
-        <activity android:name=".DeckView"
+        <activity android:name=".TokenManager"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>

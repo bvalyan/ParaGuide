@@ -30,11 +30,16 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity implements CardInfoResponse, ImageLoaderResponse, HeroInfoResponse {
@@ -62,11 +67,15 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     int stopPosition;
     Animation in;
     Animation buttonIN;
+    Animation greetingIN;
+    TokenManager check = new TokenManager();
+
 
     private void setUpToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -114,6 +123,15 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     public void onResume() {
         super.onResume();
         Log.d("resume", "onResume called");
+        try {
+            check.checkToken(this); //check token expire time on resume
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         videoview.seekTo(stopPosition);
         videoview.start(); //Or use resume() if it doesn't work. I'm not sure
     }
@@ -136,8 +154,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         in.setDuration(7000);
         buttonIN = new AlphaAnimation(0.0f, 1.0f);
         buttonIN.setDuration(8000);
+        greetingIN = new AlphaAnimation(0.0f, 1.0f);
+        greetingIN.setDuration(9000);
         TextView title = (TextView) findViewById(R.id.title_5);
         title.startAnimation(in);
+
         Button analyze = (Button) findViewById(R.id.analyze_button);
         analyze.setOnClickListener(new View.OnClickListener() {
             Intent intent;
@@ -188,8 +209,39 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         final SharedPreferences.Editor e = getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
         final SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
         String isSignedIn = prefs.getString("signedIn", "null");
+        String userName = null;
         Menu menu = mNavigationView.getMenu();
+        TextView greeting = (TextView) findViewById(R.id.personalized_greeting);
+
         if(!isSignedIn.equals("null")){
+            try {
+                check.checkToken(this);
+            } catch (ExecutionException f) {
+                f.printStackTrace();
+            } catch (InterruptedException f) {
+                f.printStackTrace();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
+            String userID = prefs.getString("ACCOUNT_ID","null");
+            APIHomeScreenInfo info = new APIHomeScreenInfo();
+            info.execute(userID);
+            String userNameJSON;
+            try {
+                userNameJSON = info.get();
+                JSONObject displayName = new JSONObject(userNameJSON);
+                userName = displayName.getString("displayName");
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            } catch (ExecutionException e1) {
+                e1.printStackTrace();
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+
+            greeting.setVisibility(View.VISIBLE);
+            greeting.startAnimation(greetingIN);
+            greeting.setText("Welcome back, " +userName+ ". Who's the competition today?");
             for (int menuItemIndex = 0; menuItemIndex < menu.size(); menuItemIndex++) {
                 MenuItem menuItem= menu.getItem(menuItemIndex);
                 if(menuItem.getItemId() == R.id.signinbutton){
@@ -200,6 +252,10 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 }
             }
         }
+        else {
+            greeting.setVisibility(View.VISIBLE);
+        }
+
 
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -211,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
                 switch (menuItem.getItemId()) {
                     case R.id.signoutbutton:
-                        intent = new Intent(MainActivity.this,DeckView.class);
+                        intent = new Intent(MainActivity.this,TokenManager.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("HeroMap",heroDataMap);
                         bundle.putBoolean("logout", true);
@@ -222,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         mCurrentSelectedPosition = 0;
                         return true;
                     case R.id.signinbutton:
-                        intent = new Intent(MainActivity.this,DeckView.class);
+                        intent = new Intent(MainActivity.this,TokenManager.class);
                         intent.putExtra("HeroMap",heroDataMap);
                         startActivity(intent);
                         mCurrentSelectedPosition = 0;
