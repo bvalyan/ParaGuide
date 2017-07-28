@@ -47,7 +47,7 @@ public class TokenManager extends AppCompatActivity{
         boolean logout = extras.getBoolean("logout");
         setContentView(R.layout.login);
         deckManager = new FileManager(this);
-        WebView myWebView = (WebView) findViewById(R.id.webview);
+        final WebView myWebView = (WebView) findViewById(R.id.webview);
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setDomStorageEnabled(true);
         myWebView.getSettings().setLoadWithOverviewMode(true);
@@ -88,7 +88,12 @@ public class TokenManager extends AppCompatActivity{
             myWebView.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
+                    Log.e("URL", url);
+                    if(url.equals("https://accounts.epicgames.com/authorize/index?client_id=5cbc82af86414e03a549dbb811dfbbc5") ){
+                        url= "https://accounts.epicgames.com/authorize/index?response_type=code&client_id=5cbc82af86414e03a549dbb811dfbbc5";
+                        Log.e("URLSWITCH TO ", url);
+                        myWebView.loadUrl(url);
+                    }
                     if (url.startsWith(Constants.REDIRECT_URI)) {
 
                         // extract OAuth2 access_code appended in url
@@ -194,6 +199,7 @@ public class TokenManager extends AppCompatActivity{
         StringBuilder sb = new StringBuilder();
         sb.append(Constants.AUTHORIZE_PATH);
         sb.append(Constants.CLIENT_ID);
+        sb.append(Constants.RESPONSE_TYPE);
         return sb.toString();
     }
     private String mReturnDeAuthorizationRequestUri() {

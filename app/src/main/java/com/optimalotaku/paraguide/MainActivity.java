@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         final SharedPreferences.Editor e = getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
         final SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
         String isSignedIn = prefs.getString("signedIn", "null");
-        String userName = null;
+        String userName = " ";
         Menu menu = mNavigationView.getMenu();
         TextView greeting = (TextView) findViewById(R.id.personalized_greeting);
 
@@ -237,6 +237,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 e1.printStackTrace();
             } catch (JSONException e1) {
                 e1.printStackTrace();
+            } catch (NullPointerException el){
+                el.printStackTrace();
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
             }
 
             greeting.setVisibility(View.VISIBLE);
