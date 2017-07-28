@@ -42,7 +42,6 @@ public class TokenManager extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         Bundle extras = getIntent().getExtras();
         boolean logout = extras.getBoolean("logout");
         setContentView(R.layout.login);
@@ -127,6 +126,13 @@ public class TokenManager extends AppCompatActivity{
                                     .setIcon(android.R.drawable.ic_dialog_alert)
                                     .show();*/
 
+                            try {
+                                getToken(getApplicationContext(), authCode);
+                            } catch (ExecutionException e1) {
+                                e1.printStackTrace();
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
                             Toast.makeText(getApplicationContext(), "Signed in!",
                                     Toast.LENGTH_LONG).show();
                             Intent i = new Intent(TokenManager.this, MainActivity.class);
@@ -159,12 +165,16 @@ public class TokenManager extends AppCompatActivity{
         //myWebView.loadUrl("http://www.example.com");
     }
 
-    public void checkToken(Context context) throws ExecutionException, InterruptedException, ParseException {
+
+
+    public String checkToken(Context context, String authCode) throws ExecutionException, InterruptedException, ParseException {
         SharedPreferences prefs = context.getSharedPreferences("authInfo", MODE_PRIVATE);
         String expireDate = prefs.getString("EXPIRE_TIME", "null");
+        String userID = prefs.getString("ACCOUNT_ID", "null");
+
 
         if(expireDate.equals("null")){// if we don't have a token, go get one!
-            getToken(context);
+            getToken(context, authCode);
             expireDate = prefs.getString("EXPIRE_TIME", "null");
         }
         else{ //check to make sure token hasnt expired. If it has, go get a new one!
@@ -176,16 +186,16 @@ public class TokenManager extends AppCompatActivity{
             int compare = calendar.compareTo(now);
             if(compare < 0){
                 Log.e("TOKEN","Gotta get tokens!");
-                getToken(context);
+                userID = getToken(context, authCode);
             }
         }
+        return userID;
     }
 
-    public void getToken(Context context) throws ExecutionException, InterruptedException {
-        SharedPreferences prefs = context.getSharedPreferences("authInfo", MODE_PRIVATE);
-        authCode = prefs.getString("signedIn", null);
+    public String getToken(Context context, String authCode) throws ExecutionException, InterruptedException {
         ParagonAPITokenJob obtainToken = new ParagonAPITokenJob(authCode, context);
-        obtainToken.execute();
+        String userID = obtainToken.execute().get();
+        return userID;
     }
 
     private String mExtractToken(String url) {

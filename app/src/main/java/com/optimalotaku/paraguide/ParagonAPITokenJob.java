@@ -57,6 +57,7 @@ public class ParagonAPITokenJob extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... urls) {
 
+
         String token = null;
         String expireTime;
         URL url = null;
@@ -123,7 +124,7 @@ public class ParagonAPITokenJob extends AsyncTask<Void, Void, String> {
             e.printStackTrace();
             return null;
         }
-        return token;
+        return accountID;
     }
 
 
@@ -131,7 +132,7 @@ public class ParagonAPITokenJob extends AsyncTask<Void, Void, String> {
 
 
     protected void onPostExecute(String response){
-
+        System.out.print(response);
 
     }
 

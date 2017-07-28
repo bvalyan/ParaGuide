@@ -38,7 +38,7 @@
             <View
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:background="#85000000"
+                android:background="#99000000"
              />
             <TextView
                 android:id="@+id/title_5"
@@ -62,6 +62,31 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title_5"
                 android:fontFamily="sans-serif-condensed"/>
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/personalized_hero_kill_stat"
+            android:layout_below="@id/personalized_greeting"
+            android:visibility="gone"
+                android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-smallcaps"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/personalized_core_kill_stat"
+                android:layout_below="@id/personalized_hero_kill_stat"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif-smallcaps"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/personalized_games_won_stat"
+                android:layout_below="@id/personalized_core_kill_stat"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif-smallcaps"/>
 
             <include layout="@layout/toolbar" />
 
@@ -73,6 +98,7 @@
                 android:text="Player Analysis"
                 android:layout_below="@id/title_5"
                 android:layout_marginTop="100dp"
+                android:textColor="@color/white"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"/>
 

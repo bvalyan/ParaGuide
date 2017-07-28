@@ -21,22 +21,21 @@
 
     <AutoCompleteTextView
         android:id="@+id/playerText"
-        android:layout_width="200dp"
+        android:layout_width="159dp"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="Enter Epic Account Name"
+        android:hint="Epic Account Name"
         android:textSize="15dp"
-
         android:textColorHint="@color/white"
         android:textColor="@color/white"/>
     <Button
         android:layout_toRightOf="@id/playerText"
         android:id="@+id/playerqueryButton"
-        android:layout_width="200dp"
-        android:layout_marginLeft="60dp"
+        android:layout_width="100dp"
+        android:layout_marginLeft="0dp"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="Search"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:textColor="@color/white"
         android:onClick="onSearch"/>
 

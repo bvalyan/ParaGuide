@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -28,6 +29,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     int stopPosition;
     Animation in;
     Animation buttonIN;
+    String authCode;
     Animation greetingIN;
     TokenManager check = new TokenManager();
 
@@ -124,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         super.onResume();
         Log.d("resume", "onResume called");
         try {
-            check.checkToken(this); //check token expire time on resume
+            check.checkToken(this, authCode); //check token expire time on resume
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -137,11 +140,24 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     }
 
     @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.drawer_layout);
+        final SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
+        final SharedPreferences.Editor e = getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
+        //e.remove("signedIn");
+        //e.apply();
         videoview = (ScalableVideoView) findViewById(R.id.paragon_vid);
         videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -206,16 +222,20 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
         setUpNavDrawer();
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        final SharedPreferences.Editor e = getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
-        final SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
-        String isSignedIn = prefs.getString("signedIn", "null");
+        authCode = prefs.getString("signedIn", "null");
         String userName = " ";
         Menu menu = mNavigationView.getMenu();
         TextView greeting = (TextView) findViewById(R.id.personalized_greeting);
+        TextView pHeroKills = (TextView) findViewById(R.id.personalized_hero_kill_stat);
+        TextView pCoreKills = (TextView) findViewById(R.id.personalized_core_kill_stat);
+        TextView pGamesWon  = (TextView) findViewById(R.id.personalized_games_won_stat);
+        String userID = "";
 
-        if(!isSignedIn.equals("null")){
+
+
+        if(!authCode.equals("null")){
             try {
-                check.checkToken(this);
+                userID = check.checkToken(this, authCode);
             } catch (ExecutionException f) {
                 f.printStackTrace();
             } catch (InterruptedException f) {
@@ -223,7 +243,8 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }
-            String userID = prefs.getString("ACCOUNT_ID","null");
+
+
             APIHomeScreenInfo info = new APIHomeScreenInfo();
             info.execute(userID);
             String userNameJSON;
@@ -243,7 +264,86 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 finish();
                 startActivity(intent);
             }
+            ProgressBar pBar = new ProgressBar(this);
+            PlayerData pData = new PlayerData();
 
+            ParagonAPIPlayerInfo homeInfo = new ParagonAPIPlayerInfo(this,pBar,userName,pData);
+            homeInfo.execute();
+            String response = null;
+            try {
+                response = homeInfo.get();
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            } catch (ExecutionException e1) {
+                e1.printStackTrace();
+            }
+            Log.i("INFO", response);
+            JSONObject playerStats = null;
+
+            try {
+                playerStats = new JSONObject(response);
+            } catch (JSONException a) {
+                a.printStackTrace();
+            }
+
+            try {
+                pData.setMatches(playerStats.getJSONObject("pvp").getString("games_played"));
+            } catch (JSONException a) {
+                pData.setMatches("0");
+            }
+            try {
+                pData.setWins(playerStats.getJSONObject("pvp").getString("games_won"));
+            } catch (JSONException a) {
+                pData.setWins("0");
+            }
+            try {
+                pData.setAssists(playerStats.getJSONObject("pvp").getString("assists_hero"));
+            } catch (JSONException a) {
+                pData.setAssists("0");
+            }
+            try {
+                pData.setDeaths(playerStats.getJSONObject("pvp").getString("deaths_hero"));
+            } catch (JSONException a) {
+                pData.setDeaths("0");
+            }
+            try {
+                pData.setHeroKills(playerStats.getJSONObject("pvp").getString("kills_hero"));
+            } catch (JSONException a) {
+                pData.setHeroKills("0");
+            }
+            try {
+                pData.setCoreKills(playerStats.getJSONObject("pvp").getString("kills_core"));
+            } catch (JSONException a) {
+                pData.setCoreKills("0");
+            }
+            try {
+                pData.setTowerKills(playerStats.getJSONObject("pvp").getString("kills_towers"));
+            } catch (JSONException a) {
+                pData.setTowerKills("0");
+            }
+            try {
+                pData.setGamesLeft(playerStats.getJSONObject("pvp").getString("games_left"));
+            } catch (JSONException a) {
+                pData.setGamesLeft("0");
+            }
+            try {
+                pData.setGamesReconnected(playerStats.getJSONObject("pvp").getString("games_reconnected"));
+            } catch (JSONException a) {
+                pData.setGamesReconnected("0");
+            }
+
+            pHeroKills.setTextColor(Color.parseColor("#cec18e"));
+            pCoreKills.setTextColor(Color.parseColor("#cec18e"));
+            pGamesWon.setTextColor(Color.parseColor("#cec18e"));
+            pHeroKills.setVisibility(View.VISIBLE);
+            pCoreKills.setVisibility(View.VISIBLE);
+            pGamesWon.setVisibility(View.VISIBLE);
+            pHeroKills.startAnimation(greetingIN);
+            pCoreKills.startAnimation(greetingIN);
+            pGamesWon.startAnimation(greetingIN);
+            pHeroKills.setText("Lifetime Hero Kills: " + pData.getHeroKills());
+            pCoreKills.setText("Lifetime Core Takedowns " + pData.getCoreKills());
+            pGamesWon.setText("Lifetime Wins " + pData.getWins());
             greeting.setVisibility(View.VISIBLE);
             greeting.startAnimation(greetingIN);
             greeting.setText("Welcome back, " +userName+ ". Who's the competition today?");
@@ -258,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             }
         }
         else {
-            greeting.setVisibility(View.VISIBLE);
+
         }
 
 
