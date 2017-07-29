@@ -2,7 +2,6 @@ package com.optimalotaku.paraguide;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by bvaly on 2/8/2017.
@@ -66,7 +67,7 @@ public class PlayerTrendsFragment extends Fragment {
 
         final String []  text = new String[hDataMap.size()];
         String [] pics = new String[hDataMap.size()];
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        SharedPreferences prefs = this.getContext().getSharedPreferences("authInfo", MODE_PRIVATE);
         String accountID = prefs.getString("N_ACCOUNT_ID", "NULL");
         int [] scores = new int[hDataMap.size()];
         Set<Map.Entry<String, HeroData>> entrySet = hDataMap.entrySet();
