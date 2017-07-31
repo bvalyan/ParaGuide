@@ -76,6 +76,7 @@ public class PlayerTrendsFragment extends Fragment {
         for (int j = 0; j < hDataMap.size(); j += 1) {
             reviewPacket[j] = new HeroReview();
         }
+
         for(Map.Entry entry : entrySet){
             HeroData tempData = new HeroData();
             text[i] = entry.getKey().toString();
@@ -114,7 +115,6 @@ public class PlayerTrendsFragment extends Fragment {
         HeroAPIStats stats = new HeroAPIStats(this.getContext());
         String heroRawData = stats.execute(accountID, heroID).get();
         JSONObject rawData = new JSONObject(heroRawData);
-
         PlayerData pHData = new PlayerData();
 
         try{
