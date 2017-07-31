@@ -137,6 +137,7 @@ public class TokenManager extends AppCompatActivity{
                                     Toast.LENGTH_LONG).show();
                             Intent i = new Intent(TokenManager.this, MainActivity.class);
                             startActivity(i);
+                            finish();
                             //
 
                         }
