@@ -74,7 +74,13 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     String authCode;
     Animation greetingIN;
     TokenManager check = new TokenManager();
-
+    TextView greeting = null;
+    TextView pHeroKills = null;
+    TextView pCoreKills = null;
+    TextView pGamesWon  = null;
+    String userID = "";
+    String userName = "";
+    Menu menu = null;
 
     private void setUpToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -128,14 +134,162 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     public void onResume() {
         super.onResume();
         Log.d("resume", "onResume called");
-        try {
-            check.checkToken(this, authCode); //check token expire time on resume
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+
+        if(!authCode.equals("null")) {
+            final WebView myWebView = (WebView) findViewById(R.id.login_page);
+            myWebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    Log.e("URL", url);
+                    if (url.equals("https://accounts.epicgames.com/authorize/index?client_id=5cbc82af86414e03a549dbb811dfbbc5")) {
+                        url = "https://accounts.epicgames.com/authorize/index?response_type=code&client_id=5cbc82af86414e03a549dbb811dfbbc5";
+                        Log.e("URLSWITCH TO ", url);
+                        myWebView.loadUrl(url);
+                    }
+                    if (url.startsWith(Constants.REDIRECT_URI)) {
+
+                        // extract OAuth2 access_code appended in url
+                        if (url.indexOf("?code=") != -1) {
+
+                            // store temporarily
+                            authCode = mExtractToken(url);
+                            SharedPreferences.Editor e = getSharedPreferences("authInfo", Context.MODE_PRIVATE).edit();
+                            e.putString("signedIn", authCode);
+                            e.apply();
+                        }
+                        // don't go to redirectUri
+                        return true;
+                    }
+                    // load the webpage from url: login and grant access
+                    return super.shouldOverrideUrlLoading(view, url); // return false;
+                }
+            });
+
+            // do OAuth2 login
+            String authorizationUri = mReturnAuthorizationRequestUri();
+            myWebView.loadUrl(authorizationUri);
+
+            try {
+                check.checkToken(this, authCode); //check token expire time on resume
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            APIHomeScreenInfo info = new APIHomeScreenInfo();
+            info.execute(userID);
+            String userNameJSON;
+            try {
+                userNameJSON = info.get();
+                JSONObject displayName = new JSONObject(userNameJSON);
+                userName = displayName.getString("displayName");
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            } catch (ExecutionException e1) {
+                e1.printStackTrace();
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            } catch (NullPointerException el) {
+                el.printStackTrace();
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+            ProgressBar pBar = new ProgressBar(this);
+            PlayerData pData = new PlayerData();
+
+            ParagonAPIPlayerInfo homeInfo = new ParagonAPIPlayerInfo(this, pBar, userName, pData);
+            homeInfo.execute();
+            String response = null;
+            try {
+                response = homeInfo.get();
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            } catch (ExecutionException e1) {
+                e1.printStackTrace();
+            }
+            Log.i("INFO", response);
+            JSONObject playerStats = null;
+
+            try {
+                playerStats = new JSONObject(response);
+            } catch (JSONException a) {
+                a.printStackTrace();
+            }
+
+            try {
+                pData.setMatches(playerStats.getJSONObject("pvp").getString("games_played"));
+            } catch (JSONException a) {
+                pData.setMatches("0");
+            }
+            try {
+                pData.setWins(playerStats.getJSONObject("pvp").getString("games_won"));
+            } catch (JSONException a) {
+                pData.setWins("0");
+            }
+            try {
+                pData.setAssists(playerStats.getJSONObject("pvp").getString("assists_hero"));
+            } catch (JSONException a) {
+                pData.setAssists("0");
+            }
+            try {
+                pData.setDeaths(playerStats.getJSONObject("pvp").getString("deaths_hero"));
+            } catch (JSONException a) {
+                pData.setDeaths("0");
+            }
+            try {
+                pData.setHeroKills(playerStats.getJSONObject("pvp").getString("kills_hero"));
+            } catch (JSONException a) {
+                pData.setHeroKills("0");
+            }
+            try {
+                pData.setCoreKills(playerStats.getJSONObject("pvp").getString("kills_core"));
+            } catch (JSONException a) {
+                pData.setCoreKills("0");
+            }
+            try {
+                pData.setTowerKills(playerStats.getJSONObject("pvp").getString("kills_towers"));
+            } catch (JSONException a) {
+                pData.setTowerKills("0");
+            }
+            try {
+                pData.setGamesLeft(playerStats.getJSONObject("pvp").getString("games_left"));
+            } catch (JSONException a) {
+                pData.setGamesLeft("0");
+            }
+            try {
+                pData.setGamesReconnected(playerStats.getJSONObject("pvp").getString("games_reconnected"));
+            } catch (JSONException a) {
+                pData.setGamesReconnected("0");
+            }
+
+            pHeroKills.setTextColor(Color.parseColor("#cec18e"));
+            pCoreKills.setTextColor(Color.parseColor("#cec18e"));
+            pGamesWon.setTextColor(Color.parseColor("#cec18e"));
+            pHeroKills.setVisibility(View.VISIBLE);
+            pCoreKills.setVisibility(View.VISIBLE);
+            pGamesWon.setVisibility(View.VISIBLE);
+            pHeroKills.startAnimation(greetingIN);
+            pCoreKills.startAnimation(greetingIN);
+            pGamesWon.startAnimation(greetingIN);
+            pHeroKills.setText("Lifetime Hero Kills: " + pData.getHeroKills());
+            pCoreKills.setText("Lifetime Core Takedowns " + pData.getCoreKills());
+            pGamesWon.setText("Lifetime Wins " + pData.getWins());
+            greeting.setVisibility(View.VISIBLE);
+            greeting.startAnimation(greetingIN);
+            greeting.setText("Welcome back, " + userName + ". Who's the competition today?");
+            for (int menuItemIndex = 0; menuItemIndex < menu.size(); menuItemIndex++) {
+                MenuItem menuItem = menu.getItem(menuItemIndex);
+                if (menuItem.getItemId() == R.id.signinbutton) {
+                    menuItem.setVisible(false);
+                }
+                if (menuItem.getItemId() == R.id.signoutbutton) {
+                    menuItem.setVisible(true);
+                }
+            }
         }
         videoview.seekTo(stopPosition);
         videoview.start(); //Or use resume() if it doesn't work. I'm not sure
@@ -173,6 +327,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         buttonIN = new AlphaAnimation(0.0f, 1.0f);
         buttonIN.setDuration(8000);
         greetingIN = new AlphaAnimation(0.0f, 1.0f);
+
         greetingIN.setDuration(9000);
         TextView title = (TextView) findViewById(R.id.title_5);
         title.startAnimation(in);
@@ -225,13 +380,12 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         setUpNavDrawer();
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         authCode = prefs.getString("signedIn", "null");
-        String userName = " ";
-        Menu menu = mNavigationView.getMenu();
-        TextView greeting = (TextView) findViewById(R.id.personalized_greeting);
-        TextView pHeroKills = (TextView) findViewById(R.id.personalized_hero_kill_stat);
-        TextView pCoreKills = (TextView) findViewById(R.id.personalized_core_kill_stat);
-        TextView pGamesWon  = (TextView) findViewById(R.id.personalized_games_won_stat);
-        String userID = "";
+
+        menu = mNavigationView.getMenu();
+        greeting = (TextView) findViewById(R.id.personalized_greeting);
+        pHeroKills = (TextView) findViewById(R.id.personalized_hero_kill_stat);
+        pCoreKills = (TextView) findViewById(R.id.personalized_core_kill_stat);
+        pGamesWon  = (TextView) findViewById(R.id.personalized_games_won_stat);
 
         if(!authCode.equals("null")){
             final WebView myWebView = (WebView) findViewById(R.id.login_page);
@@ -478,48 +632,6 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
         progress.dismiss();
         AppRater.app_launched(this);
-
-      /*  gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            Intent intent;
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                gridview.playSoundEffect(SoundEffectConstants.CLICK); //send feedback on main drawer
-                gridview.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-
-                switch(position){
-                    case 0 :
-                        intent = new Intent(MainActivity.this, AccountSearch.class);
-                        intent.putExtra("HeroMap",heroDataMap);
-                        startActivity(intent);
-                        break;
-                    case 1 :
-                        intent = new Intent(MainActivity.this, DeckView.class);
-                        intent.putExtra("HeroMap",heroDataMap);
-                        startActivity(intent);
-                        break;
-                    case 2 :
-                        //intent = new Intent(MainActivity.this, PAChatActivity.class);
-                        //startActivity(intent);
-                        Toast.makeText(MainActivity.this, "Coming Soon!",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case 3 :
-                        intent = new Intent(MainActivity.this, HeroView.class);
-                        intent.putExtra("HeroMap",heroDataMap);
-                        startActivity(intent);
-                        break;
-                    case 4 :
-                        intent = new Intent(MainActivity.this, CardOfTheDayView.class);
-                        intent.putExtra("CardOfTheDay",cotd);
-                        startActivity(intent);
-                        break;
-                    case 5 :
-                        intent = new Intent(MainActivity.this, newsView.class);
-                        startActivity(intent);
-                        break;
-                }
-            }
-        });*/
     }
 
     private String mReturnAuthorizationRequestUri() {
