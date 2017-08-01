@@ -38,10 +38,10 @@ android {
     defaultConfig {
         multiDexEnabled  true
         applicationId "com.optimalotaku.paraguide"
-        minSdkVersion 22
+        minSdkVersion 23
         targetSdkVersion 25
-        versionCode 28
-        versionName "5.00"
+        versionCode 29
+        versionName "5.00A"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         packagingOptions {
             pickFirst  'META-INF/LICENSE'
