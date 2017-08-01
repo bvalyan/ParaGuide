@@ -147,23 +147,12 @@ public class playerGraphFragment extends Fragment {
         // add many colors
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
 
         for (int c : ColorTemplate.JOYFUL_COLORS)
             colors.add(c);
 
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
 
-
-        colors.add(ColorTemplate.getHoloBlue());
+        //colors.add(ColorTemplate.getHoloBlue());
         dataSet.setColors(colors);
 
         // instantiate pie data object now
@@ -462,9 +451,9 @@ public class playerGraphFragment extends Fragment {
         LegendEntry win = new LegendEntry();
         LegendEntry losses = new LegendEntry();
         win.label = "Wins";
-        win.formColor = ColorTemplate.LIBERTY_COLORS[0];
+        win.formColor = ColorTemplate.JOYFUL_COLORS[0];
         losses.label = "Losses";
-        losses.formColor = ColorTemplate.LIBERTY_COLORS[1];
+        losses.formColor = ColorTemplate.JOYFUL_COLORS[1];
         LegendEntry kills = new LegendEntry();
         LegendEntry deaths = new LegendEntry();
         LegendEntry assists = new LegendEntry();
