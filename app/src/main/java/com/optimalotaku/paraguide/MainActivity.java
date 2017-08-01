@@ -25,6 +25,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
@@ -231,10 +233,42 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         TextView pGamesWon  = (TextView) findViewById(R.id.personalized_games_won_stat);
         String userID = "";
 
-
-
         if(!authCode.equals("null")){
+            final WebView myWebView = (WebView) findViewById(R.id.login_page);
+            myWebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    Log.e("URL", url);
+                    if(url.equals("https://accounts.epicgames.com/authorize/index?client_id=5cbc82af86414e03a549dbb811dfbbc5") ){
+                        url= "https://accounts.epicgames.com/authorize/index?response_type=code&client_id=5cbc82af86414e03a549dbb811dfbbc5";
+                        Log.e("URLSWITCH TO ", url);
+                        myWebView.loadUrl(url);
+                    }
+                    if (url.startsWith(Constants.REDIRECT_URI)) {
+
+                        // extract OAuth2 access_code appended in url
+                        if (url.indexOf("?code=") != -1) {
+
+                            // store temporarily
+                            authCode = mExtractToken(url);
+                            SharedPreferences.Editor e = getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
+                            e.putString("signedIn", authCode);
+                            e.apply();
+                        }
+                        // don't go to redirectUri
+                        return true;
+                    }
+                    // load the webpage from url: login and grant access
+                    return super.shouldOverrideUrlLoading(view, url); // return false;
+                }
+            });
+
+            // do OAuth2 login
+            String authorizationUri = mReturnAuthorizationRequestUri();
+            myWebView.loadUrl(authorizationUri);
+
             try {
+
                 userID = check.checkToken(this, authCode);
             } catch (ExecutionException f) {
                 f.printStackTrace();
@@ -488,6 +522,14 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         });*/
     }
 
+    private String mReturnAuthorizationRequestUri() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Constants.AUTHORIZE_PATH);
+        sb.append(Constants.CLIENT_ID);
+        sb.append(Constants.RESPONSE_TYPE);
+        return sb.toString();
+    }
+
     public void getHeroData(){
         fileManager = new FileManager(this);
 
@@ -628,6 +670,13 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
        // gridview.setAdapter(new MyAdapter(this,imgBitmap));
     }
 
+    private String mExtractToken(String url) {
+        // url has format https://localhost/#access_token=<tokenstring>&token_type=Bearer&expires_in=315359999
+        String[] sArray = url.split("code=");
+        System.out.println(sArray[1]);
+        return sArray[1];
+    }
+
 }
 
 class AppRater {
@@ -664,6 +713,8 @@ class AppRater {
 
         editor.commit();
     }
+
+
 
     public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
         final Dialog dialog = new Dialog(mContext);
