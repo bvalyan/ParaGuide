@@ -7,20 +7,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Base64;
-import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jerek on 12/19/2016.
@@ -65,7 +53,7 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... urls) {
 
-        String token = null;
+        /*String token = null;
 
         String expireTime;
         URL url = null;
@@ -77,21 +65,6 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
         StringBuilder stringBuilder2 = new StringBuilder();
         StringBuilder stringBuilder3 = new StringBuilder();
         JSONArray deckList = new JSONArray();
-        try {
-            url = new URL("https://developer-paragon.epicgames.com/v1/auth/token/" + authCode);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
-            urlConnection.addRequestProperty(Constants.AUTH_VAR, "Basic " + encode64());
-            String testEncode = encode64();
-            System.out.println(urlConnection.toString());
-
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line).append("\n");
-            }
-            bufferedReader.close();
 
             try {
                 JSONObject obj = null;
@@ -124,9 +97,13 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
 
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (MalformedURLException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
 
-        } catch (MalformedURLException e) {
+    } catch (MalformedURLException e) {
             e.printStackTrace();
             return null;
         } catch (IOException e) {
@@ -226,7 +203,7 @@ public class ParagonAPIDeckInfo extends AsyncTask<Void, Void, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+*/ return null;
     }
 
     public static String encode64() {

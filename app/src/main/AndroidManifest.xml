@@ -67,6 +67,16 @@
             android:windowSoftInputMode="stateVisible|adjustPan"
             >
         </activity>
+        <activity android:name=".MyDecks"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            >
+        </activity>
+        <activity android:name=".Cards"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            >
+        </activity>
         <activity android:name=".NewPlayerDisplay"
             android:screenOrientation="portrait">
         </activity>

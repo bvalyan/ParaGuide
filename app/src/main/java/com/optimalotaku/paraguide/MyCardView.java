@@ -1,33 +1,12 @@
 package com.optimalotaku.paraguide;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.HapticFeedbackConstants;
-import android.view.SoundEffectConstants;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Brandon on 2/1/17.
  */
 
-public class MyCardView extends AppCompatActivity{
+public class MyCardView extends AppCompatActivity{/*
     private String authCode;
     FileManager deckManager;
     ListView list;
@@ -104,5 +83,5 @@ public class MyCardView extends AppCompatActivity{
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

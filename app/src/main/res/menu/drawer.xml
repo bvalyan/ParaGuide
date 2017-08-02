@@ -25,6 +25,12 @@
         <item
             android:id="@+id/navigation_item_4"
             android:title="Hero Data" />
+        <item
+            android:id="@+id/navigation_item_5"
+            android:title="Cards" />
+        <item
+            android:id="@+id/navigation_item_6"
+            android:title="My Decks" />
     </group>
 
 </menu>

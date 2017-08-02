@@ -604,6 +604,16 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         startActivity(intent);
                         mCurrentSelectedPosition = 4;
                         return true;
+                    case R.id.navigation_item_5:
+                        intent = new Intent(MainActivity.this, Cards.class);
+                        startActivity(intent);
+                        mCurrentSelectedPosition = 5;
+                        return true;
+                    case R.id.navigation_item_6:
+                        intent = new Intent(MainActivity.this, MyDecks.class);
+                        startActivity(intent);
+                        mCurrentSelectedPosition = 6;
+                        return true;
                     default:
                         return true;
                 }
