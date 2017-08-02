@@ -381,6 +381,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         authCode = prefs.getString("signedIn", "null");
 
+
         menu = mNavigationView.getMenu();
         greeting = (TextView) findViewById(R.id.personalized_greeting);
         pHeroKills = (TextView) findViewById(R.id.personalized_hero_kill_stat);
@@ -388,6 +389,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         pGamesWon  = (TextView) findViewById(R.id.personalized_games_won_stat);
 
         if(!authCode.equals("null")){
+            Log.e("Auth" ,"Auth code is: " + authCode);
             final WebView myWebView = (WebView) findViewById(R.id.login_page);
             myWebView.setWebViewClient(new WebViewClient() {
                 @Override
@@ -405,6 +407,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
                             // store temporarily
                             authCode = mExtractToken(url);
+                            Log.e("Auth", "Succesfully obtained a new auth code " + authCode);
                             SharedPreferences.Editor e = getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
                             e.putString("signedIn", authCode);
                             e.apply();
@@ -422,8 +425,8 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             myWebView.loadUrl(authorizationUri);
 
             try {
-
-                userID = check.checkToken(this, authCode);
+                Log.e("Auth", "Attempting login with new auth code " + authCode);
+                check.checkToken(this, authCode);
             } catch (ExecutionException f) {
                 f.printStackTrace();
             } catch (InterruptedException f) {
@@ -432,7 +435,8 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 e1.printStackTrace();
             }
 
-
+            userID = prefs.getString("ACCOUNT_ID", "null");
+            Log.e("Auth", "User ID obtained is " + userID);
             APIHomeScreenInfo info = new APIHomeScreenInfo();
             info.execute(userID);
             String userNameJSON;
@@ -440,6 +444,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 userNameJSON = info.get();
                 JSONObject displayName = new JSONObject(userNameJSON);
                 userName = displayName.getString("displayName");
+                Log.e("Auth", "User name obtained is " + userName);
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             } catch (ExecutionException e1) {
@@ -465,11 +470,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             } catch (ExecutionException e1) {
                 e1.printStackTrace();
             }
-            Log.i("INFO", response);
             JSONObject playerStats = null;
 
             try {
                 playerStats = new JSONObject(response);
+                Log.i("INFO", response);
             } catch (JSONException a) {
                 a.printStackTrace();
             }
