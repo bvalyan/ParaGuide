@@ -26,7 +26,7 @@ public class CardOfTheDayView extends AppCompatActivity{
         setContentView(R.layout.card_of_the_day_screen);
 
 
-        cotd = (CardData) getIntent().getSerializableExtra("selectedCard");
+        cotd = (CardData) getIntent().getSerializableExtra("CardOfTheDay");
         attrTranslator = new ParagonAPIAttrReplace();
 
         ImageView cotdImage = (ImageView) findViewById(R.id.cotdImage);
@@ -80,11 +80,11 @@ public class CardOfTheDayView extends AppCompatActivity{
         cotdTitle.setText(cotdTitle1);
         cotdEff.setText(ss2);
         cotdCD.setText(cotdCooldown);
-        vitCost.setText(vitality);
-        dexCost.setText(dexterity);
-        intCost.setText(intellect);
+        vitCost.setText(Integer.toString(vitality));
+        dexCost.setText(Integer.toString(dexterity));
+        intCost.setText(Integer.toString(intellect));
         rarity.setText(rarityText);
-        goldCost.setText(gold);
+        goldCost.setText(Integer.toString(gold));
     }
 
 }

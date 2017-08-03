@@ -79,7 +79,6 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Icon Image URL: " + card.getString("iconImage"));
                     cData.setName(card.getString("name"));
                     cData.setId(card.getString("id"));
-                    cData.setImageUrl(card.getJSONObject("images").getString("medium"));
 
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Paragon Version: " + Constants.PARAGON_VERSION);
                     cData.setVersion(Constants.PARAGON_VERSION);
