@@ -751,7 +751,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
          */
 
         Integer chosenCard = 0;
-        List<CardData> cDataList = cDataMap.get("Equip");
+        List<CardData> cDataList = cDataMap.get("All");
 
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");

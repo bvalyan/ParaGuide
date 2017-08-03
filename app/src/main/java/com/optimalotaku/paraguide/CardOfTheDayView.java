@@ -43,7 +43,7 @@ public class CardOfTheDayView extends AppCompatActivity{
         TextView cotdEff = (TextView) findViewById(R.id.cotdeff);
         TextView cotdCD = (TextView) findViewById(R.id.cotd_cd);
         TextView cotdFullEff = (TextView) findViewById(R.id.cotd_full_eff);
-        TextView effecttitle = (TextView) findViewById(R.id.efftitle);
+        TextView effecttitle = (TextView) findViewById(R.id.descTitle);
         TextView cdTitle = (TextView) findViewById(R.id.cdtitle);
         String cotdTitle1;
         String cotdEff2 = new String();
