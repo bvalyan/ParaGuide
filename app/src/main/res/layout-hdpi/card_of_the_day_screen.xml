@@ -39,12 +39,12 @@
         />
 
     <android.support.v7.widget.CardView
-        android:layout_width="350dp"
+        android:layout_width="290dp"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/cotdImage"
         app:cardCornerRadius="8dp"
-        android:layout_height="270dp">
+        android:layout_height="205dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -61,7 +61,7 @@
         />
             <TextView
                 android:id="@+id/minefftitle"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="0dp"
                 android:layout_width="wrap_content"
                 android:text="Description"
                 android:textStyle="bold"
@@ -69,7 +69,7 @@
                 android:layout_alignLeft="@id/cotdTitle"
                 android:layout_alignRight="@id/cotdTitle"
                 android:textAlignment="center"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="0dp"
                 android:layout_height="wrap_content" />
 
         <TextView
@@ -78,16 +78,17 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="0dp"
             android:fontFamily="sans-serif-condensed"
-            android:textAlignment="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+            android:textSize="13sp"
+            android:layout_width="280dp"
+            android:layout_height="72dp"
             android:layout_marginBottom="0dp"/>
 
             <LinearLayout
                 android:id="@+id/cooldown_layout"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="85dp"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="120dp"
                 android:orientation="vertical">
             <TextView
                 android:layout_marginTop="5dp"
@@ -96,6 +97,7 @@
                 android:visibility="visible"
                 android:id="@+id/cdtitle"
                 android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
                 android:layout_below="@id/cotdeff"
                 android:layout_alignLeft="@id/cotdTitle"
                 android:textAlignment="center"
@@ -115,10 +117,10 @@
 
             <LinearLayout
                 android:id="@+id/gold_layout"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="85dp"
                 android:layout_toRightOf="@id/cooldown_layout"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="120dp"
                 android:orientation="vertical">
                 <TextView
                     android:layout_marginTop="5dp"
@@ -130,6 +132,7 @@
                     android:layout_below="@id/cotdeff"
                     android:layout_alignLeft="@id/cotdTitle"
                     android:textAlignment="center"
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_height="wrap_content" />
 
                 <TextView
@@ -148,7 +151,7 @@
                 android:layout_width="120dp"
                 android:layout_height="85dp"
                 android:layout_toRightOf="@id/gold_layout"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="120dp"
                 android:orientation="vertical">
                 <TextView
                     android:layout_marginTop="5dp"
@@ -157,6 +160,7 @@
                     android:visibility="visible"
                     android:id="@+id/rarity_title"
                     android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_below="@id/cotdeff"
                     android:layout_alignLeft="@id/cotdTitle"
                     android:textAlignment="center"
@@ -168,19 +172,16 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/rarity"
                     android:textAlignment="center"
-
-
                     />
             </LinearLayout>
 
             <LinearLayout
                 android:visibility="visible"
                 android:id="@+id/intelect_gem_window"
-                android:layout_marginTop="100dp"
-                android:layout_width="120dp"
+                android:layout_marginTop="167dp"
+                android:layout_width="100dp"
                 android:text="intellect_gem_cost"
                 android:textStyle="bold"
-
                 android:layout_alignParentBottom="true"
                 android:textAlignment="center"
                 android:layout_height="50dp"
@@ -207,8 +208,8 @@
                 android:orientation="vertical"
                 android:visibility="visible"
                 android:id="@+id/vitality_gem_window"
-                android:layout_marginTop="100dp"
-                android:layout_width="120dp"
+                android:layout_marginTop="167dp"
+                android:layout_width="100dp"
                 android:textStyle="bold"
                 android:layout_alignParentBottom="true"
                 android:textAlignment="center"
@@ -235,7 +236,7 @@
                 android:orientation="vertical"
                 android:visibility="visible"
                 android:id="@+id/dexterity_gem_window"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="167dp"
                 android:layout_width="120dp"
                 android:textStyle="bold"
                 android:layout_alignParentBottom="true"

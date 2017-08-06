@@ -66,6 +66,11 @@ public class CardData implements Serializable {
         this.imageUrl = "http://developer-paragon-cdn.epicgames.com/Images/"+imageUrl;
     }
 
+    public void setBareImageUrl(String imageUrl) {
+
+        this.imageUrl = imageUrl;
+    }
+
     public String getRarity() {
         return rarity;
     }

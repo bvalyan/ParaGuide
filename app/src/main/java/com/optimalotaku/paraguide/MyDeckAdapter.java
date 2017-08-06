@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,14 +81,13 @@ final class MyDeckAdapter extends BaseAdapter {
             v.setTag(R.id.text, v.findViewById(R.id.text));
         }
 
-        picture = (ImageView) v.getTag(R.id.picture);
-        name = (TextView) v.getTag(R.id.text);
+        picture = (ImageView) v.findViewById(R.id.picture);
+        name = (TextView) v.findViewById(R.id.text);
 
         Item item = getItem(i);
 
-        Glide.with(viewGroup.getContext()).load("https://developer-paragon-cdn.epicgames.com/Images/" + item.drawable1).into(picture);
+        Picasso.with(v.getContext()).load(item.drawable1).into(picture);
         name.setText(item.name);
-
 
         return v;
     }

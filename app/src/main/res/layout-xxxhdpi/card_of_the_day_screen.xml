@@ -64,6 +64,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:text="Description"
+                android:fontFamily="sans-serif-condensed"
                 android:textStyle="bold"
                 android:layout_below="@id/cotdTitle"
                 android:layout_alignLeft="@id/cotdTitle"
@@ -78,8 +79,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="0dp"
             android:fontFamily="sans-serif-condensed"
-            android:textAlignment="center"
-            android:layout_width="wrap_content"
+            android:layout_width="325dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"/>
 
@@ -95,6 +95,7 @@
                 android:text="Cooldown"
                 android:visibility="visible"
                 android:id="@+id/cdtitle"
+                android:fontFamily="sans-serif-condensed"
                 android:textStyle="bold"
                 android:layout_below="@id/cotdeff"
                 android:layout_alignLeft="@id/cotdTitle"
@@ -121,6 +122,7 @@
                 android:layout_marginTop="140dp"
                 android:orientation="vertical">
                 <TextView
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:text="Gold Cost"
@@ -152,6 +154,7 @@
                 android:orientation="vertical">
                 <TextView
                     android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_width="match_parent"
                     android:text="Affinity"
                     android:visibility="visible"
@@ -190,6 +193,7 @@
                     android:layout_width="match_parent"
                     android:textAlignment="center"
                     android:layout_height="20dp"
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_gravity="center"
                     android:text="INT"
                     android:textStyle="bold"/>
@@ -218,6 +222,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:textAlignment="center"
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:text="VIT"
@@ -247,6 +252,7 @@
                     android:layout_width="match_parent"
                     android:textAlignment="center"
                     android:layout_height="20dp"
+                    android:fontFamily="sans-serif-condensed"
                     android:layout_gravity="center"
                     android:text="DEX"
                     android:textStyle="bold"/>

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.HapticFeedbackConstants;
 import android.view.SoundEffectConstants;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -16,6 +17,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +36,7 @@ public class Cards extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final Intent intent;
         intent = new Intent(this,CardDisplay.class);
         setContentView(R.layout.cardlist2);
@@ -75,7 +80,8 @@ public class Cards extends AppCompatActivity {
         } catch (JSONException e1) {
             e1.printStackTrace();
         }
-
+        CustomComparator cardCompare = new CustomComparator();
+        Arrays.sort(cardList, cardCompare);
         MyDeckAdapter CardAdapter = new MyDeckAdapter(this, cardList);
         gridview.setAdapter(CardAdapter);
 
@@ -85,17 +91,27 @@ public class Cards extends AppCompatActivity {
                                     int position, long id) {
                 gridview.playSoundEffect(SoundEffectConstants.CLICK); //send feedback on main drawer
                 gridview.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
+
                 Toast.makeText(getApplicationContext(), "You Clicked " +cardList[+ position].getName(), Toast.LENGTH_SHORT).show();
 
                 for (int i = 0; i < finalCDataMap.get("All").size(); i++){
                     if(finalCDataMap.get("All").get(i).getName().equals(cardList[position].getName())){
-                        intent.putExtra("selectedCard", finalCDataMap.get("All").get(i));
+                        CardData finalChoice = finalCDataMap.get("All").get(i);
+                        finalChoice.setBareImageUrl(cardList[position].getImageUrl());
+                        intent.putExtra("selectedCard", finalChoice);
                     }
                 }
                 startActivity(intent);
             }
         });
 
+    }
+    public class CustomComparator implements Comparator<CardData> {
+        @Override
+        public int compare(CardData o1, CardData o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
     }
 
 }

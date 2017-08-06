@@ -64,13 +64,16 @@ public class CardDisplay extends AppCompatActivity{
 
 
         int level= 0;
-        String effectName = cotd.getCardLevels().get(level).getAbilites().get(0).getName();
         String description = cotd.getCardLevels().get(level).getAbilites().get(0).getDescription();
         int vitality = cotd.getVitalityGemCost();
         int dexterity = cotd.getDexterityGemCost();
         int intellect = cotd.getIntellectGemCost();
         int gold = cotd.getGoldCost();
         String rarityText = cotd.getRarity();
+
+        if (cotdCooldown.equals("")){
+            cotdCooldown = "N/A";
+        }
 
 
 
@@ -80,11 +83,11 @@ public class CardDisplay extends AppCompatActivity{
         cotdTitle.setText(cotdTitle1);
         cotdEff.setText(ss2);
         cotdCD.setText(cotdCooldown);
-        vitCost.setText(vitality);
-        dexCost.setText(dexterity);
-        intCost.setText(intellect);
+        vitCost.setText(String.valueOf(vitality));
+        dexCost.setText(String.valueOf(dexterity));
+        intCost.setText(String.valueOf(intellect));
         rarity.setText(rarityText);
-        goldCost.setText(gold);
+        goldCost.setText(String.valueOf(gold));
     }
 
 }
