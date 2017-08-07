@@ -33,7 +33,7 @@ public class CardDisplay extends AppCompatActivity{
         cotdImage.setVisibility(View.VISIBLE);
 
         //Set Picture Image with Glide
-        Glide.with(this).load(cotd.getImageUrl()).into(cotdImage);
+        Glide.with(this).load(cotd.getCardLevels().get(0).getImageURL()).into(cotdImage);
 
         //Resize image to be a percentage of width of device
         Display display = getWindowManager().getDefaultDisplay();

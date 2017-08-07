@@ -20,21 +20,9 @@
         app:layout_marginLeftPercent="15%"
         app:layout_marginTopPercent="3.09%"
         app:layout_widthPercent="70%"
-        android:scaleX="1.63"
+        android:scaleX="1.2"
         android:layout_marginBottom="20dp"
         app:layout_heightPercent="49.3%"
-        android:adjustViewBounds="true"
-        />
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        app:layout_marginLeftPercent="15.6%"
-        android:src="@drawable/tr"
-        app:layout_marginTopPercent="3%"
-        app:layout_widthPercent="69%"
-        android:layout_marginBottom="20dp"
-        app:layout_heightPercent="50%"
         android:adjustViewBounds="true"
         />
 

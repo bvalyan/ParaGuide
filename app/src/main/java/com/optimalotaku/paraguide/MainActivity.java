@@ -276,8 +276,8 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             pCoreKills.startAnimation(greetingIN);
             pGamesWon.startAnimation(greetingIN);
             pHeroKills.setText("Lifetime Hero Kills: " + pData.getHeroKills());
-            pCoreKills.setText("Lifetime Core Takedowns " + pData.getCoreKills());
-            pGamesWon.setText("Lifetime Wins " + pData.getWins());
+            pCoreKills.setText("Lifetime Core Takedowns: " + pData.getCoreKills());
+            pGamesWon.setText("Lifetime Wins: " + pData.getWins());
             greeting.setVisibility(View.VISIBLE);
             greeting.startAnimation(greetingIN);
             greeting.setText("Welcome back, " + userName + ". Who's the competition today?");

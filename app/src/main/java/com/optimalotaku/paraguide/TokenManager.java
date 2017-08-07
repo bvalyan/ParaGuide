@@ -226,57 +226,6 @@ public class TokenManager extends AppCompatActivity{
     }
 
 
-
-
-        /*CustomList adapter = new
-                CustomList(this, text, pics);
-        list =(ListView)findViewById(R.id.list2);
-        list.setAdapter(adapter);
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                //Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
-                //start new activity with method that takes in name and HeroData object and displays information
-                Intent i = new Intent(TokenManager.this,DetailDeckView.class);
-                DeckData chosenDeck = dDataList.get(position);
-                //Bundle deckGoodies = new Bundle();
-                //deckGoodies.putString("deckJSONArray", chosenDeck.toString());
-                i.putExtra("deckObject", chosenDeck);
-
-                startActivity(i);
-            }
-        });
-
-
-        for(DeckData deck : dDataList){
-
-            deckListStr = deckListStr + deck.getDeckName() + "\n";
-            deckListStr = deckListStr + deck.getHeroName() + "\n\n";
-
-
-        }
-        Button cardButton = (Button) findViewById(R.id.cardButton);
-        cardButton.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(TokenManager.this, MyCardView.class);
-                startActivity(i);
-            }
-        });
-*/
-        //responseView.setText(deckListStr);
-
-//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        //imm.hideSoftInputFromWindow(responseView.getWindowToken(), 0);
-        //Button endButton = (Button) findViewById(R.id.button3);
-        //endButton.setVisibility(View.VISIBLE);
-
-
-
     @Override
     public void onBackPressed()
     {

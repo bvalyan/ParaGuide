@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +91,7 @@ public class Cards extends AppCompatActivity {
                 gridview.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
 
-                Toast.makeText(getApplicationContext(), "You Clicked " +cardList[+ position].getName(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "You Clicked " +cardList[+ position].getName(), Toast.LENGTH_SHORT).show();
 
                 for (int i = 0; i < finalCDataMap.get("All").size(); i++){
                     if(finalCDataMap.get("All").get(i).getName().equals(cardList[position].getName())){

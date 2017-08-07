@@ -29,7 +29,7 @@ public class Constants {
     public static final String DATASTREAM_UUID = "com.pubnub.example.android.datastream.pubnubdatastreams.DATASTREAM_UUID";
 
     //Paragon Version
-    public static final Double PARAGON_VERSION  = 42.0;
+    public static final Double PARAGON_VERSION  = 42.1;
 
 
 
