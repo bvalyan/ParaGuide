@@ -242,7 +242,7 @@ public class PlayerScoreFragment extends Fragment {
         else if(finalScore < 95 && finalScore > 89){
             grade = "A";
         }
-        else if(finalScore > 85 && finalScore < 90){
+        else if(finalScore > 84 && finalScore < 90){
             grade = "B+";
         }
         else if(finalScore > 79 && finalScore < 85){

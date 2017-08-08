@@ -14,6 +14,16 @@ public class CardData implements Serializable {
     private String name;
     private String id;
     private String imageUrl;
+    private String rarity;
+    private String affinity;
+    private String trait;
+    private Integer intellectGemCost;
+    private Integer vitalityGemCost;
+    private Integer dexterityGemCost;
+    private Integer goldCost;
+    private List<CardLevel> cardLevels;
+
+
 
     public String getImageUrl2() {
         return imageUrl2;
@@ -24,15 +34,6 @@ public class CardData implements Serializable {
     }
 
     private String imageUrl2;
-
-
-    public enum SlotType{
-        UNKNOWN,PRIME,ACTIVE,PASSIVE,UPGRADE
-    }
-    SlotType slot;
-
-    private List<CardEffect> effectList;
-    private List<CardEffect> maxEffectList;
 
     private Double version;
 
@@ -61,36 +62,77 @@ public class CardData implements Serializable {
     }
 
     public void setImageUrl(String imageUrl) {
+
+        this.imageUrl = "http://developer-paragon-cdn.epicgames.com/Images/"+imageUrl;
+    }
+
+    public void setBareImageUrl(String imageUrl) {
+
         this.imageUrl = imageUrl;
     }
 
-    public SlotType getSlot() {
-
-        return slot;
+    public String getRarity() {
+        return rarity;
     }
 
-    public void setSlot(SlotType slot) {
-
-        this.slot = slot;
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
     }
 
-    public List<CardEffect> getEffectList() {
-
-        return effectList;
+    public String getAffinity() {
+        return affinity;
     }
 
-    public void setEffectList(List<CardEffect> effectList) {
-
-        this.effectList = effectList;
+    public void setAffinity(String affinity) {
+        this.affinity = affinity;
     }
 
-    public List<CardEffect> getMaxEffectList() {
-
-        return maxEffectList;
+    public String getTrait() {
+        return trait;
     }
 
-    public void setMaxEffectList(List<CardEffect> maxEffectList) {
-        this.maxEffectList = maxEffectList;
+    public void setTrait(String trait) {
+        this.trait = trait;
+    }
+
+    public Integer getIntellectGemCost() {
+        return intellectGemCost;
+    }
+
+    public void setIntellectGemCost(Integer intellectGemCost) {
+        this.intellectGemCost = intellectGemCost;
+    }
+
+    public Integer getVitalityGemCost() {
+        return vitalityGemCost;
+    }
+
+    public void setVitalityGemCost(Integer vitalityGemCost) {
+        this.vitalityGemCost = vitalityGemCost;
+    }
+
+    public Integer getDexterityGemCost() {
+        return dexterityGemCost;
+    }
+
+    public void setDexterityGemCost(Integer dexterityGemCost) {
+        this.dexterityGemCost = dexterityGemCost;
+    }
+
+    public Integer getGoldCost() {
+        return goldCost;
+    }
+
+    public void setGoldCost(Integer goldCost) {
+        this.goldCost = goldCost;
+    }
+
+    public List<CardLevel> getCardLevels() {
+        return cardLevels;
+    }
+
+    public void setCardLevels(List<CardLevel> cardLevels) {
+        this.cardLevels = cardLevels;
     }
 
     public Double getVersion() {

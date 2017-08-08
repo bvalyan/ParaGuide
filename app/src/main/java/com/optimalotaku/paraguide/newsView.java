@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
@@ -31,9 +33,18 @@ public class newsView extends Activity{
 
         this.newsView = (WebView)findViewById(R.id.newsview);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // chromium, enable hardware acceleration
+            this.newsView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else {
+            // older android version, disable hardware acceleration
+            this.newsView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+
         WebSettings settings = newsView.getSettings();
         settings.setJavaScriptEnabled(true);
         newsView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+
 
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
 

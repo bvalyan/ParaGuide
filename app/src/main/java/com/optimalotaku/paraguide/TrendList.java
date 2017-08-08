@@ -6,56 +6,72 @@ package com.optimalotaku.paraguide;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.EdgeDetail;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
 
-public class TrendList extends ArrayAdapter<String>{
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class TrendList extends RecyclerView.Adapter<TrendList.ViewHolder> {
 
     private final Activity context;
     private final String[] web;
     private final String[] imageId;
     ProgressDialog progressDialog;
     private int [] heroScore;
+
+
     public TrendList(Activity context,
-                     String[] web, String[] imageId, int [] scores) {
-        super(context, R.layout.listtrendsingle, web);
+                     HeroReview[] reviewPacket) {
+
+        Arrays.sort(reviewPacket, new HeroComparator());
         this.context = context;
-        this.web = web;
-        this.imageId = imageId;
-        this.heroScore = scores;
+        this.web = new String[reviewPacket.length];
+        this.imageId = new String[reviewPacket.length];
+        this.heroScore = new int[reviewPacket.length];
+        for(int i = 0; i < reviewPacket.length; i++){
+            this.web[i] = reviewPacket[i].getText();
+            this.imageId[i] = reviewPacket[i].getPic();
+            this.heroScore[i] = reviewPacket[i].getScore();
 
+        }
     }
+
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        //final TextView nameView = (TextView) view.findViewById(R.id.percent);
-        LayoutInflater inflater = context.getLayoutInflater();
-        View rowView= inflater.inflate(R.layout.listtrendsingle, null, true);
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
-        DecoView score = (DecoView) rowView.findViewById(R.id.dynamicArcView2);
+    public TrendList.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
 
+        // Inflate the custom layout
+        View contactView = inflater.inflate(R.layout.listtrendsinglenew, parent, false);
 
+        // Return a new holder instance
+        TrendList.ViewHolder viewHolder = new TrendList.ViewHolder(contactView);
+        return viewHolder;
+    }
 
-// Create background track
-        score.addSeries(new SeriesItem.Builder(Color.argb(255, 218, 218, 218))
+    @Override
+    public void onBindViewHolder(TrendList.ViewHolder holder, int position) {
+        // Create background track
+        holder.trendchart1.addSeries(new SeriesItem.Builder(Color.argb(255, 218, 218, 218))
                 .setRange(0, 100, 100)
                 .setInitialVisibility(false)
                 .setLineWidth(70f)
                 .build());
 
-//Create data series track
+        //Create data series track
         final SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 255, 158, 158))
                 //.setRange(0, seriesMax, 0)
                 .setInitialVisibility(true)
@@ -71,8 +87,8 @@ public class TrendList extends ArrayAdapter<String>{
                 .setChartStyle(SeriesItem.ChartStyle.STYLE_DONUT)
                 .build();
 
-        final TextView scorePercent = (TextView) rowView.findViewById(R.id.scorePercent);
-        final TextView gradePercent = (TextView) rowView.findViewById(R.id.gradePercent);
+        final TextView scorePercent = (TextView) holder.itemView.findViewById(R.id.scorePercent);
+        final TextView gradePercent = (TextView) holder.itemView.findViewById(R.id.gradePercent);
         scorePercent.setTextColor(Color.WHITE);
 
         String grade;
@@ -127,18 +143,52 @@ public class TrendList extends ArrayAdapter<String>{
             }
         });
 
-        final int series1Index = score.addSeries(seriesItem1);
+        final int series1Index = holder.trendchart1.addSeries(seriesItem1);
 
 
         //nameView.setTextSize(60);
 
-        txtTitle.setTextSize(25);
-        txtTitle.setTextColor(Color.WHITE);
-        txtTitle.setText("  "+web[position]);
+        holder.heroText.setTextSize(25);
+        holder.heroText.setTextColor(Color.WHITE);
+        holder.heroText.setText(web[position]);
 
-        Glide.with(getContext()).load(imageId[position]).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
-        score.addEvent(new DecoEvent.Builder(heroScore[position]).setIndex(series1Index).setDelay(1).build());
+        Glide.with(holder.itemView.getContext()).load(imageId[position]).into(holder.heroImage);
+        holder.trendchart1.addEvent(new DecoEvent.Builder(heroScore[position]).setIndex(series1Index).setDelay(1).build());
 
-        return rowView;
+
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return web.length;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public DecoView trendchart1;
+        public ImageView heroImage;
+        public TextView heroText;
+        public TextView gradeNumber;
+        public TextView gradeLetter;
+
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            setIsRecyclable(false);
+            trendchart1 = (DecoView) itemView.findViewById(R.id.dynamicArcView2);
+            heroImage = (ImageView) itemView.findViewById(R.id.img);
+            heroText = (TextView) itemView.findViewById(R.id.txt);
+            gradeNumber = (TextView) itemView.findViewById(R.id.scorePercent);
+            gradeLetter = (TextView) itemView.findViewById(R.id.gradePercent);
+
+        }
+    }
+
+    class HeroComparator implements Comparator<HeroReview> {
+        @Override
+        public int compare(HeroReview a, HeroReview b) {
+            return a.getText().compareToIgnoreCase(b.getText());
+        }
     }
 }

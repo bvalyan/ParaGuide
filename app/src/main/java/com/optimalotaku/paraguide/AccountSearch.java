@@ -1,9 +1,12 @@
 package com.optimalotaku.paraguide;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,10 +20,18 @@ import java.util.concurrent.ExecutionException;
 
 public class AccountSearch extends AppCompatActivity {
     private EditText textSearch;
+    ProgressDialog dialog;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.player_data_screen);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.height = WindowManager.LayoutParams.MATCH_PARENT;
+        params.width  = WindowManager.LayoutParams.MATCH_PARENT;
+        getWindow().setAttributes(params);
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         textSearch = (EditText) findViewById(R.id.playerText);
         final String[] newString = new String[1];
         Button search = (Button) findViewById(R.id.playerqueryButton);
@@ -28,6 +39,8 @@ public class AccountSearch extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 APIPlayerCheck check = new APIPlayerCheck(); // call APIPlayerCheck to verify account exists
                 try {
                      newString[0] = check.execute(textSearch.getText().toString()).get();

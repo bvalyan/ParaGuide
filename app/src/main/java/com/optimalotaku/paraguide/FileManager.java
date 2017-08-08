@@ -61,11 +61,8 @@ public class FileManager {
             try {
                 JSONArray cardArray = new JSONArray(cardListStr);
                 for (int i = 0; i < cardArray.length(); i++) {
-                    CardData card = new CardData();
+                    CardData card;
                     card = gson.fromJson(cardArray.getJSONObject(i).toString(), CardData.class);
-                    if (card.getSlot() == CardData.SlotType.ACTIVE || card.getSlot() == CardData.SlotType.PASSIVE) {
-                        equipCList.add(card);
-                    }
                     cList.add(card);
 
                 }

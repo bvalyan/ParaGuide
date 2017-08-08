@@ -37,7 +37,7 @@ public class CustomList extends ArrayAdapter<String>{
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setTextSize(20);
         txtTitle.setText("  "+web[position]);
-        Glide.with(getContext()).load(imageId[position]).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
+        Glide.with(getContext()).load(imageId[position]).into(imageView);
 
         return rowView;
     }

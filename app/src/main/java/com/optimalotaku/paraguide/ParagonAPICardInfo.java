@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -67,110 +68,95 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
             Log.i("INFO", "CARD DATABASE NOT FOUND!");
         } else {
 
-            String slotType;
 
             try {
                 JSONArray cardArray = new JSONArray(response);
-                JSONArray effectArray;
-                JSONArray maxEffectArray;
                 for (int i = 0; i < cardArray.length(); i++) {
                     CardData cData = new CardData();
                     JSONObject card = cardArray.getJSONObject(i);
-                    effectArray = card.getJSONArray("effects");
-                    maxEffectArray = card.getJSONArray("maxedEffects");
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Name: " + card.getString("name"));
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card ID: " + card.getString("id"));
-                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Image URL: " + card.getJSONObject("images").getString("medium_stats"));
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Icon Image URL: " + card.getString("iconImage"));
                     cData.setName(card.getString("name"));
                     cData.setId(card.getString("id"));
-                    cData.setImageUrl("http:"+card.getJSONObject("images").getString("medium"));
-                    cData.setImageUrl2("http:"+card.getJSONObject("images").getString("large_stats"));
+
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Paragon Version: " + Constants.PARAGON_VERSION);
                     cData.setVersion(Constants.PARAGON_VERSION);
 
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Rarity: " + card.getString("rarity"));
+                    cData.setRarity(card.getString("rarity"));
+
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card affinity: " + card.getString("affinity"));
+                    cData.setRarity(card.getString("affinity"));
+
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card trait: " + card.getString("trait"));
+                    cData.setTrait(card.getString("trait"));
+
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card intellectGemCost: " + Integer.toString(card.getInt("intellectGemCost")));
+                    cData.setIntellectGemCost(card.getInt("intellectGemCost"));
+
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card vitalityGemCost: " + Integer.toString(card.getInt("vitalityGemCost")));
+                    cData.setVitalityGemCost(card.getInt("vitalityGemCost"));
+
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card dexterityGemCost: " + Integer.toString(card.getInt("dexterityGemCost")));
+                    cData.setDexterityGemCost(card.getInt("dexterityGemCost"));
+
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card goldCost: " + Integer.toString(card.getInt("goldCost")));
+                    cData.setGoldCost(card.getInt("goldCost"));
+
+                    List<CardLevel> cardLevels = new ArrayList<>();
+                    JSONArray levelArray = card.getJSONArray("levels");
+
+                    for (int j = 0; j < levelArray.length(); j++) {
+                        CardLevel cardLevel = new CardLevel();
+                        JSONObject level = levelArray.getJSONObject(j);
+
+                        Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card level: " + Integer.toString(level.getInt("level")));
+                        cardLevel.setLevelNum(level.getInt("level"));
+
+                        JSONObject abilities = level.getJSONObject("Abilities");
+                        Iterator<String> abilityIter = level.getJSONObject("Abilities").keys();
+                        CardAbility cardAbility = new CardAbility();
+                        List<CardAbility> cardAbilityList = new ArrayList<>();
+                        while(abilityIter.hasNext()){
+                            String abilityKey = abilityIter.next();
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability key: " + abilityKey);
+
+                            JSONObject ability = abilities.getJSONObject(abilityKey);
+
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability name: " + ability.getString("name"));
+                            cardAbility.setName(ability.getString("name"));
+
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability description: " + ability.getString("description"));
+                            cardAbility.setDescription(ability.getString("description"));
+
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability cooldown: " + ability.getString("cooldown"));
+                            cardAbility.setCooldown(ability.getString("cooldown"));
+
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability manacost: " + ability.getString("manacost"));
+                            cardAbility.setManacost(ability.getString("manacost"));
+
+                            cardAbilityList.add(cardAbility);
+
+                        }
+
+                        Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "adding card ability list to card level object");
+                        cardLevel.setAbilites(cardAbilityList);
+
+                        //TODO: If Epic ever gives us more than one image for this i may need to do the same logic here as i did above with card levels
+                        Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level image url: " + level.getJSONObject("images").getString("large"));
+                        cardLevel.setImageURL(level.getJSONObject("images").getString("large"));
 
 
-                    slotType = card.getString("slotType");
-                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Slot Type: " + card.getString("slotType"));
-
-                    List<CardEffect> cEffectList = new ArrayList<>();
-                    List<CardEffect> cMaxEffectList = new ArrayList<>();
-
-                    for (int j = 0; j < effectArray.length(); j++) {
-                        CardEffect cEffect = new CardEffect();
-                        JSONObject effectdisplay = effectArray.getJSONObject(j);
-                        if (slotType.equals("Active")) {
-                            cData.setSlot(CardData.SlotType.ACTIVE);
-                        }
-                        else if(slotType.equals("Passive")){
-                            cData.setSlot(CardData.SlotType.PASSIVE);
-                        }
-                        else if(slotType.equals("Prime")){
-                            cData.setSlot(CardData.SlotType.PRIME);
-
-                        }
-                        else if(slotType.equals("Upgrade")){
-                            cData.setSlot(CardData.SlotType.UPGRADE);
-                        }
-                        else{
-                            cData.setSlot(CardData.SlotType.UNKNOWN);
-                        }
-
-                        if(effectdisplay.has("stat") && effectdisplay.has("value")) {
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Stat: " + effectdisplay.getString("stat"));
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Value: " + effectdisplay.getString("value"));
-                            cEffect.setStat(effectdisplay.getString("stat"));
-                            cEffect.setStatValue(effectdisplay.getString("value"));
-                        }
-
-                        if(effectdisplay.has("description")) {
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Desc: " + effectdisplay.getString("description"));
-                            cEffect.setDescription(effectdisplay.getString("description"));
-                        }
-                        if(effectdisplay.has("cooldown")) {
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Cooldown: " + effectdisplay.getString("cooldown"));
-                            cEffect.setCooldown(effectdisplay.getString("cooldown"));
-                        }
-
-                        cEffectList.add(cEffect);
+                        cardLevels.add(cardLevel);
 
                     }
 
-                    cData.setEffectList(cEffectList);
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "adding card levels to card object");
+                    cData.setCardLevels(cardLevels);
 
-
-                    for (int j = 0; j < maxEffectArray.length(); j++) {
-                        CardEffect cEffect = new CardEffect();
-                        JSONObject effectdisplay = maxEffectArray.getJSONObject(j);
-
-                        if(effectdisplay.has("stat") && effectdisplay.has("value")) {
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Stat: " + effectdisplay.getString("stat"));
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Value: " + effectdisplay.getString("value"));
-                            cEffect.setStat(effectdisplay.getString("stat"));
-                            cEffect.setStatValue(effectdisplay.getString("value"));
-                        }
-
-                        if(effectdisplay.has("description")) {
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Desc: " + effectdisplay.getString("description"));
-                            cEffect.setDescription(effectdisplay.getString("description"));
-                        }
-                        if(effectdisplay.has("cooldown")) {
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - " + "Card Effect Cooldown: " + effectdisplay.getString("cooldown"));
-                            cEffect.setCooldown(effectdisplay.getString("cooldown"));
-                        }
-
-                        cMaxEffectList.add(cEffect);
-
-                    }
-
-                    cData.setMaxEffectList(cMaxEffectList);
-
-
+                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "adding card data to card list");
                     cardList.add(cData);
-
-                    if(cData.getSlot() == CardData.SlotType.ACTIVE || cData.getSlot() == CardData.SlotType.PASSIVE){
-                        equipCardList.add(cData);
-                    }
-
 
                 }
 
@@ -183,7 +169,6 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
         }
 
         cardMap.put("All",cardList);
-        cardMap.put("Equip",equipCardList);
         delegate.processCardInfoFinish(cardMap);
 
     }

@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+  >
 
-    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/mainLayout"
+    <RelativeLayout
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        app:layout_heightPercent="100%"
-        app:layout_widthPercent="100%">
+        android:padding="40dp"
+>
+
 
        <ImageView
            android:id="@+id/skillimage"
-           app:layout_heightPercent="15%"
-           app:layout_widthPercent="20%"
-           app:layout_marginLeftPercent="40%"/>
+           android:layout_height="75dp"
+           android:layout_width="75dp"
+           android:layout_centerHorizontal="true"
+
+           />
         <TextView
             android:id="@+id/skillname"
-            app:layout_heightPercent="10%"
+            android:layout_below="@id/skillimage"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
             android:textAlignment="center"
-            android:textSize="30dp"
+            android:textSize="35dp"
             android:textColor="@color/white"
-            app:layout_widthPercent="80%"
-            app:layout_marginLeftPercent="10%"
-            app:layout_marginTopPercent="13%"
+            android:gravity="center"
+            android:fontFamily="sans-serif-condensed"
             />
+
         <TextView
             android:id="@+id/skillText"
+            android:layout_marginTop="25dp"
             android:textColor="@color/white"
-            app:layout_widthPercent="80%"
-            app:layout_marginLeftPercent="10%"
-            app:layout_marginTopPercent="25%"/>
+            android:layout_below="@id/skillname"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_width="350dp"
+            android:fontFamily="sans-serif-condensed"/>
 
 
-    </android.support.percent.PercentRelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

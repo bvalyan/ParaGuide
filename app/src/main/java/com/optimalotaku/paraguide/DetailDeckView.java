@@ -1,32 +1,11 @@
 package com.optimalotaku.paraguide;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.HapticFeedbackConstants;
-import android.view.SoundEffectConstants;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by bvaly on 1/29/2017.
  */
-public class DetailDeckView extends AppCompatActivity {
+public class DetailDeckView extends AppCompatActivity {/*
     private DeckData deckInfo;
     private ListView cardlistView;
     private GridView gridview;
@@ -85,7 +64,7 @@ public class DetailDeckView extends AppCompatActivity {
 
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
-                    gridview.playSoundEffect(SoundEffectConstants.CLICK); //send feedback on main menu
+                    gridview.playSoundEffect(SoundEffectConstants.CLICK); //send feedback on main drawer
                     gridview.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
                     Toast.makeText(getApplicationContext(), "You Clicked " +cardText[+ position], Toast.LENGTH_SHORT).show();
                     for (int i = 0; i < finalCDataMap.get("All").size(); i++){
@@ -131,5 +110,5 @@ public class DetailDeckView extends AppCompatActivity {
                 })
                 .show();
     }
-
+*/
 }

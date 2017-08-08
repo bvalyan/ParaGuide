@@ -13,6 +13,8 @@ public class Constants {
     public static final String AUTH_VAR         = "Authorization";
     public static final String REDIRECT_URI     = "https://optimalotaku.com/paraguide/";
     public static final String AUTHORIZE_PATH   = "https://developer-paragon.epicgames.com/v1/auth/login/";
+    public static final String LOGOUT_PATH      = "https://developer-paragon.epicgames.com/v1/auth/logout/";
+    public static final String RESPONSE_TYPE    = "?response_type=code";
 
     //Chat Constants
 
@@ -27,24 +29,24 @@ public class Constants {
     public static final String DATASTREAM_UUID = "com.pubnub.example.android.datastream.pubnubdatastreams.DATASTREAM_UUID";
 
     //Paragon Version
-    public static final Double PARAGON_VERSION  = 41.0;
+    public static final Double PARAGON_VERSION  = 42.1;
 
-
+    //PARAFLOW CEILING
     public static final double currentKillMax       = 8.3;
-    public static final float currentMin            =  0;
+    public static final float  currentMin           =  0;
     public static final double currentAssistMax     = 9.0;
     public static final double currentTowerKillMax  = 1.5;
     public static final double currentDeathMax      = 3.75;
-    public static final double crrentinhibAssistMax =  .35;
+    public static final double crrentinhibAssistMax = 0.40;
     public static final double currentInhibKillsMax = .45;
     public static final double currentheroDamageMax = 12500;
     public static final double currentMinionDamageMax = 50000;
-    public static final double currentMinionKillMax = 135;
-    public static final double currentTowerAssistMax = .90;
-    public static final double currentMaxWardKills = .90;
-    public static final double currentMaxStructDamage = 3400;
-    public static final double currentMaxTimePlayed = 5000000;
-    public static final double currentMaxGamesPlayed = 2800;
+    public static final double currentMinionKillMax = 150;
+    public static final double currentTowerAssistMax = .99;
+    public static final double currentMaxWardKills = 1.00;
+    public static final double currentMaxStructDamage = 3500;
+    public static final double currentMaxTimePlayed = 6589413;
+    public static final double currentMaxGamesPlayed = 5000;
 
 
 

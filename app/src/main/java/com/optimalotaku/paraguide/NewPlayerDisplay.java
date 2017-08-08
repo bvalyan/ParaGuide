@@ -43,7 +43,7 @@ public class NewPlayerDisplay extends AppCompatActivity {
     }
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
-        private int NUM_ITEMS = 3;
+        private int NUM_ITEMS = 2;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -62,9 +62,7 @@ public class NewPlayerDisplay extends AppCompatActivity {
                 case 0: // Fragment # 0 - This will show FirstFragment
                     return playerGraphFragment.newInstance(0, "Player Data", pData, playerName);
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return PlayerScoreFragment.newInstance(1, "Player Score", pData, playerName);
-                case 2: // Fragment # 1 - This will show SecondFragment
-                    return PlayerTrendsFragment.newInstance(2, "Player Trends", pData,hDataMap);
+                    return PlayerTrendsFragment.newInstance(1, "Player Trends", pData, hDataMap);
                 default:
                     return null;
             }
@@ -78,8 +76,6 @@ public class NewPlayerDisplay extends AppCompatActivity {
                     return "Data";
                 case 1:
                     return "Score";
-                case 2:
-                    return "Trends";
                 default:
                     return null;
             }

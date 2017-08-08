@@ -1,5 +1,6 @@
 package com.optimalotaku.paraguide;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
@@ -13,6 +14,14 @@ import java.net.URL;
  * Created by bvaly on 2/9/2017.
  */
 public class APIPlayerCheck extends AsyncTask<String, Void, String>{
+    ProgressDialog dialog;
+
+    @Override
+    protected void onPreExecute(){
+
+
+    }
+
     @Override
     protected String doInBackground(String... Strings) {
         URL url2 = null;

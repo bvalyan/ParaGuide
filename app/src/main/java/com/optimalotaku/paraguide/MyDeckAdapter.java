@@ -1,7 +1,6 @@
 package com.optimalotaku.paraguide;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,14 +26,14 @@ final class MyDeckAdapter extends BaseAdapter {
     private final LayoutInflater mInflater;
     private Bitmap cotdBitMapImg;
 
-    public MyDeckAdapter(Context context, String[] cotdBitMapImg, String [] cardText) {
+    public MyDeckAdapter(Context context, CardData[] cardList) {
         mInflater = LayoutInflater.from(context);
 
-        for(int i = 0; i < cardText.length; i++){
-            Item card = new Item(cardText[i], cotdBitMapImg[i]);
-
+        for(int i = 0; i < cardList.length; i++){
+            Item card = new Item(cardList[i].getName(), cardList[i].getImageUrl(), cardList[i].getId());
             mItems.add(card);
         }
+
         Collections.sort(mItems, new Comparator<Item>() {
             @Override
             public int compare(Item o1, Item o2) {
@@ -83,14 +81,13 @@ final class MyDeckAdapter extends BaseAdapter {
             v.setTag(R.id.text, v.findViewById(R.id.text));
         }
 
-        picture = (ImageView) v.getTag(R.id.picture);
-        name = (TextView) v.getTag(R.id.text);
+        picture = (ImageView) v.findViewById(R.id.picture);
+        name = (TextView) v.findViewById(R.id.text);
 
         Item item = getItem(i);
 
-        Glide.with(viewGroup.getContext()).load("https:" + item.drawable1).diskCacheStrategy(DiskCacheStrategy.ALL).into(picture);
+        Picasso.with(v.getContext()).load(item.drawable1).into(picture);
         name.setText(item.name);
-
 
         return v;
     }
@@ -98,10 +95,12 @@ final class MyDeckAdapter extends BaseAdapter {
     private static class Item {
         public final String name;
         public final String drawable1;
+        public final String id;
 
-        Item(String name, String drawable) {
+        Item(String name, String drawable, String id) {
             this.name = name;
             this.drawable1 = drawable;
+            this.id = id;
         }
 
 
