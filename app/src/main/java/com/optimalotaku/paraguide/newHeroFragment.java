@@ -51,7 +51,6 @@ public class newHeroFragment extends android.support.v4.app.Fragment{
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,9 +66,9 @@ public class newHeroFragment extends android.support.v4.app.Fragment{
         name.setText(this.name);
         difficultyBar.setProgress(difficulty);
         mobilityBar.setProgress(mobility*10);
-        durabilityBar.setProgress(durability);
-        physicalBar.setProgress(physicalPower);
-        abilityBar.setProgress(abilityPower);
+        durabilityBar.setProgress(durability*10);
+        physicalBar.setProgress(physicalPower*10);
+        abilityBar.setProgress(abilityPower*10);
         Glide.with(getContext()).load(imageURL).into(coverView);
 
         return view;
