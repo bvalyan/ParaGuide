@@ -31,8 +31,6 @@ public class Constants {
     //Paragon Version
     public static final Double PARAGON_VERSION  = 42.1;
 
-
-
     //PARAFLOW CEILING
     public static final double currentKillMax       = 8.3;
     public static final float  currentMin           =  0;
