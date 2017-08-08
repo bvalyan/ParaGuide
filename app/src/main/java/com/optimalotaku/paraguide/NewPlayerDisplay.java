@@ -76,8 +76,6 @@ public class NewPlayerDisplay extends AppCompatActivity {
                     return "Data";
                 case 1:
                     return "Score";
-                case 2:
-                    return "Trends";
                 default:
                     return null;
             }

@@ -1,9 +1,7 @@
 package com.optimalotaku.paraguide;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +50,8 @@ public class newHeroFragment extends android.support.v4.app.Fragment{
         name = bundle.getString("name");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,11 +65,11 @@ public class newHeroFragment extends android.support.v4.app.Fragment{
         ImageView coverView = (ImageView) view.findViewById(R.id.hero_portrait);
 
         name.setText(this.name);
-        difficultyBar.setProgress(difficulty, true);
-        mobilityBar.setProgress(mobility*10, true);
-        durabilityBar.setProgress(durability*10, true);
-        physicalBar.setProgress(physicalPower*10, true);
-        abilityBar.setProgress(abilityPower*10, true);
+        difficultyBar.setProgress(difficulty);
+        mobilityBar.setProgress(mobility*10);
+        durabilityBar.setProgress(durability);
+        physicalBar.setProgress(physicalPower);
+        abilityBar.setProgress(abilityPower);
         Glide.with(getContext()).load(imageURL).into(coverView);
 
         return view;
