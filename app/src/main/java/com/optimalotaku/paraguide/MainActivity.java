@@ -272,14 +272,10 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             pHeroKills.setVisibility(View.VISIBLE);
             pCoreKills.setVisibility(View.VISIBLE);
             pGamesWon.setVisibility(View.VISIBLE);
-            pHeroKills.startAnimation(greetingIN);
-            pCoreKills.startAnimation(greetingIN);
-            pGamesWon.startAnimation(greetingIN);
             pHeroKills.setText("Lifetime Hero Kills: " + pData.getHeroKills());
             pCoreKills.setText("Lifetime Core Takedowns: " + pData.getCoreKills());
             pGamesWon.setText("Lifetime Wins: " + pData.getWins());
             greeting.setVisibility(View.VISIBLE);
-            greeting.startAnimation(greetingIN);
             greeting.setText("Welcome back, " + userName + ". Who's the competition today?");
             for (int menuItemIndex = 0; menuItemIndex < menu.size(); menuItemIndex++) {
                 MenuItem menuItem = menu.getItem(menuItemIndex);
