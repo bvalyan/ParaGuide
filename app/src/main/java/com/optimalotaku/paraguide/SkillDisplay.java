@@ -3,7 +3,6 @@ package com.optimalotaku.paraguide;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +22,6 @@ public class SkillDisplay extends AppCompatActivity{
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Bundle gifts2 = getIntent().getExtras();
         skillname = gifts2.getString("skillname");
         skillPic  = gifts2.getString("skillpic");

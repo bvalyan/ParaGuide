@@ -29,9 +29,6 @@ public class AccountSearch extends AppCompatActivity {
         WindowManager.LayoutParams params = getWindow().getAttributes();
         params.height = WindowManager.LayoutParams.MATCH_PARENT;
         params.width  = WindowManager.LayoutParams.MATCH_PARENT;
-        getWindow().setAttributes(params);
-        getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         textSearch = (EditText) findViewById(R.id.playerText);
         final String[] newString = new String[1];
         Button search = (Button) findViewById(R.id.playerqueryButton);

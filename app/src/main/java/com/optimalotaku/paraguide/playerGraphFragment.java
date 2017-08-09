@@ -385,13 +385,41 @@ public class playerGraphFragment extends Fragment {
             if (pData.getMatches() != null) {
 
                 // add data to local variables
-                wins = Integer.parseInt(pData.getWins());
-                matches = Integer.parseInt(pData.getMatches());
-                kills = Integer.parseInt(pData.getHeroKills());
-                deaths = Integer.parseInt(pData.getDeaths());
-                assists = Integer.parseInt(pData.getAssists());
-                towerKills = Integer.parseInt(pData.getTowerKills());
-                coreKills = Integer.parseInt(pData.getCoreKills());
+                try{
+                wins = Integer.parseInt(pData.getWins());}
+                catch(NumberFormatException e){
+                    wins = 0;
+                }
+                try{
+                matches = Integer.parseInt(pData.getMatches());}
+                catch(NumberFormatException e){
+                    matches = 0;
+                }
+                try{
+                kills = Integer.parseInt(pData.getHeroKills());}
+                catch (NumberFormatException e){
+                    kills = 0;
+                }
+                try{
+                deaths = Integer.parseInt(pData.getDeaths());}
+                catch (NumberFormatException e){
+                    deaths = 0;
+                }
+                try{
+                assists = Integer.parseInt(pData.getAssists());}
+                catch (NumberFormatException e){
+                    assists = 0;
+                }
+                try{
+                towerKills = Integer.parseInt(pData.getTowerKills());}
+                catch (NumberFormatException e){
+                    towerKills = 0;
+                }
+                try{
+                coreKills = Integer.parseInt(pData.getCoreKills());}
+                catch (NumberFormatException e){
+                    coreKills = 0;
+                }
 
             } else {
                 // Toast.makeText(playerGraphFragment.this, "Player Not Found!!!",
