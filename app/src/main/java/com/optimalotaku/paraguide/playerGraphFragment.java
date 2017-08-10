@@ -76,6 +76,27 @@ public class playerGraphFragment extends Fragment {
     int towerKills;
     int coreKills;
     private String playerName;
+    private TextView topAvgKills;
+    private TextView topAvgDeaths;
+    private TextView topAvgAssists;
+    private TextView topAvgMinionKills;
+    private TextView topAvgHeroDamage;
+    private TextView yourAvgKills;
+    private TextView yourAvgDeaths;
+    private TextView yourAvgAssists;
+    private TextView yourAvgMinionKills;
+    private TextView yourAvgHeroDamage;
+    private TextView topAvgTowers;
+    private TextView topAvgTowerAssists;
+    private TextView topStructDamage;
+    private TextView topInhibTakedowns;
+    private TextView topInhibAssists;
+    private TextView yourAvgTowers;
+    private TextView yourAvgTowerAssists;
+    private TextView yourStructDamage;
+    private TextView yourInhibTakedowns;
+    private TextView yourInhibAssists;
+
     ProgressDialog dialog;
 
 
@@ -342,6 +363,28 @@ public class playerGraphFragment extends Fragment {
         mChart3.setDescription(description3);
         final String[] playerJSONInfo = new String[1];
 
+        topAvgAssists = (TextView) view.findViewById(R.id.top_average_assits);
+        topAvgKills = (TextView) view.findViewById(R.id.top_average_kills);
+        topAvgDeaths = (TextView) view.findViewById(R.id.top_average_deaths);
+        topAvgHeroDamage = (TextView) view.findViewById(R.id.top_average_hero_dmg);
+        topAvgMinionKills = (TextView) view.findViewById(R.id.top_average_minion_kills);
+        yourAvgAssists = (TextView) view.findViewById(R.id.your_average_assists);
+        yourAvgKills = (TextView) view.findViewById(R.id.your_average_kills);
+        yourAvgDeaths = (TextView) view.findViewById(R.id.your_average_deaths);
+        yourAvgHeroDamage = (TextView) view.findViewById(R.id.your_average_hero_dmg);
+        yourAvgMinionKills = (TextView) view.findViewById(R.id.your_average_minion_kills);
+        topAvgTowers = (TextView) view.findViewById(R.id.top_average_tower_kills);
+        topAvgTowerAssists = (TextView) view.findViewById(R.id.top_average_tower_assists);
+        topInhibTakedowns = (TextView) view.findViewById(R.id.top_average_inhibs_destroyed);
+        topInhibAssists = (TextView) view.findViewById(R.id.top_average_inhib_assists);
+        topStructDamage = (TextView) view.findViewById(R.id.top_average_struct_dmg);
+        yourAvgTowers = (TextView) view.findViewById(R.id.your_average_tower_kills);
+        yourAvgTowerAssists = (TextView) view.findViewById(R.id.your_average_tower_assists);
+        yourInhibTakedowns = (TextView) view.findViewById(R.id.your_average_inhib_kills);
+        yourInhibAssists = (TextView) view.findViewById(R.id.your_average_inhib_assists);
+        yourStructDamage = (TextView) view.findViewById(R.id.your_average_struct_dmg);
+
+
         try {
             //Gather UI Objects
             ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
@@ -563,6 +606,18 @@ public class playerGraphFragment extends Fragment {
             e.printStackTrace();
         }
 
+        topAvgAssists.setText(Double.toString(Constants.currentAssistMax));
+        topAvgKills.setText(Double.toString(Constants.currentKillMax));
+        topAvgDeaths.setText(Double.toString(Constants.currentDeathMax));
+        topAvgHeroDamage.setText(Double.toString(Constants.currentheroDamageMax));
+        topAvgMinionKills.setText(Double.toString(Constants.currentMinionKillMax));
+        topAvgTowers.setText(Double.toString(Constants.currentTowerKillMax));
+        topAvgTowerAssists.setText(Double.toString(Constants.currentTowerAssistMax));
+        topInhibTakedowns.setText(Double.toString(Constants.currentInhibKillsMax));
+        topInhibAssists.setText(Double.toString(Constants.crrentinhibAssistMax));
+        topStructDamage.setText(Double.toString(Constants.currentMaxStructDamage));
+
+
 
 // Create background track
         arcView.addSeries(new SeriesItem.Builder(Color.argb(255, 218, 218, 218))
@@ -692,6 +747,81 @@ public class playerGraphFragment extends Fragment {
         // double surrenderProb = Double.parseDouble(pData.getSurrenders())/Double.parseDouble(pData.getMatches());
         double timePlayed = Double.parseDouble(pData.getTimeePlayed());
         double gamesPlayed = Double.parseDouble(pData.getMatches());
+
+        yourAvgAssists.setText(String.format("%.1f",avgAssists));
+        yourAvgKills.setText(String.format("%.1f", avgKills));
+        yourAvgDeaths.setText(String.format("%.1f", avgDeaths));
+        yourAvgHeroDamage.setText(String.format("%.1f", avgHeroDmg));
+        yourAvgMinionKills.setText(String.format("%.1f",avgMinionKills));
+        yourAvgTowers.setText(String.format("%.1f", avgTowerKills));
+        yourAvgTowerAssists.setText(String.format("%.1f", avgTowerAssists));
+        yourInhibTakedowns.setText(String.format("%.1f", avgInhibKills));
+        yourInhibAssists.setText(String.format("%.1f", avgInhibAssists));
+        yourStructDamage.setText(String.format("%.1f", avgStuctDamage));
+
+        if(avgTowerKills < Constants.currentTowerKillMax){
+            yourAvgTowers.setTextColor(Color.RED);
+        }
+        else{
+            yourAvgTowers.setTextColor(Color.GREEN);
+        }
+
+        if(avgTowerAssists < Constants.currentTowerAssistMax){
+            yourAvgTowerAssists.setTextColor(Color.RED);
+        }
+        else {
+            yourAvgTowerAssists.setTextColor(Color.GREEN);
+        }
+        if(avgInhibKills < Constants.currentInhibKillsMax){
+            yourInhibTakedowns.setTextColor(Color.RED);
+        }
+        else{
+            yourInhibTakedowns.setTextColor(Color.GREEN);
+        }
+        if(avgInhibAssists < Constants.crrentinhibAssistMax){
+            yourInhibAssists.setTextColor(Color.RED);
+        }
+        else{
+            yourInhibAssists.setTextColor(Color.GREEN);
+        }
+        if(avgStuctDamage < Constants.currentMaxStructDamage){
+            yourStructDamage.setTextColor(Color.RED);
+        }
+        else{
+            yourStructDamage.setTextColor(Color.GREEN);
+        }
+
+        if (avgAssists < Constants.currentAssistMax){
+            yourAvgAssists.setTextColor(Color.RED);
+        }
+        else{
+            yourAvgAssists.setTextColor(Color.GREEN);
+        }
+        if(avgKills < Constants.currentAssistMax){
+            yourAvgKills.setTextColor(Color.RED);
+        }
+        else {
+            yourAvgKills.setTextColor(Color.GREEN);
+        }
+        if(avgDeaths > Constants.currentDeathMax){
+            yourAvgDeaths.setTextColor(Color.RED);
+        }
+        else{
+            yourAvgDeaths.setTextColor(Color.GREEN);
+        }
+        if(avgHeroDmg < Constants.currentheroDamageMax){
+            yourAvgHeroDamage.setTextColor(Color.RED);
+        }
+        else{
+            yourAvgHeroDamage.setTextColor(Color.GREEN);
+        }
+        if(avgMinionKills < Constants.currentMinionKillMax){
+            yourAvgMinionKills.setTextColor(Color.RED);
+        }
+        else{
+            yourAvgMinionKills.setTextColor(Color.GREEN);
+        }
+
 
         double killScore = (avgKills - Constants.currentMin) / (Constants.currentKillMax - Constants.currentMin);
         double assistScore = (avgAssists - Constants.currentMin) / (Constants.currentAssistMax - Constants.currentMin);
