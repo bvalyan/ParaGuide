@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@android:color/background_dark"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        app:cardCornerRadius="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%">
+
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_heightPercent="45%"
+            app:layout_widthPercent="46%"
+            app:layout_marginLeftPercent="0%"
+            android:layout_marginTop="5dp"
+
+            />
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/chart2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_heightPercent="45%"
+            app:layout_widthPercent="46%"
+            android:layout_marginTop="5dp"
+            app:layout_marginLeftPercent="46.5%"
+            />
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_heightPercent="40%"
+            app:layout_widthPercent="95%"
+            app:layout_marginLeftPercent="0%"
+            app:layout_marginTopPercent="53%"
+            />
+
+    </android.support.percent.PercentRelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp">
+
+        <android.support.percent.PercentRelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="490dp">
+
+            <com.hookedonplay.decoviewlib.DecoView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/dynamicArcView"
+                app:layout_widthPercent="80%"
+                app:layout_heightPercent="100%"
+                app:layout_marginLeftPercent="10%"
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="PARAFLOW SCORE"
+                android:textSize="20dp"
+                app:layout_widthPercent = "100%"
+                app:layout_heightPercent="100%"
+                android:textAlignment="center"
+                app:layout_marginLeftPercent="0%"
+                app:layout_marginTopPercent="35%"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/percent"
+                app:layout_widthPercent = "100%"
+                app:layout_heightPercent="100%"
+                android:textAlignment="center"
+                app:layout_marginLeftPercent="3%"
+                app:layout_marginTopPercent="40%"
+                />
+            <TextView
+                android:id="@+id/grade"
+                android:textAlignment="center"
+                app:layout_widthPercent = "100%"
+                app:layout_heightPercent="100%"
+                app:layout_marginLeftPercent="1%"
+                app:layout_marginTopPercent="60%"
+                />
+        </android.support.percent.PercentRelativeLayout>
+    </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/killscore_breakdown"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="15dp"
+            app:cardCornerRadius="8dp">
+
+            <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/kda_breakdown_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Mechanical Score Breakdown"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+                <TextView
+                    android:text="Top Avg Kills"
+                    android:id="@+id/top_average_kills_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="34dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/kda_breakdown_title"/>
+                <TextView
+                    android:id="@+id/top_average_kills"
+                    android:layout_width="72dp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/top_average_kills_title"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_kills_title"
+                    android:text="1.23"/>
+                <TextView
+                    android:text="Your Avg Kills"
+                    android:id="@+id/your_average_kills_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="65.5%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/kda_breakdown_title"/>
+                <TextView
+                    android:id="@+id/your_average_kills"
+                    android:layout_width="77dp"
+                    android:layout_alignStart="@id/your_average_kills_title"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/your_average_kills_title"
+                    android:text="0.73"/>
+
+                <TextView
+                    android:text="Top Avg Deaths"
+                    android:id="@+id/top_average_deaths_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="28dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/top_average_kills"/>
+
+                <TextView
+                    android:id="@+id/top_average_deaths"
+                    android:layout_width="87dp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_alignStart="@id/top_average_deaths_title"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_deaths_title"
+                    android:text="0.53"/>
+                <TextView
+                    android:text="Your Avg Deaths"
+                    android:id="@+id/your_average_deaths_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="62.5%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/your_average_kills"/>
+                <TextView
+                    android:id="@+id/your_average_deaths"
+                    android:layout_width="93dp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/your_average_deaths_title"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/your_average_deaths_title"
+                    android:text="0.84"/>
+                <TextView
+                    android:text="Top Avg Assists"
+                    android:id="@+id/top_average_assists_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/top_average_deaths"/>
+                <TextView
+                    android:id="@+id/top_average_assits"
+                    android:layout_width="89dp"
+                    android:layout_alignStart="@id/top_average_assists_title"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_assists_title"
+                    android:text="1.93"/>
+                <TextView
+                    android:text="Top Avg Minion Kills"
+                    android:id="@+id/top_average_minions_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/top_average_assits"/>
+                <TextView
+                    android:id="@+id/top_average_minion_kills"
+                    android:layout_width="114dp"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_alignStart="@id/top_average_minions_title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_minions_title"
+                    android:text="1.93"/>
+                <TextView
+                    android:text="Top Avg Hero Damage"
+                    android:id="@+id/top_average_hero_dmg_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="9.4dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/top_average_minion_kills"/>
+                <TextView
+                    android:id="@+id/top_average_hero_dmg"
+                    android:layout_width="124dp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/top_average_hero_dmg_title"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_hero_dmg_title"
+                    android:text="1.93"/>
+                <TextView
+                    android:text="Your Avg Assists"
+                    android:id="@+id/your_average_assists_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="62.2%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/your_average_deaths"/>
+                <TextView
+                    android:id="@+id/your_average_assists"
+                    android:layout_width="94dp"
+                    android:layout_alignStart="@id/your_average_assists_title"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:layout_below="@id/your_average_assists_title"
+                    android:text="0.98"/>
+                <TextView
+                    android:text="Your Avg Minion Kills"
+                    android:id="@+id/your_average_minions_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="58.2%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/your_average_assists"/>
+                <TextView
+                    android:id="@+id/your_average_minion_kills"
+                    android:layout_width="118dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/your_average_minions_title"
+                    android:layout_below="@id/your_average_minions_title"
+                    android:text="0.98"/>
+                <TextView
+                    android:text="Your Avg Hero Damage"
+                    android:id="@+id/your_average_hero_dmg_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="56.2%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/your_average_minion_kills"/>
+                <TextView
+                    android:id="@+id/your_average_hero_dmg"
+                    android:layout_width="130dp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/your_average_hero_dmg_title"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/your_average_hero_dmg_title"
+                    android:text="0.98"/>
+
+
+                <View
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="1dp"
+                    android:layout_marginTop="33dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+
+            </android.support.percent.PercentRelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="15dp"
+            android:id="@+id/efficieny_breakdown"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="8dp">
+
+            <android.support.percent.PercentRelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Efficiency Score Breakdown"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:id="@+id/efficiency_breakdown_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAlignment="center"
+                    />
+
+                <TextView
+                    android:text="Top Avg Towers Destroyed"
+                    android:id="@+id/top_average_tower_kills_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/efficiency_breakdown_title"/>
+                <TextView
+                    android:id="@+id/top_average_tower_kills"
+                    android:layout_width="146dp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/top_average_tower_kills_title"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_tower_kills_title"
+                    android:text="1.23"/>
+                <TextView
+                    android:text="Your Avg Towers Destroyed"
+                    android:textSize="13sp"
+                    android:id="@+id/your_average_tower_kills_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="55.5%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/efficiency_breakdown_title"/>
+                <TextView
+                    android:id="@+id/your_average_tower_kills"
+                    android:layout_width="150dp"
+                    android:layout_alignStart="@id/your_average_tower_kills_title"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/your_average_tower_kills_title"
+                    android:text="0.73"/>
+
+                <TextView
+                    android:text="Top Avg Tower Assists"
+                    android:id="@+id/top_average_tower_assists_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/top_average_tower_kills"/>
+
+                <TextView
+                    android:id="@+id/top_average_tower_assists"
+                    android:layout_width="125dp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_alignStart="@id/top_average_tower_assists_title"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_tower_assists_title"
+                    android:text="0.53"/>
+                <TextView
+                    android:text="Your Avg Tower Assists"
+                    android:id="@+id/your_average_tower_assists_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="13sp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="58%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/your_average_tower_kills"/>
+                <TextView
+                    android:id="@+id/your_average_tower_assists"
+                    android:layout_width="130dp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/your_average_tower_assists_title"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/your_average_tower_assists_title"
+                    android:text="0.84"/>
+                <TextView
+                    android:text="Top Avg Inhib Takedowns"
+                    android:id="@+id/top_average_inhibs_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/top_average_tower_assists"/>
+                <TextView
+                    android:id="@+id/top_average_inhibs_destroyed"
+                    android:layout_width="158dp"
+                    android:layout_alignStart="@id/top_average_inhibs_title"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_inhibs_title"
+                    android:text="1.93"/>
+                <TextView
+                    android:text="Top Avg Inhibitor Assists"
+                    android:id="@+id/top_average_inhib_assists_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/top_average_inhibs_destroyed"/>
+                <TextView
+                    android:id="@+id/top_average_inhib_assists"
+                    android:layout_width="135dp"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_alignStart="@id/top_average_inhib_assists_title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_inhib_assists_title"
+                    android:text="1.93"/>
+                <TextView
+                    android:text="Top Avg Structure Damage"
+                    android:id="@+id/top_average_struct_dmg_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/top_average_inhib_assists"/>
+                <TextView
+                    android:id="@+id/top_average_struct_dmg"
+                    android:layout_width="148dp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/top_average_struct_dmg_title"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/top_average_struct_dmg_title"
+                    android:text="1.93"/>
+                <TextView
+                    android:text="Your Avg Inhib Takedowns"
+                    android:id="@+id/your_inhib_kills_title"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="56.7%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/your_average_tower_assists"/>
+                <TextView
+                    android:id="@+id/your_average_inhib_kills"
+                    android:layout_width="138dp"
+                    android:layout_alignStart="@id/your_inhib_kills_title"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:layout_below="@id/your_inhib_kills_title"
+                    android:text="0.98"/>
+                <TextView
+                    android:text="Your Avg Inhibitor Assists"
+                    android:id="@+id/your_average_inhib_assist_title"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="56.2%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/your_average_inhib_kills"/>
+                <TextView
+                    android:id="@+id/your_average_inhib_assists"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/your_average_inhib_assist_title"
+                    android:layout_below="@id/your_average_inhib_assist_title"
+                    android:text="0.98"/>
+                <TextView
+                    android:text="Your Avg Structure Damage"
+                    android:id="@+id/your_average_struct_dmg_title"
+                    android:textSize="13sp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_marginLeftPercent="54.2%"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/your_average_inhib_assists"/>
+                <TextView
+                    android:id="@+id/your_average_struct_dmg"
+                    android:layout_width="150dp"
+                    android:textAlignment="center"
+                    android:layout_alignStart="@id/your_average_struct_dmg_title"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_below="@id/your_average_struct_dmg_title"
+                    android:text="0.98"/>
+                <View
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="1dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+
+            </android.support.percent.PercentRelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:visibility="gone"
+            android:layout_marginTop="15dp"
+            android:id="@+id/experience_breakdown"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginBottom="30dp"
+            app:cardCornerRadius="8dp">
+
+            <android.support.percent.PercentRelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Experience Score Breakdown"
+                    android:textSize="30sp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAlignment="center"
+                    />
+
+
+                <View
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="1dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+
+            </android.support.percent.PercentRelativeLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</ScrollView>

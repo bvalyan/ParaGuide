@@ -77,8 +77,8 @@
         </activity>
         <activity android:name=".AccountSearch"
             android:screenOrientation="portrait"
-            android:fillViewport="true"
             android:theme="@style/Theme.AppCompat.Dialog"
+            android:fillViewport="true"
             android:windowSoftInputMode="stateAlwaysVisible|adjustPan">
         </activity>
         <activity android:name=".PAChatActivity"
