@@ -72,7 +72,7 @@ public class Cards extends AppCompatActivity {
             for (int i = 0; i < cardArray.length(); i++) {
                 cardList[i].setId(cardArray.getJSONObject(i).getString("id"));
                 cardList[i].setName(cardArray.getJSONObject(i).getString("name"));
-                cardList[i].setImageUrl(cardArray.getJSONObject(i).getString("iconImage"));
+                cardList[i].setImageUrl(cardArray.getJSONObject(i).getJSONArray("levels").getJSONObject(0).getJSONObject("images").getString("large"));
             }
 
         } catch (JSONException e1) {

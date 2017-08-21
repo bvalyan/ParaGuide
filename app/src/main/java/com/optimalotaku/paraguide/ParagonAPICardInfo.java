@@ -76,7 +76,6 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                     JSONObject card = cardArray.getJSONObject(i);
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Name: " + card.getString("name"));
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card ID: " + card.getString("id"));
-                    Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card Icon Image URL: " + card.getString("iconImage"));
                     cData.setName(card.getString("name"));
                     cData.setId(card.getString("id"));
 
@@ -114,27 +113,25 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                         Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card level: " + Integer.toString(level.getInt("level")));
                         cardLevel.setLevelNum(level.getInt("level"));
 
-                        JSONObject abilities = level.getJSONObject("Abilities");
-                        Iterator<String> abilityIter = level.getJSONObject("Abilities").keys();
+                        JSONObject abilities = level.getJSONArray("abilities").getJSONObject(0);
+                        Iterator<String> abilityIter = level.getJSONArray("abilities").getJSONObject(0).keys();
                         CardAbility cardAbility = new CardAbility();
                         List<CardAbility> cardAbilityList = new ArrayList<>();
                         while(abilityIter.hasNext()){
                             String abilityKey = abilityIter.next();
                             Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability key: " + abilityKey);
 
-                            JSONObject ability = abilities.getJSONObject(abilityKey);
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability name: " + abilities.getString("name"));
+                            cardAbility.setName(abilities.getString("name"));
 
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability name: " + ability.getString("name"));
-                            cardAbility.setName(ability.getString("name"));
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability description: " + abilities.getString("description"));
+                            cardAbility.setDescription(abilities.getString("description"));
 
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability description: " + ability.getString("description"));
-                            cardAbility.setDescription(ability.getString("description"));
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability cooldown: " + abilities.getString("cooldown"));
+                            cardAbility.setCooldown(abilities.getString("cooldown"));
 
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability cooldown: " + ability.getString("cooldown"));
-                            cardAbility.setCooldown(ability.getString("cooldown"));
-
-                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability manacost: " + ability.getString("manacost"));
-                            cardAbility.setManacost(ability.getString("manacost"));
+                            Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "level ability manacost: " + abilities.getString("manacost"));
+                            cardAbility.setManacost(abilities.getString("manacost"));
 
                             cardAbilityList.add(cardAbility);
 

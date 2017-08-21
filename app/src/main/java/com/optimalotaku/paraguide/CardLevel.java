@@ -34,6 +34,6 @@ public class CardLevel implements Serializable {
     }
 
     public void setImageURL(String imageURL) {
-        this.imageURL = "http://developer-paragon-cdn.epicgames.com/Images/"+imageURL;
+        this.imageURL = "http:"+imageURL;
     }
 }

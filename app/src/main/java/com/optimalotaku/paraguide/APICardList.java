@@ -44,7 +44,7 @@ public class APICardList extends AsyncTask<Void, Void, String> {
 
         try {
 
-            url2 = new URL("https://developer-paragon.epicgames.com/v1/cards");
+            url2 = new URL("https://developer-paragon.epicgames.com/v1/cards/complete");
             urlConnection2 = (HttpURLConnection) url2.openConnection();
             urlConnection2.addRequestProperty(Constants.API_KEY, Constants.API_VALUE);
 
