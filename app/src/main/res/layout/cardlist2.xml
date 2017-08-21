@@ -18,7 +18,7 @@
         app:layout_heightPercent="100%"
         android:verticalSpacing="5dp"
         android:horizontalSpacing="-50dp"
-        android:stretchMode="columnWidth"
+
         android:numColumns="3"/>
 
     </android.support.percent.PercentRelativeLayout>
