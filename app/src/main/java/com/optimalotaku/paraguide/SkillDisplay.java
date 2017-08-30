@@ -3,6 +3,7 @@ package com.optimalotaku.paraguide;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ public class SkillDisplay extends AppCompatActivity{
         ParagonAPIAttrReplace replacer = new ParagonAPIAttrReplace();
         ssSkillDesc = replacer.replaceSymbolsWithImages(this,skillDesc);
         setContentView(R.layout.skillview);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         skillTextName = (TextView) findViewById(R.id.skillname);
         skillImage = (ImageView) findViewById(R.id.skillimage);
         skillText = (TextView) findViewById(R.id.skillText);
