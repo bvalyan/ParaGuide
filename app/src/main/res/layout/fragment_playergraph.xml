@@ -380,6 +380,7 @@
                     android:layout_centerHorizontal="true"
                     android:text="Efficiency Score Breakdown"
                     android:textSize="30sp"
+                    android:textStyle="bold"
                     android:id="@+id/efficiency_breakdown_title"
                     android:fontFamily="sans-serif-condensed"
                     android:textAlignment="center"
