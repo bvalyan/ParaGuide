@@ -150,18 +150,24 @@ public class ParagonAPIAttrReplace {
     public String replaceModifiersWithText(Map<String, List<String>> mods, String APIText){
 
         List<Integer>strLocs = new ArrayList<>();
-        Set<String> keys = mods.keySet();
 
-        for(String key: keys){
+        try {
+            Set<String> keys = mods.keySet();
 
-            String replaceStr = "{"+key+"}";
+            for (String key : keys) {
 
-            Log.i("INFO","replaceModifiersWithText() - attempting to replace "+ replaceStr + " with "+listToModString(mods.get(key)));
+                String replaceStr = "{" + key + "}";
 
-            APIText  =  APIText.replace(replaceStr,listToModString(mods.get(key)));
+                Log.i("INFO", "replaceModifiersWithText() - attempting to replace " + replaceStr + " with " + listToModString(mods.get(key)));
 
-            Log.i("INFO","replaceModifiersWithText() - text after replace: "+ APIText);
+                APIText = APIText.replace(replaceStr, listToModString(mods.get(key)));
 
+                Log.i("INFO", "replaceModifiersWithText() - text after replace: " + APIText);
+
+            }
+        }
+        catch (NullPointerException e){
+            Log.i("NULL KEYS", "Null key for" + APIText);
         }
 
         return APIText;
