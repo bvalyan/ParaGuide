@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,10 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,63 +37,17 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements CardInfoResponse, ImageLoaderResponse, HeroInfoResponse, NavigationView.OnNavigationItemSelectedListener {
 
     CardData cotd;
-    GridView gridview;
     FileManager fileManager;
     HashMap<String,HeroData> heroDataMap;
     HashMap<String,List<CardData>> cDataMap;
     ProgressDialog progress;
-    private Toolbar mToolbar;
-    private DrawerLayout mDrawerLayout;
-    NavigationView mNavigationView;
-    FrameLayout mContentFrame;
     private static final String PREFERENCES_FILE = "mymaterialapp_settings";
-    private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-    ScalableVideoView videoview;
-    private boolean mUserLearnedDrawer;
-    private boolean mFromSavedInstanceState;
-    private int mCurrentSelectedPosition;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
-    int stopPosition;
-    Animation in;
-    Animation buttonIN;
     String authCode;
-    Animation greetingIN;
-    TokenManager check = new TokenManager();
-    TextView greeting = null;
-    TextView pHeroKills = null;
-    TextView pCoreKills = null;
-    TextView pGamesWon  = null;
-    String userID = "";
-    String userName = "";
-    Menu menu = null;
+    Menu menu;
+    SharedPreferences prefs;
     SharedPreferences.Editor e;
 
-   /* private void setUpToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (mToolbar != null) {
-            setSupportActionBar(mToolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }*/
-
-
-
-
-    public static void saveSharedSetting(Context ctx, String settingName, String settingValue) {
-        SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(settingName, settingValue);
-        editor.apply();
-    }
-
-    public static String readSharedSetting(Context ctx, String settingName, String defaultValue) {
-        SharedPreferences sharedPref = ctx.getSharedPreferences(PREFERENCES_FILE, Context.MODE_PRIVATE);
-        return sharedPref.getString(settingName, defaultValue);
-    }
 
 
 
@@ -106,11 +56,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
     @Override
     public void onBackPressed() {
-        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            finish();
-        }
+
     }
 
     @Override
@@ -119,51 +65,13 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_main);
-        final SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
-        final SharedPreferences.Editor e = getSharedPreferences("authInfo", Context.MODE_PRIVATE).edit();
+        prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
+        e = getSharedPreferences("authInfo", Context.MODE_PRIVATE).edit();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //e.remove("signedIn");
-        //e.apply();
-       /* videoview = (ScalableVideoView) findViewById(R.id.paragon_vid);
-        videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-                mp.setVolume(0,0);
-            }
-        });
-        in = new AlphaAnimation(0.0f, 1.0f);
-        in.setDuration(7000);
-        buttonIN = new AlphaAnimation(0.0f, 1.0f);
-        buttonIN.setDuration(8000);
-        greetingIN = new AlphaAnimation(0.0f, 1.0f);
-
-        greetingIN.setDuration(9000);
-        TextView title = (TextView) findViewById(R.id.title_5);
-        title.startAnimation(in);
-
-        Button analyze = (Button) findViewById(R.id.analyze_button);
-        analyze.setOnClickListener(new View.OnClickListener() {
-            Intent intent;
-            @Override
-            public void onClick(View v) {
-                intent = new Intent(MainActivity.this, AccountSearch.class);
-                intent.putExtra("HeroMap",heroDataMap);
-                startActivity(intent);
-            }
-        });
-        analyze.startAnimation(buttonIN);
-        //videoview.setDisplayMode(ScalableVideoView.DisplayMode.FULL_SCREEN);
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.trailer);
-        videoview.setVideoURI(uri);
-        videoview.start();
-        //gridview = (GridView) findViewById(R.id.gridview);*/
         fileManager = new FileManager(this);
         heroDataMap = new HashMap<>();
         cDataMap = new HashMap<>();
-
-        //setUpToolbar();
-
+        authCode = prefs.getString("signedIn", "null");
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -176,11 +84,23 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        menu = navigationView.getMenu();
+
+        if(!authCode.equals("null")) {
+            for (int menuItemIndex = 0; menuItemIndex < menu.size(); menuItemIndex++) {
+                MenuItem menuItem = menu.getItem(menuItemIndex);
+                if (menuItem.getItemId() == R.id.signinbutton) {
+                    menuItem.setVisible(false);
+                }
+                if (menuItem.getItemId() == R.id.signoutbutton) {
+                    menuItem.setVisible(true);
+                }
+            }
+        }
+
 
 
         if (savedInstanceState != null) {
-            mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
-            mFromSavedInstanceState = true;
             return;
         }
         else{
@@ -215,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
 
         return true;
     }
@@ -362,12 +281,6 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
        // gridview.setAdapter(new MyAdapter(this,imgBitmap));
     }
 
-    private String mExtractToken(String url) {
-        // url has format https://localhost/#access_token=<tokenstring>&token_type=Bearer&expires_in=315359999
-        String[] sArray = url.split("code=");
-        System.out.println(sArray[1]);
-        return sArray[1];
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -377,49 +290,50 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
         switch (item.getItemId()) {
             case R.id.signoutbutton:
-                intent = new Intent(MainActivity.this, TokenManager.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("HeroMap", heroDataMap);
-                bundle.putBoolean("logout", true);
                 e.remove("signedIn");
                 e.apply();
-                intent.putExtras(bundle);
-                startActivity(intent);
-                mCurrentSelectedPosition = 0;
+                authCode = prefs.getString("signedIn", "null");
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, TokenManager.newInstance(true, menu))
+                        .commit();
+                //mCurrentSelectedPosition = 0;
                 return true;
             case R.id.signinbutton:
-                intent = new Intent(MainActivity.this, TokenManager.class);
-                intent.putExtra("HeroMap", heroDataMap);
-                startActivity(intent);
-                mCurrentSelectedPosition = 0;
+                authCode = prefs.getString("signedIn", "null");
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, TokenManager.newInstance(false, menu))
+                        .commit();
+                //mCurrentSelectedPosition = 0;
                 return true;
             case R.id.navigation_item_1:
                 intent = new Intent(MainActivity.this, AccountSearch.class);
                 intent.putExtra("HeroMap", heroDataMap);
                 startActivity(intent);
-                mCurrentSelectedPosition = 1;
+               // mCurrentSelectedPosition = 1;
                 return true;
             case R.id.navigation_item_2:
                 intent = new Intent(MainActivity.this, CardOfTheDayView.class);
                 intent.putExtra("CardOfTheDay", cotd);
                 startActivity(intent);
-                mCurrentSelectedPosition = 2;
+               // mCurrentSelectedPosition = 2;
                 return true;
             case R.id.navigation_item_3:
                 intent = new Intent(MainActivity.this, newsView.class);
                 startActivity(intent);
-                mCurrentSelectedPosition = 3;
+              //  mCurrentSelectedPosition = 3;
                 return true;
             case R.id.navigation_item_4:
                 intent = new Intent(MainActivity.this, HeroView.class);
                 intent.putExtra("HeroMap", heroDataMap);
                 startActivity(intent);
-                mCurrentSelectedPosition = 4;
+              //  mCurrentSelectedPosition = 4;
                 return true;
             case R.id.navigation_item_5:
                 intent = new Intent(MainActivity.this, Cards.class);
                 startActivity(intent);
-                mCurrentSelectedPosition = 5;
+               // mCurrentSelectedPosition = 5;
                 return true;
                     /*case R.id.navigation_item_6:
                         intent = new Intent(MainActivity.this, MyDecks.class);

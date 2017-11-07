@@ -45,7 +45,7 @@ public class MainFragment extends Fragment {
     TextView pGamesWon  = null;
     String userID = "";
     String userName = "";
-    Menu menu = null;
+    Menu menu;
     String authCode;
 
     public static MainFragment newInstance() {
