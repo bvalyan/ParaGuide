@@ -294,7 +294,8 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d("resume", "onResume called");
-        videoview.resume();
+        videoview.seekTo(stopPosition);
+        videoview.start();
     }
 
 
