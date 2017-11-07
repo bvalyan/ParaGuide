@@ -1,12 +1,13 @@
 package com.optimalotaku.paraguide;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -17,29 +18,41 @@ import java.util.HashMap;
  * Created by bvaly on 2/8/2017.
  */
 
-public class NewPlayerDisplay extends AppCompatActivity {
+public class NewPlayerDisplay extends Fragment {
 
     private PlayerData pData;
     private HashMap<String,HeroData> hDataMap;
-    private String playerName;
+    private static String playerName;
+    private static HashMap<String,HeroData> map;
 
+    public static NewPlayerDisplay newInstance(String name, HashMap<String,HeroData> heroMap) {
+
+        Bundle args = new Bundle();
+        playerName = name;
+        map = heroMap;
+
+        NewPlayerDisplay fragment = new NewPlayerDisplay();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_player_data);
-        Intent i = this.getIntent();
-        playerName = i.getStringExtra("name");
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        super.onCreate(savedInstanceState);
+        View view = inflater.inflate(R.layout.new_player_data, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         //pData = (PlayerData) getIntent().getSerializableExtra("PlayerData");
-        hDataMap = (HashMap<String,HeroData>) getIntent().getSerializableExtra("HeroMap");
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs2);
-        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager2);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs2);
+        ViewPager vpPager = (ViewPager) view.findViewById(R.id.viewpager2);
         FragmentPagerAdapter adapterViewPager;
-        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        adapterViewPager = new MyPagerAdapter(getActivity().getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
         tabs.setViewPager(vpPager);
         vpPager.setCurrentItem(0);
+
+        return view;
     }
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
@@ -62,7 +75,7 @@ public class NewPlayerDisplay extends AppCompatActivity {
                 case 0: // Fragment # 0 - This will show FirstFragment
                     return playerGraphFragment.newInstance(0, "Player Data", pData, playerName);
                 case 1: // Fragment # 0 - This will show FirstFragment different title
-                    return PlayerTrendsFragment.newInstance(1, "Player Trends", pData, hDataMap);
+                    return PlayerTrendsFragment.newInstance(1, "Player Trends", pData, map);
                 default:
                     return null;
             }

@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -43,10 +44,12 @@ public class TokenManager extends Fragment{
     String [] cardText;
     static boolean logouts = false;
     static Menu menus;
+    static HashMap<String,HeroData> heroDataMap;
 
-    public static TokenManager newInstance(boolean logout, Menu menu) {
+    public static TokenManager newInstance(boolean logout, Menu menu,HashMap<String,HeroData> heroMap) {
         logouts = logout;
         menus = menu;
+        heroDataMap = heroMap;
         return new TokenManager();
     }
 
@@ -96,7 +99,7 @@ public class TokenManager extends Fragment{
             }
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, MainFragment.newInstance())
+                    .replace(R.id.fragment_container, MainFragment.newInstance(heroDataMap))
                     .commit();
         }
         SharedPreferences prefs = getActivity().getSharedPreferences("authInfo", Context.MODE_PRIVATE);
@@ -170,7 +173,7 @@ public class TokenManager extends Fragment{
                             }
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
-                                    .replace(R.id.fragment_container, MainFragment.newInstance())
+                                    .replace(R.id.fragment_container, MainFragment.newInstance(heroDataMap))
                                     .commit();
                             //
 

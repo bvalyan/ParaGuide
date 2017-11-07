@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -45,10 +46,14 @@ public class MainFragment extends Fragment {
     TextView pGamesWon  = null;
     String userID = "";
     String userName = "";
+    static HashMap<String, HeroData> map;
     Menu menu;
     String authCode;
 
-    public static MainFragment newInstance() {
+    String TAG = MainFragment.class.getSimpleName();
+
+    public static MainFragment newInstance(HashMap<String, HeroData> heroDataMap) {
+        map = heroDataMap;
         return new MainFragment();
     }
 
@@ -82,10 +87,11 @@ public class MainFragment extends Fragment {
             Intent intent;
             @Override
             public void onClick(View v) {
-                //intent = new Intent(MainActivity.this, AccountSearch.class);
-                //intent.putExtra("HeroMap",heroDataMap);
-                //startActivity(intent);
-                //TODO: Reimplement account search as fragment
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, AccountSearch.newInstance(map))
+                        .addToBackStack(TAG)
+                        .commit();
             }
         });
         analyze.startAnimation(buttonIN);
@@ -283,5 +289,13 @@ public class MainFragment extends Fragment {
         stopPosition = videoview.getCurrentPosition(); //stopPosition is an int
         videoview.pause();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("resume", "onResume called");
+        videoview.resume();
+    }
+
 
 }

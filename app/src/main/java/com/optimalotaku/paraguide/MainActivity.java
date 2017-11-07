@@ -48,17 +48,6 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     SharedPreferences prefs;
     SharedPreferences.Editor e;
 
-
-
-
-
-
-
-    @Override
-    public void onBackPressed() {
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -118,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             AppRater.app_launched(this);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container, MainFragment.newInstance())
+                    .add(R.id.fragment_container, MainFragment.newInstance(heroDataMap))
                     .commit();
         }
     }
@@ -295,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 authCode = prefs.getString("signedIn", "null");
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, TokenManager.newInstance(true, menu))
+                        .replace(R.id.fragment_container, TokenManager.newInstance(true, menu, heroDataMap))
                         .commit();
                 //mCurrentSelectedPosition = 0;
                 return true;
@@ -303,14 +292,16 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 authCode = prefs.getString("signedIn", "null");
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, TokenManager.newInstance(false, menu))
+                        .replace(R.id.fragment_container, TokenManager.newInstance(false, menu, heroDataMap))
                         .commit();
                 //mCurrentSelectedPosition = 0;
                 return true;
             case R.id.navigation_item_1:
-                intent = new Intent(MainActivity.this, AccountSearch.class);
-                intent.putExtra("HeroMap", heroDataMap);
-                startActivity(intent);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, AccountSearch.newInstance(heroDataMap))
+                        .addToBackStack("NEW")
+                        .commit();
                // mCurrentSelectedPosition = 1;
                 return true;
             case R.id.navigation_item_2:
