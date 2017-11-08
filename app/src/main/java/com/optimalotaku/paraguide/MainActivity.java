@@ -319,8 +319,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                // mCurrentSelectedPosition = 2;
                 return true;
             case R.id.navigation_item_3:
-                intent = new Intent(MainActivity.this, newsView.class);
-                startActivity(intent);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, newsView.newInstance())
+                        .addToBackStack("NEW")
+                        .commit();
               //  mCurrentSelectedPosition = 3;
                 return true;
             case R.id.navigation_item_4:
