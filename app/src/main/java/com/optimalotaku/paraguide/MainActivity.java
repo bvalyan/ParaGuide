@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     Menu menu;
     SharedPreferences prefs;
     SharedPreferences.Editor e;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.nav_drawer);
+        drawer = (DrawerLayout) findViewById(R.id.nav_drawer);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -286,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         .beginTransaction()
                         .replace(R.id.fragment_container, TokenManager.newInstance(true, menu, heroDataMap))
                         .commit();
+                drawer.closeDrawer(Gravity.LEFT);
                 //mCurrentSelectedPosition = 0;
                 return true;
             case R.id.signinbutton:
@@ -294,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         .beginTransaction()
                         .replace(R.id.fragment_container, TokenManager.newInstance(false, menu, heroDataMap))
                         .commit();
+                drawer.closeDrawer(Gravity.LEFT);
                 //mCurrentSelectedPosition = 0;
                 return true;
             case R.id.navigation_item_1:
@@ -302,12 +306,16 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         .replace(R.id.fragment_container, AccountSearch.newInstance(heroDataMap))
                         .addToBackStack("NEW")
                         .commit();
+                drawer.closeDrawer(Gravity.LEFT);
                // mCurrentSelectedPosition = 1;
                 return true;
             case R.id.navigation_item_2:
-                intent = new Intent(MainActivity.this, CardOfTheDayView.class);
-                intent.putExtra("CardOfTheDay", cotd);
-                startActivity(intent);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, CardOfTheDayView.newInstance(cotd))
+                        .addToBackStack("NEW")
+                        .commit();
+                drawer.closeDrawer(Gravity.LEFT);
                // mCurrentSelectedPosition = 2;
                 return true;
             case R.id.navigation_item_3:
