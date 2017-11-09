@@ -300,6 +300,15 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 drawer.closeDrawer(Gravity.LEFT);
                 //mCurrentSelectedPosition = 0;
                 return true;
+            case R.id.navigation_item_0:
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, MainFragment.newInstance(heroDataMap))
+                        .addToBackStack("NEW")
+                        .commit();
+                drawer.closeDrawer(Gravity.LEFT);
+                // mCurrentSelectedPosition = 1;
+                return true;
             case R.id.navigation_item_1:
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -324,6 +333,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                         .replace(R.id.fragment_container, newsView.newInstance())
                         .addToBackStack("NEW")
                         .commit();
+                drawer.closeDrawer(Gravity.LEFT);
               //  mCurrentSelectedPosition = 3;
                 return true;
             case R.id.navigation_item_4:
@@ -331,6 +341,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 intent.putExtra("HeroMap", heroDataMap);
                 startActivity(intent);
               //  mCurrentSelectedPosition = 4;
+                drawer.closeDrawer(Gravity.LEFT);
                 return true;
             case R.id.navigation_item_5:
                 getSupportFragmentManager()
