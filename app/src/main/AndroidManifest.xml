@@ -21,10 +21,6 @@
         android:theme="@style/Theme.MyParaTheme"
         android:name="android.support.multidex.MultiDexApplication"
         >
-
-
-
-
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MyParaTheme"

@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             case R.id.navigation_item_2:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, CardOfTheDayView.newInstance(cotd))
+                        .replace(R.id.fragment_container, CardDisplay.newInstance(cotd))
                         .addToBackStack("NEW")
                         .commit();
                 drawer.closeDrawer(Gravity.LEFT);
@@ -333,8 +333,12 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
               //  mCurrentSelectedPosition = 4;
                 return true;
             case R.id.navigation_item_5:
-                intent = new Intent(MainActivity.this, Cards.class);
-                startActivity(intent);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, Cards.newInstance(cotd))
+                        .addToBackStack("NEW")
+                        .commit();
+                drawer.closeDrawer(Gravity.LEFT);
                // mCurrentSelectedPosition = 5;
                 return true;
                     /*case R.id.navigation_item_6:
