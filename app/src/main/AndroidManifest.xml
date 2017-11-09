@@ -18,7 +18,7 @@
         android:hardwareAccelerated="false"
         android:supportsRtl="true"
         android:uiOptions="splitActionBarWhenNarrow"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Theme.MyParaTheme"
         android:name="android.support.multidex.MultiDexApplication"
         >
 
@@ -27,7 +27,7 @@
 
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.MyParaTheme"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".HeroView"

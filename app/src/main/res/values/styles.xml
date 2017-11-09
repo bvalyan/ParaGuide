@@ -8,10 +8,11 @@
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:colorBackground">@color/background_material_light</item>
+        <item name="android:colorBackground">?android:attr/colorBackground</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:colorForeground">@color/cardview_dark_background</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/label_back_dark</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"
