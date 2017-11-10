@@ -43,16 +43,7 @@
             android:theme="@style/Theme.AppCompat.Dialog"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
-        <activity android:name=".CardDisplay"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
         <activity android:name=".MyDecks"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            >
-        </activity>
-        <activity android:name=".Cards"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan"
             >
