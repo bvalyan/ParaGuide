@@ -228,6 +228,8 @@ public class NewHomeFragment extends Fragment {
                 (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.vicvp);
         final HorizontalPagerAdapter adapter = new HorizontalPagerAdapter(getContext(), map, view);
         horizontalInfiniteCycleViewPager.setAdapter(adapter);
+        horizontalInfiniteCycleViewPager.startAutoScroll(true);
+        horizontalInfiniteCycleViewPager.setScrollDuration(2500);
         horizontalInfiniteCycleViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             public void onPageScrollStateChanged(int state) {}
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
