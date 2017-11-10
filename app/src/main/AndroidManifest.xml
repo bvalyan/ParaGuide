@@ -16,7 +16,6 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:hardwareAccelerated="true"
-        android:supportsRtl="true"
         android:uiOptions="splitActionBarWhenNarrow"
         android:theme="@style/Theme.MyParaTheme"
         android:name="android.support.multidex.MultiDexApplication"

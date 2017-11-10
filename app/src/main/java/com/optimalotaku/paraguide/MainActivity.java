@@ -149,6 +149,10 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         }
         else{
             Log.i("INFO", "HeroView - onCreate(): Hero data does exist and is current. Grabbing current data from file - hero.data ");
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
+                    .commit();
         }
     }
 

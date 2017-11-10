@@ -24,7 +24,7 @@
         android:id="@+id/personalized_greeting"
         android:textAlignment="center"
         android:visibility="visible"
-        app:layout_marginTopPercent="63%"
+        app:layout_marginTopPercent="67%"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         app:layout_marginBottomPercent="10%"
         app:layout_marginTopPercent="10%"
         app:icvp_center_page_scale_offset="20dp"
-        app:icvp_max_page_scale="0.6"
+        app:icvp_max_page_scale="0.75"
         app:icvp_min_page_scale="0.5"
         app:icvp_min_page_scale_offset="0dp"
         app:icvp_scroll_duration="500"
@@ -76,7 +76,7 @@
     <TextView
 
         android:id="@+id/title_5"
-        app:layout_marginTopPercent="5%"
+        app:layout_marginTopPercent="6.3%"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PARAGUIDE 5"
