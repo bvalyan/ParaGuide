@@ -107,10 +107,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
             progress.dismiss();
             AppRater.app_launched(this);
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, MainFragment.newInstance(heroDataMap))
-                    .commit();
+
         }
     }
 
@@ -158,6 +155,10 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     @Override
     public void processHeroInfoFinish(final HashMap<String,HeroData> hData){
         heroDataMap = hData;
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
+                .commit();
     }
 
 
