@@ -3,13 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:id="@+id/main_relative_layout"
     android:layout_height="match_parent">
+    <ImageView
+        style="@style/BackGroundImageView"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:tint="#83000000"
+        android:id="@+id/background"/>
+
+    <WebView
+        android:id="@id/login_page"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:visibility="gone"></WebView>
 
     <TextView
         android:id="@+id/personalized_greeting"
         android:textAlignment="center"
         android:visibility="visible"
-        app:layout_marginTopPercent="20%"
+        app:layout_marginTopPercent="5%"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +36,7 @@
         android:id="@+id/personalized_hero_kill_stat"
         android:layout_below="@id/personalized_greeting"
         android:visibility="gone"
-        android:layout_marginTop="75dp"
+        app:layout_marginTopPercent="5%"
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-smallcaps"/>
     <TextView
@@ -43,15 +58,15 @@
 
     <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
         android:id="@+id/vicvp"
-        app:layout_marginTopPercent="40%"
-        app:icvp_center_page_scale_offset="30dp"
-        app:icvp_max_page_scale="0.8"
+        app:layout_marginTopPercent="8%"
         app:icvp_medium_scaled="true"
+        app:icvp_center_page_scale_offset="20dp"
+        app:icvp_max_page_scale="0.6"
         app:icvp_min_page_scale="0.5"
-        app:icvp_min_page_scale_offset="5dp"
+        app:icvp_min_page_scale_offset="0dp"
         app:icvp_scroll_duration="500"
         app:layout_widthPercent="100%"
-        app:layout_heightPercent="60%"
+        app:layout_heightPercent="100%"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"

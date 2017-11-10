@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             case R.id.navigation_item_0:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, MainFragment.newInstance(heroDataMap))
+                        .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
                         .addToBackStack("NEW")
                         .commit();
                 drawer.closeDrawer(Gravity.LEFT);

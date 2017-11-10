@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,10 +19,12 @@ import android.view.animation.Animation;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -223,7 +226,15 @@ public class NewHomeFragment extends Fragment {
         }
         final HorizontalInfiniteCycleViewPager horizontalInfiniteCycleViewPager =
                 (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.vicvp);
-        horizontalInfiniteCycleViewPager.setAdapter(new HorizontalPagerAdapter(getContext(), map));
+        final HorizontalPagerAdapter adapter = new HorizontalPagerAdapter(getContext(), map, view);
+        horizontalInfiniteCycleViewPager.setAdapter(adapter);
+        horizontalInfiniteCycleViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageSelected(int position) {
+                adapter.pageChanged(horizontalInfiniteCycleViewPager.getRealItem());
+            }
+        });
         return view;
 
     }
