@@ -99,7 +99,7 @@ public class TokenManager extends Fragment{
             }
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, MainFragment.newInstance(heroDataMap))
+                    .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
                     .commit();
         }
         SharedPreferences prefs = getActivity().getSharedPreferences("authInfo", Context.MODE_PRIVATE);
@@ -173,7 +173,7 @@ public class TokenManager extends Fragment{
                             }
                             getActivity().getSupportFragmentManager()
                                     .beginTransaction()
-                                    .replace(R.id.fragment_container, MainFragment.newInstance(heroDataMap))
+                                    .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
                                     .commit();
                             //
 

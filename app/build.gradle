@@ -24,7 +24,6 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
-    compile group: 'com.pubnub', name: 'pubnub', version: '4.0.5'
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile 'com.google.guava:guava:20.0'
     compile 'joda-time:joda-time:2.9.9'
