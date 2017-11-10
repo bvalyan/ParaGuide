@@ -11,7 +11,7 @@
         android:cropToPadding="true"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:tint="#83000000"
+        android:tint="#90000000"
         android:id="@+id/background"/>
 
     <WebView
@@ -24,7 +24,7 @@
         android:id="@+id/personalized_greeting"
         android:textAlignment="center"
         android:visibility="visible"
-        app:layout_marginTopPercent="5%"
+        app:layout_marginTopPercent="63%"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:id="@+id/personalized_hero_kill_stat"
         android:layout_below="@id/personalized_greeting"
         android:visibility="gone"
-        app:layout_marginTopPercent="5%"
+        app:layout_marginTopPercent="2%"
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-smallcaps"/>
     <TextView
@@ -58,7 +58,6 @@
 
     <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
         android:id="@+id/vicvp"
-        app:layout_marginTopPercent="8%"
         app:icvp_medium_scaled="true"
         app:icvp_center_page_scale_offset="20dp"
         app:icvp_max_page_scale="0.6"
@@ -71,5 +70,19 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+
+        android:id="@+id/title_5"
+        app:layout_marginTopPercent="5%"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PARAGUIDE 5"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:textSize="50sp"
+        android:fontFamily="sans-serif-condensed"
+        />
+
 
 </android.support.percent.PercentRelativeLayout>
