@@ -24,7 +24,7 @@
         android:id="@+id/personalized_greeting"
         android:textAlignment="center"
         android:visibility="visible"
-        app:layout_marginTopPercent="62%"
+        app:layout_marginTopPercent="65.2%"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         android:id="@+id/personalized_hero_kill_stat"
         android:layout_below="@id/personalized_greeting"
         android:visibility="gone"
-        app:layout_marginTopPercent="2%"
+        app:layout_marginTopPercent="1%"
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-smallcaps"/>
     <TextView
@@ -62,19 +62,18 @@
         app:layout_marginBottomPercent="5%"
         app:layout_marginTopPercent="5%"
         app:icvp_center_page_scale_offset="20dp"
-        app:icvp_interpolator="@android:interpolator/linear"
         app:icvp_max_page_scale="0.75"
         app:icvp_min_page_scale="0.5"
         app:icvp_min_page_scale_offset="0dp"
         app:icvp_scroll_duration="500"
         app:layout_widthPercent="100%"
         app:layout_heightPercent="100%"
-      />
+        />
 
     <TextView
         android:id="@+id/title_5"
-        app:layout_heightPercent="10%"
-        app:layout_marginTopPercent="5%"
+        android:layout_height="wrap_content"
+        app:layout_marginTopPercent="4%"
         android:layout_width="match_parent"
         android:textAlignment="center"
         android:text="PARAGUIDE 5"
