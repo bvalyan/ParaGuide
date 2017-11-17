@@ -62,7 +62,6 @@
         app:layout_marginBottomPercent="5%"
         app:layout_marginTopPercent="5%"
         app:icvp_center_page_scale_offset="20dp"
-        app:icvp_interpolator="@android:interpolator/linear"
         app:icvp_max_page_scale="0.75"
         app:icvp_min_page_scale="0.5"
         app:icvp_min_page_scale_offset="0dp"

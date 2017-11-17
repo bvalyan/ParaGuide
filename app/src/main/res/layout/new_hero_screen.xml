@@ -1,167 +1,227 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black">
 
     <ImageView
         android:id="@+id/hero_portrait"
-        android:layout_height="310dp"
-        android:layout_width="0dp"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-   />
+        style="@style/GameCoverStyle"
+        />
 
-    <android.support.v7.widget.CardView
-        android:layout_width="395dp"
-        app:cardCornerRadius="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/hero_portrait"
-        app:layout_constraintRight_toLeftOf="@+id/hero_portrait"
-        app:layout_constraintTop_toBottomOf="@+id/hero_portrait"
-        android:layout_height="wrap_content"
-        >
-        <RelativeLayout
+    <com.truizlop.fabreveallayout.FABRevealLayout
+        android:id="@+id/fab_reveal_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fab_reveal_height">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/plus_2_256"
+            app:backgroundTint="#363636" />
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/main_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <ProgressBar
-        android:layout_width="340dp"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content"
-        android:id="@+id/difficulty_bar"
-        android:animationResolution="10000"
-        android:max="3"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="10dp"
-/>
+            <TextView
+                android:id="@+id/hero_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:layout_marginTopPercent="25%"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="40sp" />
+            <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+                android:id="@+id/difficulty_bar"
+                android:layout_below="@id/hero_name"
+                app:rcIconSrc="@drawable/paragon_white"
+                app:rcBackgroundColor="#1b1b1b"
+                app:rcSecondaryProgress="0"
+                app:rcIconPadding="6dp"
+                app:rcBackgroundPadding="3dp"
+                app:rcIconSize="30dp"
+                app:rcRadius="2dp"
+                app:rcProgressColor="#cab280"
+                android:layout_centerHorizontal="true"
+                app:layout_widthPercent="80%"
+                app:layout_marginTopPercent="5%"
+                app:rcIconBackgroundColor="#847453"
+                android:layout_height="wrap_content"
+                app:rcMax="150"
+                />
 
-    <TextView
-        android:id="@+id/difficulty_text"
-        android:text="Difficulty"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/difficulty_bar"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:textAlignment="center"
-        android:textSize="21dp"
-        android:fontFamily="sans-serif-condensed"
- />
+            <TextView
+                android:text="Difficulty"
+                android:layout_below="@id/difficulty_bar"
+                android:textStyle="bold"
+                app:layout_marginTopPercent="2%"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="25sp"
+                android:textColor="#867757"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                />
+        </android.support.percent.PercentRelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/ability_power_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_below="@id/difficulty_text"
-        android:layout_marginTop="50dp"
-        android:layout_width="150dp"
-        android:layout_marginLeft="230dp"
-        android:layout_height="wrap_content"
-   />
-
-    <TextView
-        android:text="Ability Power"
-        android:layout_below="@id/ability_power_bar"
-        android:layout_alignRight="@id/ability_power_bar"
-        android:layout_alignLeft="@id/ability_power_bar"
-        android:textAlignment="center"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-         />
-
-    <ProgressBar
-        android:id="@+id/physical_power_bar"
-        android:layout_below="@id/difficulty_text"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-
-/>
-
-    <TextView
-        android:text="Physical Power"
-        android:layout_below="@id/physical_power_bar"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@id/physical_power_bar"
-        android:layout_alignLeft="@id/physical_power_bar"
-        android:textAlignment="center"
-        android:id="@+id/textView3"
- />
-
-    <ProgressBar
-        android:id="@+id/durability_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView3"
-        android:layout_marginTop="100dp"
-        android:layout_alignLeft="@id/physical_power_bar"
-         />
-
-    <TextView
-        android:text="Durability"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/durability_bar"
-        android:layout_alignLeft="@id/durability_bar"
-        android:layout_alignRight="@id/durability_bar"
-        android:textAlignment="center"
-        android:layout_marginBottom="20dp"/>
-
-    <ProgressBar
-        android:id="@+id/mobility_bar"
-        android:layout_width="150dp"
-        android:layout_marginTop="100dp"
-        android:layout_below="@id/textView4"
-        android:layout_alignLeft="@id/ability_power_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_height="wrap_content"
-         />
-
-    <TextView
-        android:text="Mobility"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mobility_bar"
-        android:layout_alignRight="@id/mobility_bar"
-        android:layout_alignLeft="@id/mobility_bar"
-        android:textAlignment="center"
-        android:layout_marginBottom="20dp"
-  />
-
-    <TextView
-        android:id="@+id/hero_name"
-        android:layout_width="match_parent"
-
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-condensed"
-        android:text="TextView"
-        android:layout_marginBottom="8dp"
- />
-
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/secondary_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000">
 
 
-</android.support.constraint.ConstraintLayout>
+            <RelativeLayout
+                android:id="@+id/ability_layout"
+                app:layout_widthPercent="80%"
+                app:layout_marginTopPercent="10%"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content">
+                <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+                    android:id="@+id/ability_power_bar"
+                    app:rcIconSrc="@drawable/icon_energy_rating_128x_to_16x16"
+                    app:rcProgressColor="#2f318f"
+                    app:rcBackgroundColor="#1b1b1b"
+                    app:rcIconPadding="6dp"
+                    app:rcBackgroundPadding="3dp"
+                    app:rcIconSize="30dp"
+                    app:rcRadius="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_marginTopPercent="35%"
+                    app:layout_marginLeftPercent="1%"
+                    app:rcIconBackgroundColor="#3b3fff"
+                    app:rcMax="500"/>
+
+                <TextView
+                    android:text="Ability Power"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/ability_power_bar"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:textSize="17sp"
+                    app:layout_marginTopPercent="4%"
+                    android:textColor="#191b79"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/physical_layout"
+                android:layout_below="@id/ability_layout"
+                app:layout_widthPercent="80%"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:layout_marginTopPercent="1%"
+                >
+                <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+                    android:id="@+id/physical_power_bar"
+                    app:rcIconSrc="@drawable/icon_basic"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    app:rcIconPadding="6dp"
+                    app:rcBackgroundColor="#1b1b1b"
+                    app:rcIconSize="30dp"
+                    app:rcRadius="2dp"
+                    app:rcProgressColor="#740e10"
+                    app:rcBackgroundPadding="3dp"
+                    app:rcIconBackgroundColor="#ca2c2f"
+                    app:rcMax="500"
+                    />
+
+                <TextView
+                    android:text="Basic Power"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/physical_power_bar"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:textSize="17sp"
+                    app:layout_marginTopPercent="4%"
+                    android:textColor="#560a0b"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/health_layout"
+                android:layout_below="@id/physical_layout"
+                app:layout_widthPercent="80%"
+                android:layout_centerHorizontal="true"
+                app:layout_marginTopPercent="1%"
+                android:layout_height="wrap_content"
+                >
+                <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+                    android:id="@+id/durability_bar"
+                    app:rcIconSrc="@drawable/icon_max_health_128x_to_16x16"
+                    app:rcProgressColor="#092d00"
+                    app:rcIconBackgroundColor="#217c00"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:rcBackgroundPadding="3dp"
+                    app:rcIconPadding="6dp"
+                    app:rcBackgroundColor="#1b1b1b"
+                    app:rcIconSize="30dp"
+                    app:rcRadius="2dp"
+                    app:rcMax="500"/>
+
+                <TextView
+                    android:text="Durability"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/durability_bar"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:textSize="17sp"
+                    app:layout_marginTopPercent="4%"
+                    android:textColor="#062900"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/speed_layout"
+                android:layout_below="@id/health_layout"
+                app:layout_widthPercent="80%"
+                android:layout_centerHorizontal="true"
+                app:layout_marginTopPercent="1%"
+                android:layout_height="wrap_content">
+                <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
+                    android:id="@+id/mobility_bar"
+                    app:rcIconSrc="@drawable/icon_movement_speed_128x_to_16x16"
+                    app:rcProgressColor="#9e4f00"
+                    app:rcIconBackgroundColor="#ff823b"
+                    app:rcBackgroundPadding="3dp"
+                    android:layout_height="wrap_content"
+                    app:rcBackgroundColor="#1b1b1b"
+                    android:layout_width="match_parent"
+                    app:rcIconPadding="6dp"
+                    app:rcIconSize="30dp"
+                    app:rcRadius="2dp"
+                    app:rcMax="500" />
+
+                <TextView
+                    android:text="Mobility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/mobility_bar"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:textSize="17sp"
+                    app:layout_marginTopPercent="4%"
+                    android:textColor="#4b2109"
+                    />
+
+            </RelativeLayout>
+
+
+        </android.support.percent.PercentRelativeLayout>
+
+    </com.truizlop.fabreveallayout.FABRevealLayout>
+</LinearLayout>

@@ -1,11 +1,16 @@
 package com.optimalotaku.paraguide;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.percent.PercentRelativeLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +35,7 @@ public class CardFragment extends Fragment {
     String Images[];
     String SkillImages[];
     HashMap map;
-
+    int mStackLevel = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,11 +117,17 @@ public class CardFragment extends Fragment {
                     bundle.putInt("durability", list.get(position).getDurability());
                     bundle.putString("imageurl", list.get(position).getImageURL());
                     bundle.putString("name", list.get(position).getCardName());
-                    nextFrag.setArguments(bundle);
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentContainer, nextFrag)
-                            .addToBackStack(null)
-                            .commit();
+                    DialogFragment newFragment = newHeroFragment.newInstance(mStackLevel,list.get(position).getDifficulty(),list.get(position).getPhysicalPower(),list.get(position).getAbilitypower(),list.get(position).getMobility(),list.get(position).getDurability(),list.get(position).getImageURL(),list.get(position).getCardName());
+                    newFragment.setArguments(bundle);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+                    // Create and show the dialog.
+                    newFragment.show(ft, "dialog");
+
                 }
             });
 
@@ -180,6 +191,7 @@ public class CardFragment extends Fragment {
             return list.size();
         }
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 

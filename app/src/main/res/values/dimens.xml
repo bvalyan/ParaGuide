@@ -9,5 +9,6 @@
     <dimen name="icon_padding">4dp</dimen>
     <dimen name="card_height">250dip</dimen>
     <dimen name="text_size">18sp</dimen>
+    <dimen name="fab_reveal_height">330dp</dimen>
 
 </resources>

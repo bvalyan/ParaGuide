@@ -42,4 +42,12 @@
         <item name="android:alpha">0.5</item>
         <item name="android:scaleType">fitXY</item>
     </style>
+
+    <style name="GameCoverStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
 </resources>
