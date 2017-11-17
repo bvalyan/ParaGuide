@@ -159,6 +159,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     @Override
     public void processHeroInfoFinish(final HashMap<String,HeroData> hData){
         heroDataMap = hData;
+        try {
+            fileManager.saveHeroesToStorage(hData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
