@@ -40,7 +40,6 @@ public class CardFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Your Heroes");
         map = (HashMap) getArguments().getSerializable("heroes");
         //Wonders = getArguments().getStringArray("heronames");
         //Images = getArguments().getStringArray("heropics");
