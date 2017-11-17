@@ -342,10 +342,11 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
               //  mCurrentSelectedPosition = 3;
                 return true;
             case R.id.navigation_item_4:
-                intent = new Intent(MainActivity.this, HeroView.class);
-                intent.putExtra("HeroMap", heroDataMap);
-                startActivity(intent);
-              //  mCurrentSelectedPosition = 4;
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, HeroView.newInstance(heroDataMap))
+                        .addToBackStack("NEW")
+                        .commit();
                 drawer.closeDrawer(Gravity.LEFT);
                 return true;
             case R.id.navigation_item_5:
