@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     SharedPreferences prefs;
     SharedPreferences.Editor e;
     DrawerLayout drawer;
+    // Tracks if the SDK is playing an ad, since the SDK might not necessarily use the video
+    // player provided to play the video ad.
+    private boolean mIsAdPlaying;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

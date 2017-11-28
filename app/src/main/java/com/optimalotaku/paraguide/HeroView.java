@@ -1,33 +1,17 @@
 package com.optimalotaku.paraguide;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * Created by Jerek on 12/19/2016.
@@ -74,7 +58,6 @@ public class HeroView extends android.support.v4.app.Fragment {
         android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
         android.support.v4.app.Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
-        if (fragment == null) {
             fragment = new CardFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable("heroes", hData);
@@ -113,7 +96,7 @@ public class HeroView extends android.support.v4.app.Fragment {
                 e.printStackTrace();
             }
 
-        }
+
     return view;
     }
 }
