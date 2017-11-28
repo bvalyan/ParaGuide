@@ -79,6 +79,13 @@ public class CardOfTheDayView extends Fragment{
         int level= 0;
         String effectName = cotd.getCardLevels().get(level).getAbilites().get(0).getName();
         String description = cotd.getCardLevels().get(level).getAbilites().get(0).getDescription();
+        try {
+            cotdCooldown = cotd.getCardLevels().get(0).getAbilites().get(0).getCooldown();
+            cotdCooldown = android.text.Html.fromHtml(cotdCooldown).toString();
+        }
+        catch (Exception e){
+
+        }
         int vitality = cotd.getVitalityGemCost();
         int dexterity = cotd.getDexterityGemCost();
         int intellect = cotd.getIntellectGemCost();

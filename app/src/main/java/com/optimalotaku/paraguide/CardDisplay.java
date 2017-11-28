@@ -1,10 +1,11 @@
 package com.optimalotaku.paraguide;
 
+import android.app.DialogFragment;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.bumptech.glide.Glide;
  * Created by bvaly on 1/29/2017.
  */
 
-public class CardDisplay extends Fragment{
+public class CardDisplay extends DialogFragment{
     static CardData cotd;
     ParagonAPIAttrReplace attrTranslator;
 
@@ -78,6 +79,13 @@ public class CardDisplay extends Fragment{
         String description = cotd.getCardLevels().get(level).getAbilites().get(0).getDescription();
         int vitality = cotd.getVitalityGemCost();
         int dexterity = cotd.getDexterityGemCost();
+        try {
+            cotdCooldown = cotd.getCardLevels().get(0).getAbilites().get(0).getCooldown();
+            cotdCooldown = android.text.Html.fromHtml(cotdCooldown).toString();
+        }
+        catch (Exception e){
+
+        }
         int intellect = cotd.getIntellectGemCost();
         int gold = cotd.getGoldCost();
         String rarityText = cotd.getRarity();
@@ -85,8 +93,6 @@ public class CardDisplay extends Fragment{
         if (cotdCooldown.equals("")){
             cotdCooldown = "N/A";
         }
-
-
 
         SpannableString ss = attrTranslator.replaceSymbolsWithImages((AppCompatActivity) getActivity(),cotdFullEffect);
         SpannableString ss2 = attrTranslator.replaceSymbolsWithImages((AppCompatActivity) getActivity(),description);
@@ -101,6 +107,18 @@ public class CardDisplay extends Fragment{
         goldCost.setText(String.valueOf(gold));
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        getDialog().getWindow().setLayout((19 * width)/20, params.height);
     }
 
 }

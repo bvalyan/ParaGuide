@@ -34,6 +34,7 @@ public class Cards extends Fragment {
     GridView gridview;
     FileManager cardmanager;
     static CardData incCard;
+    String TAG = Cards.class.getSimpleName();
 
     public static Cards newInstance(CardData cotd) {
 
@@ -109,11 +110,14 @@ public class Cards extends Fragment {
                     if(finalCDataMap.get("All").get(i).getName().equals(cardList[position].getName())){
                         CardData finalChoice = finalCDataMap.get("All").get(i);
                         finalChoice.setBareImageUrl(cardList[position].getImageUrl());
-                        getFragmentManager()
+                        android.app.DialogFragment newFragment = CardDisplay.newInstance(finalChoice);
+                        newFragment.show(getActivity().getFragmentManager(), "dialog");
+
+                        /*getFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.fragment_container, CardDisplay.newInstance(finalChoice))
                                 .addToBackStack("NEW")
-                                .commit();
+                                .commit();*/
                     }
                 }
             }

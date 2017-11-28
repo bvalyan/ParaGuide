@@ -336,7 +336,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             case R.id.navigation_item_2:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, CardDisplay.newInstance(cotd))
+                        .replace(R.id.fragment_container, CardOfTheDayView.newInstance(cotd))
                         .addToBackStack("NEW")
                         .commit();
                 drawer.closeDrawer(Gravity.LEFT);
