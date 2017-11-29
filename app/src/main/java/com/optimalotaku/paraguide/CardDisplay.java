@@ -62,10 +62,12 @@ public class CardDisplay extends DialogFragment{
         TextView intCost = (TextView) view.findViewById(R.id.intellect_gem_cost);
         TextView goldCost = (TextView) view.findViewById(R.id.gold_cost);
         TextView rarity = (TextView) view.findViewById(R.id.rarity);
+        TextView affinity = (TextView) view.findViewById(R.id.affinity);
         String cotdTitle1;
         String cotdEff2 = new String();
         String cotdCooldown = new String();
         String cotdFullEffect = new String();
+        String affinityText = cotd.getAffinity();
 
 
         cotdImage.getLayoutParams().width = (int) Math.round(width * 0.5);
@@ -99,6 +101,7 @@ public class CardDisplay extends DialogFragment{
 
         cotdTitle.setText(cotdTitle1);
         cotdEff.setText(ss2);
+        affinity.setText(affinityText);
         cotdCD.setText(cotdCooldown);
         vitCost.setText(String.valueOf(vitality));
         dexCost.setText(String.valueOf(dexterity));

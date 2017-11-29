@@ -86,7 +86,7 @@ public class ParagonAPICardInfo extends AsyncTask<Void, Void, String> {
                     cData.setRarity(card.getString("rarity"));
 
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card affinity: " + card.getString("affinity"));
-                    cData.setRarity(card.getString("affinity"));
+                    cData.setAffinity(card.getString("affinity"));
 
                     Log.i("INFO", "ParagonAPICardInfo - onPostExecute - "+ "Card trait: " + card.getString("trait"));
                     cData.setTrait(card.getString("trait"));

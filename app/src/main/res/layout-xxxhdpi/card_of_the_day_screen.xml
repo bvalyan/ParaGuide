@@ -260,7 +260,7 @@
                 app:layout_widthPercent="50%"
                 app:layout_marginLeftPercent="50%"
                 android:layout_height="wrap_content"
-                android:id="@+id/affinity_card"
+                android:id="@+id/rarity_card"
                 app:cardUseCompatPadding="true"
                 app:cardElevation="15dp"
                 android:layout_marginTop="-30dp"
@@ -274,7 +274,7 @@
                         android:layout_marginTop="5dp"
                         android:fontFamily="sans-serif-smallcaps"
                         android:layout_width="match_parent"
-                        android:text="Affinity"
+                        android:text="Rarity"
                         android:textSize="30sp"
                         android:visibility="visible"
                         android:id="@+id/rarity_title"
@@ -297,42 +297,85 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                android:layout_below="@id/cooldown_card"
+                android:layout_below="@id/rarity_card"
                 app:layout_widthPercent="50%"
+                app:layout_marginLeftPercent="50%"
                 android:layout_height="wrap_content"
-                android:id="@+id/gold_card"
+                android:id="@+id/affinity_card"
                 app:cardUseCompatPadding="true"
                 app:cardElevation="15dp"
-                android:layout_marginTop="-20dp"
+                android:layout_marginTop="-30dp"
                 >
 
                 <android.support.percent.PercentRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                <TextView
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:text="Gold Cost"
-                    android:visibility="visible"
-                    android:id="@+id/goldtitle"
-                    android:textStyle="bold"
-                    android:textSize="30sp"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:layout_width="match_parent"
+                        android:text="Affinity"
+                        android:textSize="30sp"
+                        android:visibility="visible"
+                        android:id="@+id/affinity_title"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:visibility="visible"
-                    android:layout_below="@id/goldtitle"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/gold_cost"
-                    android:textAlignment="center"
-                    />
-
+                    <TextView
+                        android:layout_below="@id/affinity_title"
+                        android:layout_width="match_parent"
+                        android:visibility="visible"
+                        android:padding="5dp"
+                        android:textSize="15sp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/affinity"
+                        android:textAlignment="center"
+                        />
 
                 </android.support.percent.PercentRelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_below="@id/rarity_card"
+                app:layout_widthPercent="50%"
+                android:layout_height="wrap_content"
+                android:id="@+id/gold_card"
+                app:cardUseCompatPadding="true"
+                app:cardElevation="15dp"
+                android:layout_marginTop="-30dp"
+                >
+
+                <android.support.percent.PercentRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-smallcaps"
+                        android:layout_width="match_parent"
+                        android:text="Gold Cost"
+                        android:textSize="30sp"
+                        android:visibility="visible"
+                        android:id="@+id/gold_title"
+                        android:textStyle="bold"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_below="@id/gold_title"
+                        android:layout_width="match_parent"
+                        android:visibility="visible"
+                        android:padding="5dp"
+                        android:textSize="15sp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/gold_cost"
+                        android:textAlignment="center"
+                        />
+
+                </android.support.percent.PercentRelativeLayout>
+
             </android.support.v7.widget.CardView>
 
 
