@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/plus_2_256"
-            app:backgroundTint="#363636" />
+            app:backgroundTint="#2b2b2b" />
 
         <android.support.percent.PercentRelativeLayout
             android:id="@+id/main_view"
@@ -83,7 +83,7 @@
                 <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
                     android:id="@+id/ability_power_bar"
                     app:rcIconSrc="@drawable/icon_energy_rating_128x_to_16x16"
-                    app:rcProgressColor="#2f318f"
+                    app:rcProgressColor="#3032be"
                     app:rcBackgroundColor="#1b1b1b"
                     app:rcIconPadding="6dp"
                     app:rcBackgroundPadding="3dp"
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     app:layout_marginTopPercent="35%"
                     app:layout_marginLeftPercent="1%"
-                    app:rcIconBackgroundColor="#3b3fff"
+                    app:rcIconBackgroundColor="#6265ff"
                     app:rcMax="500"/>
 
                 <TextView
@@ -104,7 +104,7 @@
                     android:fontFamily="sans-serif-smallcaps"
                     android:textSize="17sp"
                     app:layout_marginTopPercent="4%"
-                    android:textColor="#191b79"
+                    android:textColor="#69698e"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     />
@@ -128,9 +128,9 @@
                     app:rcBackgroundColor="#1b1b1b"
                     app:rcIconSize="30dp"
                     app:rcRadius="2dp"
-                    app:rcProgressColor="#740e10"
+                    app:rcProgressColor="#a41618"
                     app:rcBackgroundPadding="3dp"
-                    app:rcIconBackgroundColor="#ca2c2f"
+                    app:rcIconBackgroundColor="#e14245"
                     app:rcMax="500"
                     />
 
@@ -142,7 +142,7 @@
                     android:fontFamily="sans-serif-smallcaps"
                     android:textSize="17sp"
                     app:layout_marginTopPercent="4%"
-                    android:textColor="#560a0b"
+                    android:textColor="#805050"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"/>
 
@@ -160,8 +160,8 @@
                 <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
                     android:id="@+id/durability_bar"
                     app:rcIconSrc="@drawable/icon_max_health_128x_to_16x16"
-                    app:rcProgressColor="#092d00"
-                    app:rcIconBackgroundColor="#217c00"
+                    app:rcProgressColor="#125c00"
+                    app:rcIconBackgroundColor="#6ecf4b"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:rcBackgroundPadding="3dp"
@@ -179,7 +179,7 @@
                     android:fontFamily="sans-serif-smallcaps"
                     android:textSize="17sp"
                     app:layout_marginTopPercent="4%"
-                    android:textColor="#062900"
+                    android:textColor="#556652"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"/>
             </RelativeLayout>
@@ -194,8 +194,8 @@
                 <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
                     android:id="@+id/mobility_bar"
                     app:rcIconSrc="@drawable/icon_movement_speed_128x_to_16x16"
-                    app:rcProgressColor="#9e4f00"
-                    app:rcIconBackgroundColor="#ff823b"
+                    app:rcProgressColor="#e9790a"
+                    app:rcIconBackgroundColor="#ff975c"
                     app:rcBackgroundPadding="3dp"
                     android:layout_height="wrap_content"
                     app:rcBackgroundColor="#1b1b1b"
@@ -215,7 +215,7 @@
                     android:fontFamily="sans-serif-smallcaps"
                     android:textSize="17sp"
                     app:layout_marginTopPercent="4%"
-                    android:textColor="#4b2109"
+                    android:textColor="#6c5243"
                     />
 
             </RelativeLayout>

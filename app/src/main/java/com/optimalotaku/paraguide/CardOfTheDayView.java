@@ -63,6 +63,7 @@ public class CardOfTheDayView extends Fragment{
         TextView intCost = (TextView) view.findViewById(R.id.intellect_gem_cost);
         TextView goldCost = (TextView) view.findViewById(R.id.gold_cost);
         TextView rarity = (TextView) view.findViewById(R.id.rarity);
+        TextView affinity = (TextView) view.findViewById(R.id.affinity);
         String cotdTitle1;
         String cotdEff2 = new String();
         String cotdCooldown = new String();
@@ -86,11 +87,15 @@ public class CardOfTheDayView extends Fragment{
         catch (Exception e){
 
         }
+        if (cotdCooldown.equals("")){
+            cotdCooldown = "N/A";
+        }
         int vitality = cotd.getVitalityGemCost();
         int dexterity = cotd.getDexterityGemCost();
         int intellect = cotd.getIntellectGemCost();
         int gold = cotd.getGoldCost();
         String rarityText = cotd.getRarity();
+        String affinityText = cotd.getAffinity();
 
 
 
@@ -98,6 +103,7 @@ public class CardOfTheDayView extends Fragment{
         SpannableString ss2 = attrTranslator.replaceSymbolsWithImages((AppCompatActivity) getActivity(),description);
 
         cotdTitle.setText(cotdTitle1);
+        affinity.setText(affinityText);
         cotdEff.setText(ss2);
         cotdCD.setText(cotdCooldown);
         vitCost.setText(Integer.toString(vitality));
