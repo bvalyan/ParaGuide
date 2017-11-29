@@ -63,6 +63,7 @@ public class AccountSearch extends Fragment {
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_container, NewPlayerDisplay.newInstance(textSearch.getText().toString(),heroDataMap))
+                            .addToBackStack("SEARCH")
                             .commit();
                 }
 

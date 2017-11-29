@@ -3,7 +3,7 @@ package com.optimalotaku.paraguide;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +46,7 @@ public class NewPlayerDisplay extends Fragment {
         //pData = (PlayerData) getIntent().getSerializableExtra("PlayerData");
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs2);
         ViewPager vpPager = (ViewPager) view.findViewById(R.id.viewpager2);
-        FragmentPagerAdapter adapterViewPager;
+        FragmentStatePagerAdapter adapterViewPager;
         adapterViewPager = new MyPagerAdapter(getActivity().getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
         tabs.setViewPager(vpPager);
@@ -55,7 +55,7 @@ public class NewPlayerDisplay extends Fragment {
         return view;
     }
 
-    public class MyPagerAdapter extends FragmentPagerAdapter {
+    public class MyPagerAdapter extends FragmentStatePagerAdapter {
         private int NUM_ITEMS = 2;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
