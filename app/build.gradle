@@ -45,7 +45,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 25
         versionCode 45
-        versionName "5.17"
+        versionName "5.18"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         packagingOptions {
             pickFirst  'META-INF/LICENSE'
