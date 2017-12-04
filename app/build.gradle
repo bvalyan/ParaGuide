@@ -44,8 +44,8 @@ android {
         applicationId "com.optimalotaku.paraguide"
         minSdkVersion 23
         targetSdkVersion 25
-        versionCode 44
-        versionName "5.16"
+        versionCode 45
+        versionName "5.17"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         packagingOptions {
             pickFirst  'META-INF/LICENSE'

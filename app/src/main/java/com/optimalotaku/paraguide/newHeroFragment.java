@@ -1,9 +1,7 @@
 package com.optimalotaku.paraguide;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -12,12 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar;
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 import com.truizlop.fabreveallayout.FABRevealLayout;
 import com.truizlop.fabreveallayout.OnRevealChangeListener;
 
@@ -102,7 +98,7 @@ public class newHeroFragment extends DialogFragment{
         durabilityBar.setProgress(durability*50);
         physicalBar.setProgress(physicalPower*50);
         abilityBar.setProgress(abilityPower*50);
-        Picasso.with(getContext()).load(imageURL).into(coverView);
+        Glide.with(getContext()).load(imageURL).into(coverView);
 
         return view;
     }
