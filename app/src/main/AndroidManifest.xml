@@ -26,10 +26,6 @@
             android:theme="@style/Theme.MyParaTheme"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
-        <activity android:name=".HeroView"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
         <activity android:name=".PlayerView"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">

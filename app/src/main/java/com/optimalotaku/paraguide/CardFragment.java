@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,32 +92,32 @@ public class CardFragment extends Fragment {
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
             holder.titleTextView.setText(list.get(position).getCardName());
-            Glide.with(getActivity()).load(list.get(position).getImageURL()).into(holder.coverImageView);
+            Picasso.with(getActivity()).load(list.get(position).getImageURL()).into(holder.coverImageView);
             holder.shareImageView.setImageResource(list.get(position).getAffinity1());
             holder.likeImageView.setImageResource(list.get(position).getAffinity2());
             if(list.get(position).getSkill1pic() != null) {
-                Glide.with(getActivity()).load(list.get(position).getSkill1pic()).into(holder.skill1view);
+                Picasso.with(getActivity()).load(list.get(position).getSkill1pic()).into(holder.skill1view);
             }
             else{
-                Glide.with(getActivity()).load(R.drawable.error_icons).into(holder.skill1view);
+                Picasso.with(getActivity()).load(R.drawable.error_icons).into(holder.skill1view);
             }
             if(list.get(position).getSkill2pic() != null) {
-                Glide.with(getActivity()).load(list.get(position).getSkill2pic()).into(holder.skill2view);
+                Picasso.with(getActivity()).load(list.get(position).getSkill2pic()).into(holder.skill2view);
             }
             else{
-                Glide.with(getActivity()).load(R.drawable.error_icons).into(holder.skill2view);
+                Picasso.with(getActivity()).load(R.drawable.error_icons).into(holder.skill2view);
             }
             if(list.get(position).getSkill3pic() != null){
-                Glide.with(getActivity()).load(list.get(position).getSkill3pic()).into(holder.skill3view);
+                Picasso.with(getActivity()).load(list.get(position).getSkill3pic()).into(holder.skill3view);
             }
             else{
-                Glide.with(getActivity()).load(R.drawable.error_icons).into(holder.skill3view);
+                Picasso.with(getActivity()).load(R.drawable.error_icons).into(holder.skill3view);
             }
             if(list.get(position).getSkill4pic() != null) {
-                Glide.with(getActivity()).load(list.get(position).getSkill4pic()).into(holder.skill4view);
+                Picasso.with(getActivity()).load(list.get(position).getSkill4pic()).into(holder.skill4view);
             }
             else{
-                Glide.with(getActivity()).load(R.drawable.paragon_white).into(holder.skill4view);
+                Picasso.with(getActivity()).load(R.drawable.paragon_white).into(holder.skill4view);
             }
 
             holder.coverImageView.setOnClickListener(new View.OnClickListener() {

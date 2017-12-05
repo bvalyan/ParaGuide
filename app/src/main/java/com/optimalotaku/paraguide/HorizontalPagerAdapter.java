@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +33,7 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         mData = data;
         list = new ArrayList<>(mData.values());
         background = (ImageView) mLayout.findViewById(R.id.background);
-        Glide.with(mContext).load(list.get(0).getImageIconURL()).into(background);
+        Picasso.with(mContext).load(list.get(0).getImageIconURL()).into(background);
     }
 
 
@@ -51,7 +51,7 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         ImageView heroImageView = (ImageView) view.findViewById(R.id.hero_image);
         heroNameView.setText(list.get(position).getName());
         heroNameView.setVisibility(View.VISIBLE);
-        Glide.with(mContext).load(list.get(position).getImageIconURL()).into(heroImageView);
+        Picasso.with(mContext).load(list.get(position).getImageIconURL()).into(heroImageView);
         container.addView(view);
         return view;
     }
@@ -67,7 +67,7 @@ public class HorizontalPagerAdapter extends PagerAdapter {
     public void pageChanged(int position) {
 
 
-        Glide.with(mContext).load(list.get(position).getImageIconURL()).into(background);
+        Picasso.with(mContext).load(list.get(position).getImageIconURL()).into(background);
     }
 
 
