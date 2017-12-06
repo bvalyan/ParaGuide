@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.view.HapticFeedbackConstants;
+import android.view.LayoutInflater;
 import android.view.SoundEffectConstants;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -27,18 +29,29 @@ import java.util.concurrent.ExecutionException;
  * Created by bvalyan on 8/2/17.
  */
 
-public class Cards extends AppCompatActivity {
+public class Cards extends Fragment {
 
     GridView gridview;
     FileManager cardmanager;
+    static CardData incCard;
+    String TAG = Cards.class.getSimpleName();
 
-    protected void onCreate(Bundle savedInstanceState) {
+    public static Cards newInstance(CardData cotd) {
+
+        Bundle args = new Bundle();
+        incCard = cotd;
+        Cards fragment = new Cards();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final Intent intent;
-        intent = new Intent(this,CardDisplay.class);
-        setContentView(R.layout.cardlist2);
-        cardmanager = new FileManager(this);
+        View view = inflater.inflate(R.layout.cardlist2, container, false);
+        cardmanager = new FileManager(getContext());
         Map<String,List<CardData>> cDataMap = new HashMap<>();
         try {
             cDataMap = cardmanager.readCardsFromStorage();
@@ -46,11 +59,11 @@ public class Cards extends AppCompatActivity {
             e.printStackTrace();
         }
         final Map<String, List<CardData>> finalCDataMap = cDataMap;
-        gridview = (GridView) findViewById(R.id.gridview2);
-        final SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
-        final SharedPreferences.Editor e = getSharedPreferences("authInfo", Context.MODE_PRIVATE).edit();
+        gridview = (GridView) view.findViewById(R.id.gridview2);
+        final SharedPreferences prefs = getActivity().getSharedPreferences("authInfo", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor e = getActivity().getSharedPreferences("authInfo", Context.MODE_PRIVATE).edit();
         String authCode = prefs.getString("signedIn", "null");
-        APICardList allCards = new APICardList(authCode, this);
+        APICardList allCards = new APICardList(authCode, getActivity());
         JSONArray cardArray = null;
         try {
             String response = allCards.execute().get();
@@ -80,7 +93,7 @@ public class Cards extends AppCompatActivity {
         }
         CustomComparator cardCompare = new CustomComparator();
         Arrays.sort(cardList, cardCompare);
-        MyDeckAdapter CardAdapter = new MyDeckAdapter(this, cardList);
+        MyDeckAdapter CardAdapter = new MyDeckAdapter(getActivity(), cardList);
         gridview.setAdapter(CardAdapter);
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,12 +110,20 @@ public class Cards extends AppCompatActivity {
                     if(finalCDataMap.get("All").get(i).getName().equals(cardList[position].getName())){
                         CardData finalChoice = finalCDataMap.get("All").get(i);
                         finalChoice.setBareImageUrl(cardList[position].getImageUrl());
-                        intent.putExtra("selectedCard", finalChoice);
+                        android.app.DialogFragment newFragment = CardDisplay.newInstance(finalChoice);
+                        newFragment.show(getActivity().getFragmentManager(), "dialog");
+
+                        /*getFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, CardDisplay.newInstance(finalChoice))
+                                .addToBackStack("NEW")
+                                .commit();*/
                     }
                 }
-                startActivity(intent);
             }
         });
+
+        return view;
 
     }
     public class CustomComparator implements Comparator<CardData> {

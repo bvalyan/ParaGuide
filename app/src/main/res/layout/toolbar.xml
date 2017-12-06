@@ -5,4 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     style="@style/ThemeActionBar"
-    android:background="@drawable/background_toolbar_translucent" />
+     />

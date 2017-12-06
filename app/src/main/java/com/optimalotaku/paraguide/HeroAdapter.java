@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -53,7 +52,7 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ImageViewHolde
 
         holder.titleTextView.setText(list.get(position).getCardName());
         //picURL = list.get(position).getImageURL();
-        Picasso.with(holder.itemView.getContext()).load(list.get(position).getImageURL()).into(holder.coverImageView);
+        Glide.with(holder.itemView.getContext()).load(list.get(position).getImageURL()).into(holder.coverImageView);
         //holder.shareImageView.setImageResource(list.get(position).getAffinity1());
         //holder.likeImageView.setImageResource(list.get(position).getAffinity2());
         Glide.with(holder.itemView.getContext()).load(list.get(position).getSkill1pic()).into(holder.skill1view);

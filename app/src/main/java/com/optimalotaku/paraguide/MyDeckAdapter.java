@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Cache;
+import com.squareup.picasso.Downloader;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,8 +29,12 @@ final class MyDeckAdapter extends BaseAdapter {
     private final List<Item> mItems = new ArrayList<Item>();
     private final LayoutInflater mInflater;
     private Bitmap cotdBitMapImg;
+    // Size in bytes (10 MB)
+    private static final long PICASSO_DISK_CACHE_SIZE = 1024 * 1024 * 10;
 
     public MyDeckAdapter(Context context, CardData[] cardList) {
+
+
         mInflater = LayoutInflater.from(context);
 
         for(int i = 0; i < cardList.length; i++){
@@ -68,12 +76,16 @@ final class MyDeckAdapter extends BaseAdapter {
     }
 
 
-
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = view;
         ImageView picture;
         TextView name;
+
+
+
+        int maxSize = 150;
+
 
         if (v == null) {
             v = mInflater.inflate(R.layout.grid_item, viewGroup, false);
@@ -86,7 +98,22 @@ final class MyDeckAdapter extends BaseAdapter {
 
         Item item = getItem(i);
 
-        Picasso.with(v.getContext()).load(item.drawable1).into(picture);
+
+
+        // Use OkHttp as downloader
+        Downloader downloader = new OkHttpDownloader(v.getContext(),
+                Integer.MAX_VALUE);
+
+
+
+        Cache memoryCache = new LruCache(maxSize);
+
+        Picasso picasso = new Picasso.Builder(v.getContext())
+                .downloader(downloader).memoryCache(memoryCache).build();
+
+        //picasso.with(v.getContext()).setIndicatorsEnabled(true);
+
+        Glide.with(v.getContext()).load(item.drawable1).into(picture);
         name.setText(item.name);
 
         return v;

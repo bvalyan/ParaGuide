@@ -5,12 +5,13 @@ dependencies {
     // glide
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.github.bmarrdev:android-DecoView-charting:v1.2'
-    compile 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.github.bumptech.glide:glide:4.3.1'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.android.support:cardview-v7:25.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:support-v4:25.1.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
     compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'com.android.support:percent:25.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -24,12 +25,15 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
-    compile group: 'com.pubnub', name: 'pubnub', version: '4.0.5'
     compile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile 'com.google.guava:guava:20.0'
     compile 'joda-time:joda-time:2.9.9'
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.github.devlight:infinitecycleviewpager:1.0.2'
+    compile 'com.truizlop.fabreveallayout:library:1.0.0'
+    compile 'com.akexorcist:RoundCornerProgressBar:2.0.3'
 }
 
 android {
@@ -40,8 +44,8 @@ android {
         applicationId "com.optimalotaku.paraguide"
         minSdkVersion 23
         targetSdkVersion 25
-        versionCode 38
-        versionName "5.12"
+        versionCode 47
+        versionName "5.20"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         packagingOptions {
             pickFirst  'META-INF/LICENSE'
@@ -76,6 +80,8 @@ android {
 
 repositories {
     maven { url "https://jitpack.io" }
+    mavenCentral()
+    maven { url 'https://maven.google.com' }
 }
 
 

@@ -2,4 +2,6 @@
     <string name="app_name">Paraguide</string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
 </resources>

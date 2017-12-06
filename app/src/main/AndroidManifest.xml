@@ -11,41 +11,22 @@
 
 
     <application
+        android:supportsRtl="true"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:hardwareAccelerated="false"
-        android:supportsRtl="true"
+        android:hardwareAccelerated="true"
         android:uiOptions="splitActionBarWhenNarrow"
         android:theme="@style/Theme.MyParaTheme"
         android:name="android.support.multidex.MultiDexApplication"
         >
-
-
-
-
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
-        <activity android:name=".TokenManager"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
-        <activity android:name=".HeroView"
-            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyParaTheme"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
         <activity android:name=".PlayerView"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
-        <activity android:name=".CardOfTheDayView"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
-        <activity android:name=".newsView"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
@@ -58,38 +39,11 @@
             android:theme="@style/Theme.AppCompat.Dialog"
             android:windowSoftInputMode="stateVisible|adjustPan">
         </activity>
-        <activity android:name=".CardDisplay"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
         <activity android:name=".MyDecks"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan"
             >
         </activity>
-        <activity android:name=".Cards"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            >
-        </activity>
-        <activity android:name=".NewPlayerDisplay"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".AccountSearch"
-            android:screenOrientation="portrait"
-            android:fillViewport="true"
-            android:theme="@style/Theme.AppCompat.Dialog"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustPan">
-        </activity>
-        <activity android:name=".PAChatActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
-        <activity android:name=".PALoginActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan">
-        </activity>
-
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"

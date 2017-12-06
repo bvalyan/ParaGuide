@@ -3,7 +3,9 @@ package com.optimalotaku.paraguide;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,12 +32,11 @@ public class CardFragment extends Fragment {
     String Images[];
     String SkillImages[];
     HashMap map;
-
+    int mStackLevel = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Your Heroes");
         map = (HashMap) getArguments().getSerializable("heroes");
         //Wonders = getArguments().getStringArray("heronames");
         //Images = getArguments().getStringArray("heropics");
@@ -91,13 +92,33 @@ public class CardFragment extends Fragment {
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
             holder.titleTextView.setText(list.get(position).getCardName());
-            Glide.with(getActivity()).load(list.get(position).getImageURL()).into(holder.coverImageView);
+            Picasso.with(getActivity()).load(list.get(position).getImageURL()).into(holder.coverImageView);
             holder.shareImageView.setImageResource(list.get(position).getAffinity1());
             holder.likeImageView.setImageResource(list.get(position).getAffinity2());
-            Glide.with(getActivity()).load(list.get(position).getSkill1pic()).into(holder.skill1view);
-            Glide.with(getActivity()).load(list.get(position).getSkill2pic()).into(holder.skill2view);
-            Glide.with(getActivity()).load(list.get(position).getSkill3pic()).into(holder.skill3view);
-            Glide.with(getActivity()).load(list.get(position).getSkill4pic()).into(holder.skill4view);
+            if(list.get(position).getSkill1pic() != null) {
+                Picasso.with(getActivity()).load(list.get(position).getSkill1pic()).into(holder.skill1view);
+            }
+            else{
+                Picasso.with(getActivity()).load(R.drawable.error_icons).into(holder.skill1view);
+            }
+            if(list.get(position).getSkill2pic() != null) {
+                Picasso.with(getActivity()).load(list.get(position).getSkill2pic()).into(holder.skill2view);
+            }
+            else{
+                Picasso.with(getActivity()).load(R.drawable.error_icons).into(holder.skill2view);
+            }
+            if(list.get(position).getSkill3pic() != null){
+                Picasso.with(getActivity()).load(list.get(position).getSkill3pic()).into(holder.skill3view);
+            }
+            else{
+                Picasso.with(getActivity()).load(R.drawable.error_icons).into(holder.skill3view);
+            }
+            if(list.get(position).getSkill4pic() != null) {
+                Picasso.with(getActivity()).load(list.get(position).getSkill4pic()).into(holder.skill4view);
+            }
+            else{
+                Picasso.with(getActivity()).load(R.drawable.paragon_white).into(holder.skill4view);
+            }
 
             holder.coverImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -112,63 +133,79 @@ public class CardFragment extends Fragment {
                     bundle.putInt("durability", list.get(position).getDurability());
                     bundle.putString("imageurl", list.get(position).getImageURL());
                     bundle.putString("name", list.get(position).getCardName());
-                    nextFrag.setArguments(bundle);
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentContainer, nextFrag)
-                            .addToBackStack(null)
-                            .commit();
+                    DialogFragment newFragment = newHeroFragment.newInstance(mStackLevel,list.get(position).getDifficulty(),list.get(position).getPhysicalPower(),list.get(position).getAbilitypower(),list.get(position).getMobility(),list.get(position).getDurability(),list.get(position).getImageURL(),list.get(position).getCardName());
+                    newFragment.setArguments(bundle);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+                    // Create and show the dialog.
+                    newFragment.show(ft, "dialog");
+
                 }
             });
 
             holder.skill1view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(),SkillDisplay.class);
-                    Bundle pck = new Bundle();
-                    pck.putString("skillpic", list.get(position).getSkill1pic());
-                    pck.putString("skillname", list.get(position).getSkill1name());
-                    pck.putString("skillDesc", list.get(position).getSkill1desc());
-                    i.putExtras(pck);
-                    startActivity(i);
+                 if(list.get(position).getSkill1name() != null) {
+                     Intent i = new Intent(getActivity(), SkillDisplay.class);
+                     Bundle pck = new Bundle();
+                     pck.putString("skillpic", list.get(position).getSkill1pic());
+                     pck.putString("skillname", list.get(position).getSkill1name());
+                     pck.putString("skillDesc", list.get(position).getSkill1desc());
+                     i.putExtras(pck);
+                     startActivity(i);
+                 }
                 }
             });
 
             holder.skill2view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(),SkillDisplay.class);
-                    Bundle pck = new Bundle();
-                    pck.putString("skillpic", list.get(position).getSkill2pic());
-                    pck.putString("skillname", list.get(position).getSkill2name());
-                    pck.putString("skillDesc", list.get(position).getSkill2desc());
-                    i.putExtras(pck);
-                    startActivity(i);
+                    if(list.get(position).getSkill2name() != null){
+                        Intent i = new Intent(getActivity(),SkillDisplay.class);
+                        Bundle pck = new Bundle();
+                        pck.putString("skillpic", list.get(position).getSkill2pic());
+                        pck.putString("skillname", list.get(position).getSkill2name());
+                        pck.putString("skillDesc", list.get(position).getSkill2desc());
+                        i.putExtras(pck);
+                        startActivity(i);
+                    }
+
                 }
             });
 
             holder.skill3view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(),SkillDisplay.class);
-                    Bundle pck = new Bundle();
-                    pck.putString("skillpic", list.get(position).getSkill3pic());
-                    pck.putString("skillname", list.get(position).getSkill3name());
-                    pck.putString("skillDesc", list.get(position).getSkill3desc());
-                    i.putExtras(pck);
-                    startActivity(i);
+                    if(list.get(position).getSkill3name() != null){
+                        Intent i = new Intent(getActivity(),SkillDisplay.class);
+                        Bundle pck = new Bundle();
+                        pck.putString("skillpic", list.get(position).getSkill3pic());
+                        pck.putString("skillname", list.get(position).getSkill3name());
+                        pck.putString("skillDesc", list.get(position).getSkill3desc());
+                        i.putExtras(pck);
+                        startActivity(i);
+                    }
+
                 }
             });
 
             holder.skill4view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(),SkillDisplay.class);
-                    Bundle pck = new Bundle();
-                    pck.putString("skillpic", list.get(position).getSkill4pic());
-                    pck.putString("skillname", list.get(position).getSkill4name());
-                    pck.putString("skillDesc", list.get(position).getSkill4desc());
-                    i.putExtras(pck);
-                    startActivity(i);
+                    if(list.get(position).getSkill4name() != null) {
+                        Intent i = new Intent(getActivity(), SkillDisplay.class);
+                        Bundle pck = new Bundle();
+                        pck.putString("skillpic", list.get(position).getSkill4pic());
+                        pck.putString("skillname", list.get(position).getSkill4name());
+                        pck.putString("skillDesc", list.get(position).getSkill4desc());
+                        i.putExtras(pck);
+                        startActivity(i);
+                    }
                 }
             });
 
@@ -180,6 +217,7 @@ public class CardFragment extends Fragment {
             return list.size();
         }
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 

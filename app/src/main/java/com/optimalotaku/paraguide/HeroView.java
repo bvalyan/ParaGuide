@@ -1,52 +1,46 @@
 package com.optimalotaku.paraguide;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 /**
  * Created by Jerek on 12/19/2016.
  */
 
-public class HeroView extends FragmentActivity {
+public class HeroView extends android.support.v4.app.Fragment {
 
     ListView list;
     String[] text;
     String[] pics;
     FileManager fileManager;
+    static HashMap<String,HeroData> map;
 
+
+    public static HeroView newInstance(HashMap<String,HeroData> hMap) {
+
+        map = hMap;
+        return new HeroView();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState){
         //Gather UI Objects
         super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        setContentView(R.layout.listtest);
-        fileManager = new FileManager(this);
-        final HashMap<String, HeroData> hData = (HashMap<String, HeroData>) getIntent().getSerializableExtra("HeroMap");
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        View view = inflater.inflate(R.layout.listtest, container, false);
+        fileManager = new FileManager(getContext());
+        final HashMap<String, HeroData> hData = map;
 
         //Get List of hero names from Map
         text = hData.keySet().toArray(new String[hData.size()]);
@@ -61,10 +55,9 @@ public class HeroView extends FragmentActivity {
         }
 
 
-        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
         android.support.v4.app.Fragment fragment = fm.findFragmentById(R.id.fragmentContainer);
 
-        if (fragment == null) {
             fragment = new CardFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable("heroes", hData);
@@ -89,10 +82,10 @@ public class HeroView extends FragmentActivity {
             }
         });*/
 
-            View view2 = this.getCurrentFocus();
+            View view2 = getActivity().getCurrentFocus();
             if (view2 != null) {
                 //hide keyboard upon return
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
             }
 
@@ -103,8 +96,8 @@ public class HeroView extends FragmentActivity {
                 e.printStackTrace();
             }
 
-        }
 
+    return view;
     }
 }
 

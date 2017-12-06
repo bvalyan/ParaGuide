@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/main_relative_layout"
+    android:layout_height="match_parent">
+    <ImageView
+        style="@style/BackGroundImageView"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:tint="#90000000"
+        android:id="@+id/background"/>
+
+    <WebView
+        android:id="@id/login_page"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:visibility="gone"></WebView>
+
+    <TextView
+        android:id="@+id/personalized_greeting"
+        android:textAlignment="center"
+        android:visibility="visible"
+        app:layout_marginTopPercent="65.2%"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_5"
+        android:fontFamily="sans-serif-condensed"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/personalized_hero_kill_stat"
+        android:layout_below="@id/personalized_greeting"
+        android:visibility="gone"
+        app:layout_marginTopPercent="1%"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-smallcaps"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/personalized_core_kill_stat"
+        android:layout_below="@id/personalized_hero_kill_stat"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-smallcaps"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/personalized_games_won_stat"
+        android:layout_below="@id/personalized_core_kill_stat"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-smallcaps"/>
+
+    <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+        android:id="@+id/vicvp"
+        app:icvp_medium_scaled="true"
+        app:layout_marginBottomPercent="5%"
+        app:layout_marginTopPercent="5%"
+        app:icvp_center_page_scale_offset="20dp"
+        app:icvp_max_page_scale="0.75"
+        app:icvp_min_page_scale="0.5"
+        app:icvp_min_page_scale_offset="0dp"
+        app:icvp_scroll_duration="500"
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="100%"
+        />
+
+    <TextView
+        android:id="@+id/title_5"
+        android:layout_height="wrap_content"
+        app:layout_marginTopPercent="4%"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:text="PARAGUIDE 5"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:fontFamily="sans-serif-condensed"
+        />
+
+
+</android.support.percent.PercentRelativeLayout>

@@ -2,12 +2,15 @@ package com.optimalotaku.paraguide;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -23,13 +26,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Brandon on 12/15/16.
  */
 
-public class TokenManager extends AppCompatActivity{
+public class TokenManager extends Fragment{
 
     private String authCode;
     FileManager deckManager;
@@ -38,25 +42,37 @@ public class TokenManager extends AppCompatActivity{
     ProgressDialog progressDialog;
     String [] pics2;
     String [] cardText;
+    static boolean logouts = false;
+    static Menu menus;
+    static HashMap<String,HeroData> heroDataMap;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    public static TokenManager newInstance(boolean logout, Menu menu,HashMap<String,HeroData> heroMap) {
+        logouts = logout;
+        menus = menu;
+        heroDataMap = heroMap;
+        return new TokenManager();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        Bundle extras = getIntent().getExtras();
-        boolean logout = extras.getBoolean("logout");
-        setContentView(R.layout.login);
-        deckManager = new FileManager(this);
-        final WebView myWebView = (WebView) findViewById(R.id.webview);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Bundle extras = getActivity().getIntent().getExtras();
+
+        View view = inflater.inflate(R.layout.login, container, false);
+        deckManager = new FileManager(getContext());
+        final WebView myWebView = (WebView) view.findViewById(R.id.webview);
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setDomStorageEnabled(true);
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
 
 
-        if (logout) {
+        if (logouts) {
 
             myWebView.setWebViewClient(new WebViewClient() {
-                SharedPreferences.Editor e = getPreferences(Context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor e = getActivity().getPreferences(Context.MODE_PRIVATE).edit();
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -67,18 +83,29 @@ public class TokenManager extends AppCompatActivity{
             String deauthorizationUri = mReturnDeAuthorizationRequestUri();
             myWebView.loadUrl(deauthorizationUri);
             myWebView.clearCache(true);
-            CookieSyncManager.createInstance(this);
+            CookieSyncManager.createInstance(getContext());
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.removeAllCookie();
-            Toast.makeText(getApplicationContext(), "Signed out!",
+            Toast.makeText(getActivity().getApplicationContext(), "Signed out!",
                     Toast.LENGTH_LONG).show();
-            Intent i = new Intent(TokenManager.this, MainActivity.class);
-            startActivity(i);
+            for (int menuItemIndex = 0; menuItemIndex < menus.size(); menuItemIndex++) {
+                MenuItem menuItem = menus.getItem(menuItemIndex);
+                if (menuItem.getItemId() == R.id.signinbutton) {
+                    menuItem.setVisible(true);
+                }
+                if (menuItem.getItemId() == R.id.signoutbutton) {
+                    menuItem.setVisible(false);
+                }
+            }
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
+                    .commit();
         }
-        SharedPreferences prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("authInfo", Context.MODE_PRIVATE);
         authCode = prefs.getString("signedIn", null);
 
-        if (authCode == null && logout == false) {
+        if (authCode == null && logouts == false) {
 
             // need to get access token with OAuth2.0
 
@@ -102,7 +129,7 @@ public class TokenManager extends AppCompatActivity{
 
                             authCode = mExtractToken(url);
 
-                            SharedPreferences.Editor e = getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
+                            SharedPreferences.Editor e = getActivity().getSharedPreferences("authInfo",Context.MODE_PRIVATE).edit();
                             e.putString("signedIn", authCode);
                             e.apply();
 
@@ -127,17 +154,27 @@ public class TokenManager extends AppCompatActivity{
                                     .show();*/
 
                             try {
-                                getToken(getApplicationContext(), authCode);
+                                getToken(getActivity().getApplicationContext(), authCode);
                             } catch (ExecutionException e1) {
                                 e1.printStackTrace();
                             } catch (InterruptedException e1) {
                                 e1.printStackTrace();
                             }
-                            Toast.makeText(getApplicationContext(), "Signed in!",
+                            Toast.makeText(getActivity().getApplicationContext(), "Signed in!",
                                     Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(TokenManager.this, MainActivity.class);
-                            startActivity(i);
-                            finish();
+                            for (int menuItemIndex = 0; menuItemIndex < menus.size(); menuItemIndex++) {
+                                MenuItem menuItem = menus.getItem(menuItemIndex);
+                                if (menuItem.getItemId() == R.id.signinbutton) {
+                                    menuItem.setVisible(false);
+                                }
+                                if (menuItem.getItemId() == R.id.signoutbutton) {
+                                    menuItem.setVisible(true);
+                                }
+                            }
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
+                                    .commit();
                             //
 
                         }
@@ -164,12 +201,13 @@ public class TokenManager extends AppCompatActivity{
 
 
         //myWebView.loadUrl("http://www.example.com");
+        return view;
     }
 
 
 
     public String checkToken(Context context, String authCode) throws ExecutionException, InterruptedException, ParseException {
-        SharedPreferences prefs = context.getSharedPreferences("authInfo", MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences("authInfo", Context.MODE_PRIVATE);
         String expireDate = prefs.getString("EXPIRE_TIME", "null");
         String userID = prefs.getString("ACCOUNT_ID", "null");
 
@@ -220,17 +258,6 @@ public class TokenManager extends AppCompatActivity{
         return sb.toString();
     }
 
-    public void endSession(View view){
-        Intent intent = new Intent(TokenManager.this, MainActivity.class);
-        startActivity(intent);
-    }
 
-
-    @Override
-    public void onBackPressed()
-    {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-    }
 }
 
