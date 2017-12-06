@@ -28,7 +28,7 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
 
 
     @Override
-    protected String doInBackground(Void... voids) {
+    protected String doInBackground(Void... strings) {
 
         try {
             URL url = new URL( "https://developer-paragon.epicgames.com/v1/heroes/complete");

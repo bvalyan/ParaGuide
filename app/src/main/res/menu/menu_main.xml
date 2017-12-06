@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-    <item android:id="@+id/action_logout" android:title="Log out"
-        android:orderInCategory="1" />
+    <item android:id="@+id/menu_action_1" android:title="Refresh Database"
 
+        android:orderInCategory="1" />
 </menu>

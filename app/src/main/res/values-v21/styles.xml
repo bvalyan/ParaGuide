@@ -12,6 +12,7 @@
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/ThemeActionBar</item>
         <item name="windowActionBarOverlay">true</item>
+        <item name="android:itemBackground">#FFFF</item>
         <item name="android:navigationBarColor">?attr/colorPrimary</item>
         <item name="android:statusBarColor">?android:attr/colorPrimary</item>
     </style>

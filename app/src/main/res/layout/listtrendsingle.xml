@@ -3,18 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <TableRow android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
     <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/layoutHERO"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         app:layout_heightPercent="100%"
         app:layout_widthPercent="100%">
@@ -62,7 +56,6 @@
             />
 
     </android.support.percent.PercentRelativeLayout>
-    </TableRow>
-    </TableLayout>
+
 
 </LinearLayout>

@@ -28,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -127,9 +128,33 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.add(Menu.NONE, R.id.menu_action_1, 1, getResources().getString(R.string.update_string));
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_action_1:
+                Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
+
+                ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
+                heroInfo.delegate = this;
+                heroInfo.execute();
+
+                Log.i("INFO", "MainActivity - getCardData(): Card data does not exist or is outdated. Grabbing current data from API ");
+
+                ParagonAPICardInfo cardInfo = new ParagonAPICardInfo();
+                cardInfo.delegate = this;
+                cardInfo.execute();
+
+
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
@@ -169,10 +194,15 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
-                .commit();
+        if(findViewById(R.id.fragment_container ) == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
+                    .commit();
+        }
+
+        Toast.makeText(this, " Hero Database Updated!",
+                Toast.LENGTH_LONG).show();
     }
 
 
@@ -196,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             Log.i("INFO", "MainActivity - getCardData(): Card data does exist and is current. Grabbing current data from file - cards.data ");
             processCardInfoFromFile(cDataMap);
         }
+
     }
 
 
@@ -277,7 +308,8 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
 
 
-
+        Toast.makeText(this, "Card Database Updated!",
+                Toast.LENGTH_LONG).show();
 
     }
 
