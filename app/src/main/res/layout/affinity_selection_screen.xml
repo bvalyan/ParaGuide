@@ -6,10 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <TextView
         android:text="Choose an affinity"
         android:layout_width="wrap_content"
-        android:textSize="25sp"
+        android:textSize="29sp"
         android:fontFamily="sans-serif-smallcaps"
         android:textStyle="bold"
         app:layout_marginTopPercent="5%"
@@ -18,7 +23,7 @@
     <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
         android:id="@+id/affinity_wheel"
         app:icvp_medium_scaled="true"
-        app:layout_marginTopPercent="16%"
+        app:layout_marginTopPercent="12%"
         app:icvp_center_page_scale_offset="20dp"
         app:icvp_max_page_scale="0.75"
         app:icvp_min_page_scale="0.5"

@@ -40,7 +40,7 @@ public class AffinitySelectionFragment extends Fragment{
                 (HorizontalInfiniteCycleViewPager) topView.findViewById(R.id.affinity_wheel);
 
 
-        final AffinitySelectorAdapter adapter = new AffinitySelectorAdapter(getContext(), topView);
+        final AffinitySelectorAdapter adapter = new AffinitySelectorAdapter(getContext(), topView, AffinitySelectionFragment.this, incCard);
         horizontalInfiniteCycleViewPager.setAdapter(adapter);
         horizontalInfiniteCycleViewPager.notifyDataSetChanged();
         horizontalInfiniteCycleViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -351,32 +351,35 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 //mCurrentSelectedPosition = 0;
                 return true;
             case R.id.navigation_item_0:
-                if(heroDataMap.size() > 0){
+                if(heroDataMap.size() < 1){
+                    getHeroData();
+
+                }
+                else{
+                    Log.i("HERODATA", "Hero data present! Good to go!");
+                }
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
                         .addToBackStack("NEW")
                         .commit();
                 drawer.closeDrawer(Gravity.LEFT);
-                }
-                else{
-                    getHeroData();
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
-                            .addToBackStack("NEW")
-                            .commit();
-                    drawer.closeDrawer(Gravity.LEFT);
-                }
                 // mCurrentSelectedPosition = 1;
                 return true;
             case R.id.navigation_item_1:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, NewPlayerAnalysis.newInstance(heroDataMap))
-                        .addToBackStack("NEW")
-                        .commit();
-                drawer.closeDrawer(Gravity.LEFT);
+                if(heroDataMap.size() < 1){
+                    getHeroData();
+                }
+                else {
+                    Log.i("HERODATA", "Hero data present! Good to go!");
+                }
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, NewPlayerAnalysis.newInstance(heroDataMap))
+                            .addToBackStack("NEW")
+                            .commit();
+                    drawer.closeDrawer(Gravity.LEFT);
+
                // mCurrentSelectedPosition = 1;
                 return true;
             case R.id.navigation_item_2:
@@ -398,6 +401,12 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
               //  mCurrentSelectedPosition = 3;
                 return true;
             case R.id.navigation_item_4:
+                if(heroDataMap.size() < 1){
+                    getHeroData();
+                }
+                else{
+                    Log.i("HERODATA", "Hero data present! Good to go!");
+                }
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, HeroView.newInstance(heroDataMap))

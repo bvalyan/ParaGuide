@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.squareup.picasso.Cache;
 import com.squareup.picasso.Downloader;
 import com.squareup.picasso.LruCache;
@@ -28,18 +29,21 @@ import java.util.List;
 final class MyDeckAdapter extends BaseAdapter {
     private final List<Item> mItems = new ArrayList<Item>();
     private final LayoutInflater mInflater;
+    private String affinity;
     private Bitmap cotdBitMapImg;
     // Size in bytes (10 MB)
     private static final long PICASSO_DISK_CACHE_SIZE = 1024 * 1024 * 10;
 
-    public MyDeckAdapter(Context context, CardData[] cardList) {
+    public MyDeckAdapter(Context context, CardData[] cardList, String affinity, String oldName) {
 
-
+        this.affinity = affinity;
         mInflater = LayoutInflater.from(context);
 
         for(int i = 0; i < cardList.length; i++){
             Item card = new Item(cardList[i].getName(), cardList[i].getImageUrl(), cardList[i].getId());
-            mItems.add(card);
+            if(cardList[i].getAffinity().toLowerCase().equals(affinity.toLowerCase()) || cardList[i].getAffinity().toLowerCase().equals(oldName.toLowerCase())){
+                mItems.add(card);
+            }
         }
 
         Collections.sort(mItems, new Comparator<Item>() {
@@ -113,7 +117,11 @@ final class MyDeckAdapter extends BaseAdapter {
 
         //picasso.with(v.getContext()).setIndicatorsEnabled(true);
 
-        Glide.with(v.getContext()).load(item.drawable1).into(picture);
+        Glide.with(v.getContext()).load(item.drawable1)
+                .apply(RequestOptions
+                        .fitCenterTransform()
+                        .placeholderOf(R.drawable.icon))
+                .into(picture);
         name.setText(item.name);
 
         return v;

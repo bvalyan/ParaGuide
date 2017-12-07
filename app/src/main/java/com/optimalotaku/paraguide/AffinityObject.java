@@ -8,11 +8,21 @@ class AffinityObject {
     private String title;
     private int image;
     private int color;
+    private String oldName;
 
-   public  AffinityObject(String title, int image, int color){
+   public  AffinityObject(String title, int image, int color, String oldName){
         this.title = title;
         this.image = image;
         this.color = color;
+        this.oldName = oldName;
+    }
+
+    public String getOldName() {
+        return oldName;
+    }
+
+    public void setOldName(String oldName) {
+        this.oldName = oldName;
     }
 
     public String getTitle() {

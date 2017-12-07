@@ -2,6 +2,7 @@ package com.optimalotaku.paraguide;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,17 +24,21 @@ public class AffinitySelectorAdapter extends PagerAdapter {
     View mLayout;
     final ImageView background;
     AffinityObject[] affinityObjects = new AffinityObject[5];
+    Fragment fragment;
+    CardData incCard;
 
-    public AffinitySelectorAdapter(final Context context, View mainLayout) {
+    public AffinitySelectorAdapter(final Context context, View mainLayout, Fragment fragment, CardData incCard) {
         mContext = context;
         mLayout = mainLayout;
         mLayoutInflater = LayoutInflater.from(context);
+        this.fragment = fragment;
         background = (ImageView) mLayout.findViewById(R.id.background);
-        affinityObjects[0] = new AffinityObject("Order", R.drawable.paragon_white, Color.parseColor("#7f7b67"));
-        affinityObjects[1] = new AffinityObject("Growth", R.drawable.paragon_white, Color.parseColor("#092d01"));
-        affinityObjects[2] = new AffinityObject("Death", R.drawable.paragon_white, Color.parseColor("#240f3d"));
-        affinityObjects[3] = new AffinityObject("Intellect", R.drawable.paragon_white, Color.parseColor("#0d266b"));
-        affinityObjects[4] = new AffinityObject("Fury", R.drawable.paragon_white, Color.parseColor("#96000c"));
+        affinityObjects[0] = new AffinityObject("Order", R.drawable.paragon_white, Color.parseColor("#7f7b67"), "Order");
+        affinityObjects[1] = new AffinityObject("Growth", R.drawable.paragon_white, Color.parseColor("#092d01"), "Growth");
+        affinityObjects[2] = new AffinityObject("Death", R.drawable.paragon_white, Color.parseColor("#240f3d"), "Corruption");
+        affinityObjects[3] = new AffinityObject("Knowledge", R.drawable.paragon_white, Color.parseColor("#0d266b"), "Intellect");
+        affinityObjects[4] = new AffinityObject("Chaos", R.drawable.paragon_white, Color.parseColor("#96000c"), "Fury");
+        background.setBackgroundColor(affinityObjects[0].getColor());
     }
 
     @Override
@@ -51,6 +56,12 @@ public class AffinitySelectorAdapter extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 Log.i("CARD TOUCH", "You've selected " + affinityObjects[position].getTitle());
+                fragment.getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, Cards.newInstance(incCard, affinityObjects[position].getTitle(), affinityObjects[position].getOldName()))
+                        .addToBackStack("NEW")
+                        .commit();
+
             }
         });
         ImageView backgroundLayout = (ImageView) view.findViewById(R.id.background_color_layout);
@@ -75,6 +86,11 @@ public class AffinitySelectorAdapter extends PagerAdapter {
     }
 
     public void pageChanged(int position) {
-        Picasso.with(mContext).load(affinityObjects[position].getColor()).into(background);
+        try {
+            background.setBackgroundColor(affinityObjects[position].getColor());
+        }
+        catch (Exception e){
+
+        }
     }
 }

@@ -45,7 +45,7 @@ public class CardDisplay extends DialogFragment{
         cotdImage.setVisibility(View.VISIBLE);
 
         //Set Picture Image with Glide
-        Glide.with(this).load(cotd.getCardLevels().get(0).getImageURL()).into(cotdImage);
+        Glide.with(this).load(cotd.getImageUrl()).into(cotdImage);
 
         //Resize image to be a percentage of width of device
         Display display = getActivity().getWindowManager().getDefaultDisplay();
