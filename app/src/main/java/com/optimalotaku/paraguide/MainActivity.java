@@ -351,12 +351,23 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                 //mCurrentSelectedPosition = 0;
                 return true;
             case R.id.navigation_item_0:
+                if(heroDataMap.size() > 0){
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
                         .addToBackStack("NEW")
                         .commit();
                 drawer.closeDrawer(Gravity.LEFT);
+                }
+                else{
+                    getHeroData();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
+                            .addToBackStack("NEW")
+                            .commit();
+                    drawer.closeDrawer(Gravity.LEFT);
+                }
                 // mCurrentSelectedPosition = 1;
                 return true;
             case R.id.navigation_item_1:
