@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -96,17 +97,19 @@ public class playerGraphFragment extends Fragment {
     private TextView yourStructDamage;
     private TextView yourInhibTakedowns;
     private TextView yourInhibAssists;
+    private String playerJSONInfo;
 
     ProgressDialog dialog;
 
 
-    public static playerGraphFragment newInstance(int page, String title, PlayerData pData, String playerName) {
+    public static playerGraphFragment newInstance(int page, String title, PlayerData pData, String playerName, String playerJSONInfo) {
         playerGraphFragment playerFrag = new playerGraphFragment();
         Bundle args = new Bundle();
         args.putInt("someInt", page);
         args.putString("someTitle", title);
         args.putSerializable("playerData", pData);
         args.putString("playerName", playerName);
+        args.putString("playerJSONInfo", playerJSONInfo);
         playerFrag.setArguments(args);
         return playerFrag;
     }
@@ -116,6 +119,7 @@ public class playerGraphFragment extends Fragment {
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
         playerName = getArguments().getString("playerName");
+        playerJSONInfo = getArguments().getString("playerJSONInfo");
         pData = new PlayerData();
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
@@ -340,6 +344,7 @@ public class playerGraphFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_playergraph, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         mainLayout = (RelativeLayout) view.findViewById(R.id.mainLayout);
         mChart = (PieChart) view.findViewById(R.id.chart);
         mChart2 = (PieChart) view.findViewById(R.id.chart2);
@@ -361,7 +366,7 @@ public class playerGraphFragment extends Fragment {
         mChart.setDescription(description1);
         mChart2.setDescription(description2);
         mChart3.setDescription(description3);
-        final String[] playerJSONInfo = new String[1];
+
 
         topAvgAssists = (TextView) view.findViewById(R.id.top_average_assits);
         topAvgKills = (TextView) view.findViewById(R.id.top_average_kills);
@@ -385,93 +390,83 @@ public class playerGraphFragment extends Fragment {
         yourStructDamage = (TextView) view.findViewById(R.id.your_average_struct_dmg);
 
 
+        //Gather UI Objects
+        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
+        EditText pEdit = (EditText) view.findViewById(R.id.playerText);
+
+        //Create PlayerData Object
+        PlayerData playerData = new PlayerData();
+
+        //make call to player info, get response to chart
+
+
+        JSONObject playerStats;
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+
+
         try {
-            //Gather UI Objects
-            ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
-            EditText pEdit = (EditText) view.findViewById(R.id.playerText);
 
-            //Create PlayerData Object
-            PlayerData playerData = new PlayerData();
+            playerStats = new JSONObject(playerJSONInfo);
 
-            //make call to player info, get response to chart
+            pData.setMatches(playerStats.getJSONObject("pvp").getString("games_played"));
+            pData.setWins(playerStats.getJSONObject("pvp").getString("games_won"));
+            pData.setAssists(playerStats.getJSONObject("pvp").getString("assists_hero"));
+            pData.setDeaths(playerStats.getJSONObject("pvp").getString("deaths_hero"));
+            pData.setHeroKills(playerStats.getJSONObject("pvp").getString("kills_hero"));
+            pData.setCoreKills(playerStats.getJSONObject("pvp").getString("kills_core"));
+            pData.setTowerKills(playerStats.getJSONObject("pvp").getString("kills_towers"));
+            pData.setGamesLeft(playerStats.getJSONObject("pvp").getString("games_left"));
+            pData.setGamesReconnected(playerStats.getJSONObject("pvp").getString("games_reconnected"));
+            //pData.setPlayerName(playerName);
+        } catch (JSONException e) {
 
+            e.printStackTrace();
+        }
 
-            ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(this.getContext(), progressBar, playerName, playerData);
+        progressBar.setVisibility(View.GONE);
 
-            playerJSONInfo[0] = playerInfo.execute().get();
+        if (pData.getMatches() != null) {
 
-            JSONObject playerStats;
-            //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-
-
-            try {
-
-                playerStats = new JSONObject(playerJSONInfo[0]);
-
-                pData.setMatches(playerStats.getJSONObject("pvp").getString("games_played"));
-                pData.setWins(playerStats.getJSONObject("pvp").getString("games_won"));
-                pData.setAssists(playerStats.getJSONObject("pvp").getString("assists_hero"));
-                pData.setDeaths(playerStats.getJSONObject("pvp").getString("deaths_hero"));
-                pData.setHeroKills(playerStats.getJSONObject("pvp").getString("kills_hero"));
-                pData.setCoreKills(playerStats.getJSONObject("pvp").getString("kills_core"));
-                pData.setTowerKills(playerStats.getJSONObject("pvp").getString("kills_towers"));
-                pData.setGamesLeft(playerStats.getJSONObject("pvp").getString("games_left"));
-                pData.setGamesReconnected(playerStats.getJSONObject("pvp").getString("games_reconnected"));
-                //pData.setPlayerName(playerName);
-            } catch (JSONException e) {
-
-                e.printStackTrace();
+            // add data to local variables
+            try{
+            wins = Integer.parseInt(pData.getWins());}
+            catch(NumberFormatException e){
+                wins = 0;
+            }
+            try{
+            matches = Integer.parseInt(pData.getMatches());}
+            catch(NumberFormatException e){
+                matches = 0;
+            }
+            try{
+            kills = Integer.parseInt(pData.getHeroKills());}
+            catch (NumberFormatException e){
+                kills = 0;
+            }
+            try{
+            deaths = Integer.parseInt(pData.getDeaths());}
+            catch (NumberFormatException e){
+                deaths = 0;
+            }
+            try{
+            assists = Integer.parseInt(pData.getAssists());}
+            catch (NumberFormatException e){
+                assists = 0;
+            }
+            try{
+            towerKills = Integer.parseInt(pData.getTowerKills());}
+            catch (NumberFormatException e){
+                towerKills = 0;
+            }
+            try{
+            coreKills = Integer.parseInt(pData.getCoreKills());}
+            catch (NumberFormatException e){
+                coreKills = 0;
             }
 
-            progressBar.setVisibility(View.GONE);
-
-            if (pData.getMatches() != null) {
-
-                // add data to local variables
-                try{
-                wins = Integer.parseInt(pData.getWins());}
-                catch(NumberFormatException e){
-                    wins = 0;
-                }
-                try{
-                matches = Integer.parseInt(pData.getMatches());}
-                catch(NumberFormatException e){
-                    matches = 0;
-                }
-                try{
-                kills = Integer.parseInt(pData.getHeroKills());}
-                catch (NumberFormatException e){
-                    kills = 0;
-                }
-                try{
-                deaths = Integer.parseInt(pData.getDeaths());}
-                catch (NumberFormatException e){
-                    deaths = 0;
-                }
-                try{
-                assists = Integer.parseInt(pData.getAssists());}
-                catch (NumberFormatException e){
-                    assists = 0;
-                }
-                try{
-                towerKills = Integer.parseInt(pData.getTowerKills());}
-                catch (NumberFormatException e){
-                    towerKills = 0;
-                }
-                try{
-                coreKills = Integer.parseInt(pData.getCoreKills());}
-                catch (NumberFormatException e){
-                    coreKills = 0;
-                }
-
-            } else {
-                // Toast.makeText(playerGraphFragment.this, "Player Not Found!!!",
-                //       Toast.LENGTH_SHORT).show();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        } else {
+            // Toast.makeText(playerGraphFragment.this, "Player Not Found!!!",
+            //       Toast.LENGTH_SHORT).show();
         }
 
 
@@ -563,15 +558,15 @@ public class playerGraphFragment extends Fragment {
         DrawData();
 
         final TextView gradeView = (TextView) view.findViewById(R.id.grade);
-        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
         final TextView nameView = (TextView) view.findViewById(R.id.percent);
         final DecoView arcView = (DecoView)view.findViewById(R.id.dynamicArcView);
 
         try {
             ParagonAPIPlayerInfo playerInfo = new ParagonAPIPlayerInfo(this.getContext(), progressBar, playerName, pData);
             //String[] playerJSONInfo = new String[1];
-            playerJSONInfo[0] = playerInfo.execute().get();
-            JSONObject rawData = new JSONObject(playerJSONInfo[0]);
+            playerJSONInfo = playerInfo.execute().get();
+            JSONObject rawData = new JSONObject(playerJSONInfo);
             pData = new PlayerData();
 
             pData.setMatches(rawData.getJSONObject("pvp").getString("games_played"));

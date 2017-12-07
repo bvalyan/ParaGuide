@@ -25,6 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -101,8 +103,6 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             return;
         }
         else{
-
-
             authCode = prefs.getString("signedIn", "null");
 
             progress = ProgressDialog.show(this, "Loading",
@@ -128,23 +128,26 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menu.add(Menu.NONE, R.id.menu_action_1, 1, getResources().getString(R.string.update_string));
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
 
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        rotation.setRepeatCount(3);
+        findViewById(R.id.menu_action_1).startAnimation(rotation);
         switch (item.getItemId()) {
             case R.id.menu_action_1:
-                Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
 
+                Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
                 ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
                 heroInfo.delegate = this;
                 heroInfo.execute();
 
                 Log.i("INFO", "MainActivity - getCardData(): Card data does not exist or is outdated. Grabbing current data from API ");
-
                 ParagonAPICardInfo cardInfo = new ParagonAPICardInfo();
                 cardInfo.delegate = this;
                 cardInfo.execute();
@@ -359,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             case R.id.navigation_item_1:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, AccountSearch.newInstance(heroDataMap))
+                        .replace(R.id.fragment_container, NewPlayerAnalysis.newInstance(heroDataMap))
                         .addToBackStack("NEW")
                         .commit();
                 drawer.closeDrawer(Gravity.LEFT);

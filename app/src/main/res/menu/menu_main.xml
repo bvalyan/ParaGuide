@@ -1,8 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
-    <item android:id="@+id/menu_action_1" android:title="Refresh Database"
-
+    <item android:id="@+id/menu_action_1"
+        android:title="Refresh Database"
+        android:icon="@drawable/command_refresh"
+        app:showAsAction="always"
         android:orderInCategory="1" />
 </menu>

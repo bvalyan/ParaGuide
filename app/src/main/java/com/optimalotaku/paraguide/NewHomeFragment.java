@@ -66,7 +66,7 @@ public class NewHomeFragment extends Fragment {
     Menu menu;
     String authCode;
 
-    String TAG = MainFragment.class.getSimpleName();
+    String TAG = NewHomeFragment.class.getSimpleName();
 
     public static NewHomeFragment newInstance(HashMap<String, HeroData> heroDataMap) {
         map = heroDataMap;

@@ -42,7 +42,7 @@ public class CardFragment extends Fragment {
         //Images = getArguments().getStringArray("heropics");
 
         initializeList();
-    }
+    } 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
