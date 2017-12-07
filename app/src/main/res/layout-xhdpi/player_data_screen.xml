@@ -3,15 +3,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:weightSum="1"
+
     >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,40 +20,121 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
 
-    <AutoCompleteTextView
-        android:id="@+id/playerText"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="Enter Epic Account Name"
-        android:textSize="15dp"
-
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"/>
-    <Button
-        android:layout_toRightOf="@id/playerText"
-        android:id="@+id/playerqueryButton"
-        android:layout_width="200dp"
-        android:layout_alignBottom="@id/playerText"
-        android:layout_marginLeft="10dp"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="Search"
-        android:layout_height="50dp"
-        android:textColor="@color/white"
-        android:onClick="onSearch"/>
 
 
+        <AutoCompleteTextView
+            android:id="@+id/playerText"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Enter Epic Account Name"
+            android:textSize="15dp"
+
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"/>
+        <Button
+            android:layout_toRightOf="@id/playerText"
+            android:id="@+id/playerqueryButton"
+            android:layout_width="200dp"
+            android:clickable="true"
+            android:layout_alignBottom="@id/playerText"
+            android:layout_marginLeft="10dp"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:text="Search"
+            android:layout_height="50dp"
+            android:textColor="@color/white"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
 
 
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:visibility="gone" />
 
-    </RelativeLayout>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_marginTopPercent="8%"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/layoutplayer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                app:layout_heightPercent="100%"
+                app:layout_widthPercent="100%">
+
+                <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/viewpager2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_marginTopPercent="10%"
+                    >
+                </android.support.v4.view.ViewPager>
+
+                <com.astuetz.PagerSlidingTabStrip
+                    android:id="@+id/tabs2"
+                    app:pstsShouldExpand="true"
+                    app:pstsTextAllCaps="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" />
+
+                <android.support.percent.PercentRelativeLayout
+                    android:id="@+id/bar_layout"
+                    android:visibility="gone"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="#d81e1e1e"
+                    app:layout_widthPercent="95%"
+                    app:layout_heightPercent="30%">
+
+                    <TextView
+                        android:id="@+id/bar_title"
+                        android:layout_centerHorizontal="true"
+                        android:layout_height="wrap_content"
+                        app:layout_marginTopPercent="15%"
+                        android:layout_width="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="Pulling the data together..."
+                        />
+
+
+                    <ProgressBar
+                        android:id="@+id/determinateBar"
+                        android:layout_below="@id/bar_title"
+                        app:layout_marginTopPercent="33%"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        app:layout_widthPercent="80%"
+                        android:layout_height="wrap_content"
+                        android:progress="0"/>
+
+                    <TextView
+                        android:id="@+id/bar_percent_number"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/white"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"/>
+
+                </android.support.percent.PercentRelativeLayout>
+            </android.support.percent.PercentRelativeLayout>
+        </LinearLayout>
+    </android.support.percent.PercentRelativeLayout>
 </LinearLayout>
