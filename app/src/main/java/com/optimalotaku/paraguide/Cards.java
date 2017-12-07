@@ -3,7 +3,9 @@ package com.optimalotaku.paraguide;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.HapticFeedbackConstants;
@@ -59,6 +61,22 @@ public class Cards extends Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final Intent intent;
         View view = inflater.inflate(R.layout.cardlist2, container, false);
+        PercentRelativeLayout backgroundLayout = (PercentRelativeLayout) view.findViewById(R.id.cardlist_background);
+        if(selectedAffinity.toLowerCase().trim().equals("order")){
+            backgroundLayout.setBackgroundColor(Color.parseColor("#878164"));
+        }
+        if(selectedAffinity.toLowerCase().trim().equals("chaos")){
+            backgroundLayout.setBackgroundColor(Color.parseColor("#701d18"));
+        }
+        if(selectedAffinity.toLowerCase().trim().equals("knowledge")){
+            backgroundLayout.setBackgroundColor(Color.parseColor("#1e1f63"));
+        }
+        if(selectedAffinity.toLowerCase().trim().equals("growth")){
+            backgroundLayout.setBackgroundColor(Color.parseColor("#1d3d12"));
+        }
+        if(selectedAffinity.toLowerCase().trim().equals("death")){
+            backgroundLayout.setBackgroundColor(Color.parseColor("#1d0b38"));
+        }
         cardmanager = new FileManager(getContext());
         Map<String,List<CardData>> cDataMap = new HashMap<>();
         try {

@@ -4,22 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.percent.PercentRelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        android:id="@+id/cardlist_background"
         android:layout_height="match_parent">
 
     <GridView
+        android:adjustViewBounds="true"
         android:id="@+id/gridview2"
-        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_heightPercent="100%"
-        android:verticalSpacing="5dp"
-        android:horizontalSpacing="-50dp"
-
-        android:numColumns="3"/>
+        android:numColumns="1"/>
 
     </android.support.percent.PercentRelativeLayout>
 </FrameLayout>

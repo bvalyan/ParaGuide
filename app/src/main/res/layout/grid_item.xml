@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="wrap_content"
+    android:background="#99000000"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.optimalotaku.paraguide.SquareImageView
         android:id="@+id/picture"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
+        app:layout_heightPercent="40%"
+        app:layout_widthPercent="30%"
         />
 
     <TextView
         android:id="@+id/text"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
+        android:layout_toRightOf="@id/picture"
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        app:layout_marginLeftPercent="10%"
+        app:layout_marginStartPercent="10%"
+        app:layout_widthPercent="100%"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:layout_gravity="bottom"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-smallcaps"
         android:textColor="@android:color/white"
-        android:background="#99000000"/>
+        />
 
-</FrameLayout>
+</android.support.percent.PercentRelativeLayout>
