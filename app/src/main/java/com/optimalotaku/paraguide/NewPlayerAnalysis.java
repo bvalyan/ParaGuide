@@ -1,18 +1,19 @@
 package com.optimalotaku.paraguide;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -33,7 +34,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Handler;
 
 /**
  * Created by bvaly on 12/6/2017.
@@ -62,6 +62,7 @@ public class NewPlayerAnalysis extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.player_data_screen, container, false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
 
         return view;
@@ -79,11 +80,14 @@ public class NewPlayerAnalysis extends Fragment {
         final TextView percentNumberView = (TextView) topView.findViewById(R.id.bar_percent_number);
         determinateBar.setMax(100);
 
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 barLayout.setVisibility(View.VISIBLE);
                 name = textSearch.getText().toString();
+                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 String url = Constants.PARAGON_PLAYER_URL + name;
 
                 // Request a string response from the provided URL.
@@ -108,9 +112,9 @@ public class NewPlayerAnalysis extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("VOLLEY: PLAYERFINDING", "That didn't work!");
-                        Toast.makeText(getActivity(), "Connection Error!",
+                        Toast.makeText(getActivity(), "Account not found!",
                                 Toast.LENGTH_LONG).show();
-                        topView.setVisibility(View.GONE);
+                        barLayout.setVisibility(View.GONE);
                     }
                 }) {
                     @Override
