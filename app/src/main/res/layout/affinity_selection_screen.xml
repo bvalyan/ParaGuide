@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:backgroundTint="#d42b2b2b"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Choose an affinity"
+        android:layout_width="wrap_content"
+        android:textSize="25sp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textStyle="bold"
+        app:layout_marginTopPercent="5%"
+        android:layout_centerHorizontal="true"/>
+
+    <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+        android:id="@+id/affinity_wheel"
+        app:icvp_medium_scaled="true"
+        app:layout_marginTopPercent="16%"
+        app:icvp_center_page_scale_offset="20dp"
+        app:icvp_max_page_scale="0.75"
+        app:icvp_min_page_scale="0.5"
+        app:icvp_min_page_scale_offset="0dp"
+        app:icvp_scroll_duration="500"
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="100%"
+        />
+
+
+
+</android.support.percent.PercentRelativeLayout>
