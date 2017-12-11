@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,21 +131,29 @@ public class newHeroFragment extends DialogFragment{
 
             @Override
             public void onSecondaryViewAppeared(FABRevealLayout fabRevealLayout, View secondaryView) {
-                getView().setOnKeyListener(new View.OnKeyListener() {
-                    @Override
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                try {
 
-                        if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK ){
 
-                            layout.revealMainView();
+                    getView().setOnKeyListener(new View.OnKeyListener() {
+                        @Override
+                        public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-                            return true;
+                            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
 
+                                layout.revealMainView();
+
+                                return true;
+
+                            }
+
+                            return false;
                         }
-
-                        return false;
-                    }
-                });
+                    });
+                }
+                catch (Exception e){
+                    Log.e("FABERROR", "FAB NULL");
+                    e.printStackTrace();
+                }
             }
         });
 
