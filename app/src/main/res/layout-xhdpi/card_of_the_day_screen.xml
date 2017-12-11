@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
      <android.support.percent.PercentRelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#94494949"
     android:layout_width="match_parent"
-    android:background="#2b2b2b"
     android:layout_height="match_parent" >
      
     <android.support.percent.PercentRelativeLayout
@@ -17,9 +17,8 @@
         <ImageView
             app:layout_marginLeftPercent="2%"
             android:id="@+id/cotdImage"
-            android:scaleType="fitXY"
             app:layout_widthPercent="45%"
-            app:layout_heightPercent="88%"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             />
 
@@ -30,6 +29,7 @@
             >
             <TextView
                 android:text="TextView"
+                android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
                 app:layout_widthPercent="90%"
                 android:layout_height="wrap_content"
@@ -63,6 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
+                        android:textColor="@color/white"
                         android:layout_marginTop="-10dp"
                         android:layout_below="@id/agility_gem"
                         android:id="@+id/dexterity_gem_cost"
@@ -72,6 +73,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
+                        android:textColor="@color/white"
                         android:textAlignment="center"
                         app:layout_marginTopPercent="4%"
                         android:layout_height="wrap_content"
@@ -101,6 +103,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:textAlignment="center"
                         android:layout_marginTop="-10dp"
                         android:id="@+id/intellect_gem_cost"
@@ -111,6 +114,7 @@
                     <TextView
                         android:layout_centerHorizontal="true"
                         app:layout_marginTopPercent="4%"
+                        android:textColor="@color/white"
                         android:layout_below="@id/intellect_gem_cost"
                         android:layout_width="wrap_content"
                         android:textAlignment="center"
@@ -138,6 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_marginTop="-10dp"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/white"
                         android:layout_below="@id/vitality_gem"
                         android:layout_centerHorizontal="true"
                         android:textAlignment="center"
@@ -148,9 +153,10 @@
                     <TextView
                         android:layout_below="@id/vitality_gem_cost"
                         android:layout_centerHorizontal="true"
+                        android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:textAlignment="center"
-                        app:layout_marginTopPercent="5%"
+                        app:layout_marginTopPercent="4%"
                         android:fontFamily="sans-serif-condensed"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
@@ -176,19 +182,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/description_card"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="15dp">
+
 
             <android.support.percent.PercentRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/desc_space"
+                app:layout_marginTopPercent="5%"
+                android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/minefftitle"
-                    android:layout_marginTop="5dp"
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:text="Description"
                     android:fontFamily="sans-serif-smallcaps"
@@ -200,6 +203,7 @@
 
                 <TextView
                     android:layout_below="@id/minefftitle"
+                    android:textColor="@color/white"
                     android:id="@+id/cotdeff"
                     android:padding="5dp"
                     android:textSize="17sp"
@@ -213,25 +217,21 @@
             </android.support.percent.PercentRelativeLayout>
 
 
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_below="@id/description_card"
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
-            android:id="@+id/cooldown_card"
-            app:cardUseCompatPadding="true"
-            android:layout_marginTop="-30dp"
-            app:cardElevation="15dp"
-            >
 
             <android.support.percent.PercentRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                app:layout_marginTopPercent="5%"
+                android:id="@+id/cooldown_space"
+                app:layout_widthPercent="50%"
+                android:layout_below="@id/desc_space"
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
+                    app:layout_widthPercent="50%"
                     android:text="Cooldown"
                     android:visibility="visible"
                     android:id="@+id/cdtitle"
@@ -242,9 +242,11 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:visibility="visible"
                     android:text="N/A"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:padding="5dp"
                     android:layout_below="@id/cdtitle"
@@ -254,29 +256,25 @@
 
             </android.support.percent.PercentRelativeLayout>
 
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_below="@id/description_card"
-            app:layout_widthPercent="50%"
-            app:layout_marginLeftPercent="50%"
-            android:layout_height="wrap_content"
-            android:id="@+id/rarity_card"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="15dp"
-            android:layout_marginTop="-30dp"
-            >
+
+
 
             <android.support.percent.PercentRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/rarity_space"
+                app:layout_marginTopPercent="5%"
+                android:layout_below="@id/desc_space"
+                android:layout_height="wrap_content"
+                app:layout_widthPercent="50%"
+                app:layout_marginLeftPercent="50%">
 
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:fontFamily="sans-serif-smallcaps"
                     android:layout_width="match_parent"
                     android:text="Rarity"
+                    android:layout_marginTop="5dp"
                     android:textSize="18sp"
+                    android:textColor="@color/white"
                     android:visibility="visible"
                     android:id="@+id/rarity_title"
                     android:textStyle="bold"
@@ -285,6 +283,7 @@
 
                 <TextView
                     android:layout_below="@id/rarity_title"
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:visibility="visible"
                     android:padding="5dp"
@@ -295,22 +294,18 @@
                     />
 
             </android.support.percent.PercentRelativeLayout>
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_below="@id/rarity_card"
-            app:layout_widthPercent="50%"
-            app:layout_marginLeftPercent="50%"
-            android:layout_height="wrap_content"
-            android:id="@+id/affinity_card"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="15dp"
-            android:layout_marginTop="-30dp"
-            >
+
+
 
             <android.support.percent.PercentRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                app:layout_marginTopPercent="5%"
+                app:layout_widthPercent="50%"
+                app:layout_marginLeftPercent="50%"
+                android:id="@+id/affinity_space"
+                android:layout_below="@id/rarity_space"
+                >
 
                 <TextView
                     android:layout_marginTop="5dp"
@@ -319,6 +314,7 @@
                     android:text="Affinity"
                     android:textSize="18sp"
                     android:visibility="visible"
+                    android:textColor="@color/white"
                     android:id="@+id/affinity_title"
                     android:textStyle="bold"
                     android:textAlignment="center"
@@ -328,6 +324,7 @@
                     android:layout_below="@id/affinity_title"
                     android:layout_width="match_parent"
                     android:visibility="visible"
+                    android:textColor="@color/white"
                     android:padding="5dp"
                     android:textSize="15sp"
                     android:layout_height="wrap_content"
@@ -336,27 +333,22 @@
                     />
 
             </android.support.percent.PercentRelativeLayout>
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_below="@id/rarity_card"
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
-            android:id="@+id/gold_card"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="15dp"
-            android:layout_marginTop="-30dp"
-            >
+
 
             <android.support.percent.PercentRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/gold_space"
+                android:layout_below="@id/cooldown_space"
+                android:layout_height="wrap_content"
+                app:layout_marginTopPercent="5%"
+                app:layout_widthPercent="50%">
 
                 <TextView
                     android:layout_marginTop="5dp"
                     android:fontFamily="sans-serif-smallcaps"
                     android:layout_width="match_parent"
                     android:text="Gold Cost"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     android:visibility="visible"
                     android:id="@+id/gold_title"
@@ -369,6 +361,7 @@
                     android:layout_width="match_parent"
                     android:visibility="visible"
                     android:padding="5dp"
+                    android:textColor="@color/white"
                     android:textSize="15sp"
                     android:layout_height="wrap_content"
                     android:id="@+id/gold_cost"
@@ -376,16 +369,6 @@
                     />
 
             </android.support.percent.PercentRelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-
-
-
-
-
-
-
 
     </android.support.percent.PercentRelativeLayout>
 

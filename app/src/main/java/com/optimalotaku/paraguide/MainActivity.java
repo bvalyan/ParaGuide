@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,6 +29,7 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -192,18 +194,18 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     @Override
     public void processHeroInfoFinish(final HashMap<String,HeroData> hData){
         heroDataMap = hData;
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         try {
             fileManager.saveHeroesToStorage(hData);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(findViewById(R.id.fragment_container ) == null) {
+        if(f == null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
                     .commit();
         }
-
         Toast.makeText(this, " Hero Database Updated!",
                 Toast.LENGTH_LONG).show();
     }

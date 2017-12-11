@@ -1,395 +1,363 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-     <android.support.percent.PercentRelativeLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#2b2b2b"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
      
-    <android.support.percent.PercentRelativeLayout
-        android:id="@+id/viewLayout"
-        app:layout_widthPercent="100%"
-        app:layout_heightPercent="39.3%"
-        >
 
-        <ImageView
-            app:layout_marginLeftPercent="2%"
-            android:id="@+id/cotdImage"
-            android:scaleType="fitXY"
-            app:layout_widthPercent="45%"
-            app:layout_heightPercent="88%"
-            android:adjustViewBounds="true"
-            />
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#94494949">
+         
 
         <android.support.percent.PercentRelativeLayout
-            app:layout_widthPercent="55%"
-            app:layout_marginLeftPercent="49%"
-            app:layout_heightPercent="100%"
-            >
-            <TextView
-                android:text="TextView"
-                android:layout_centerHorizontal="true"
-                app:layout_widthPercent="90%"
+            android:id="@+id/viewLayout"
+            app:layout_heightPercent="39.3%"
+            app:layout_widthPercent="100%">
+
+            <ImageView
+                android:id="@+id/cotdImage"
                 android:layout_height="wrap_content"
-                app:layout_marginTopPercent="1%"
-                android:textAlignment="center"
-                android:padding="2dp"
-                android:id="@+id/cotdTitle"
-                android:textSize="20sp"
-                android:fontFamily="sans-serif-condensed"
-                />
+                android:adjustViewBounds="true"
+                app:layout_marginLeftPercent="2%"
+                app:layout_widthPercent="45%" />
+
             <android.support.percent.PercentRelativeLayout
-                android:layout_below="@id/cotdTitle"
-                app:layout_marginTopPercent="7%"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:layout_heightPercent="100%"
+                app:layout_marginLeftPercent="49%"
+                app:layout_widthPercent="55%">
 
+                <TextView
+                    android:id="@+id/cotdTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="2dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:layout_marginTopPercent="1%"
+                    app:layout_widthPercent="90%" />
 
                 <android.support.percent.PercentRelativeLayout
-                    android:id="@+id/agility_layout"
-                    app:layout_widthPercent="33%"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/agility_gem"
-                        app:layout_widthPercent="100%"
-                        app:layout_heightPercent="50%"
-                        android:src="@drawable/gem_agility_offense"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cotdTitle"
+                    android:orientation="horizontal"
+                    app:layout_marginTopPercent="7%">
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <android.support.percent.PercentRelativeLayout
+                        android:id="@+id/agility_layout"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:layout_marginTop="-10dp"
-                        android:layout_below="@id/agility_gem"
-                        android:id="@+id/dexterity_gem_cost"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="sans-serif-condensed"
-                        />
+                        app:layout_widthPercent="33%">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textAlignment="center"
-                        app:layout_marginTopPercent="4%"
+                        <ImageView
+                            android:id="@+id/agility_gem"
+                            android:src="@drawable/gem_agility_offense"
+                            app:layout_heightPercent="50%"
+                            app:layout_widthPercent="100%" />
+
+
+                        <TextView
+                            android:id="@+id/dexterity_gem_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/agility_gem"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="-10dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textAlignment="center"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/dexterity_gem_cost"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="AGI"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            app:layout_marginTopPercent="4%" />
+
+
+                    </android.support.percent.PercentRelativeLayout>
+
+                    <android.support.percent.PercentRelativeLayout
+                        android:id="@+id/intellect_layout"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/dexterity_gem_cost"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="sans-serif-condensed"
-                        android:layout_gravity="center"
-                        android:text="AGI"
-                        android:textStyle="bold"/>
+                        android:layout_toRightOf="@id/agility_layout"
+                        android:orientation="vertical"
+                        app:layout_widthPercent="33%">
 
+                        <ImageView
+                            android:id="@+id/intellect_gem"
+                            android:src="@drawable/gem_intellect_offense"
+                            app:layout_heightPercent="50%"
+                            app:layout_widthPercent="100%" />
+
+                        <TextView
+                            android:id="@+id/intellect_gem_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/intellect_gem"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="-10dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textAlignment="center"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/intellect_gem_cost"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="INT"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            app:layout_marginTopPercent="4%" />
+
+                    </android.support.percent.PercentRelativeLayout>
+
+
+                    <android.support.percent.PercentRelativeLayout
+                        android:id="@+id/vitality_layout"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/intellect_layout"
+                        app:layout_widthPercent="33%">
+
+                        <ImageView
+                            android:id="@+id/vitality_gem"
+                            android:src="@drawable/gem_vitality_offense"
+                            app:layout_heightPercent="50%"
+                            app:layout_widthPercent="100%" />
+
+                        <TextView
+                            android:id="@+id/vitality_gem_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/vitality_gem"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="-10dp"
+                            android:fontFamily="sans-serif-condensed"
+                            android:textAlignment="center"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_below="@id/vitality_gem_cost"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="VIT"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            app:layout_marginTopPercent="4%" />
+
+
+                    </android.support.percent.PercentRelativeLayout>
 
 
                 </android.support.percent.PercentRelativeLayout>
-
-                <android.support.percent.PercentRelativeLayout
-                    android:layout_toRightOf="@id/agility_layout"
-                    android:id="@+id/intellect_layout"
-                    app:layout_widthPercent="33%"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/intellect_gem"
-                        app:layout_widthPercent="100%"
-                        app:layout_heightPercent="50%"
-                        android:src="@drawable/gem_intellect_offense"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:layout_marginTop="-10dp"
-                        android:id="@+id/intellect_gem_cost"
-                        android:fontFamily="sans-serif-condensed"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@id/intellect_gem"
-                        />
-                    <TextView
-                        android:layout_centerHorizontal="true"
-                        app:layout_marginTopPercent="4%"
-                        android:layout_below="@id/intellect_gem_cost"
-                        android:layout_width="wrap_content"
-                        android:textAlignment="center"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-condensed"
-                        android:layout_gravity="center"
-                        android:text="INT"
-                        android:textStyle="bold"/>
-
-                </android.support.percent.PercentRelativeLayout>
-
-
-                <android.support.percent.PercentRelativeLayout
-                    android:id="@+id/vitality_layout"
-                    android:layout_toRightOf="@id/intellect_layout"
-                    app:layout_widthPercent="33%"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/vitality_gem"
-                        app:layout_widthPercent="100%"
-                        app:layout_heightPercent="50%"
-                        android:src="@drawable/gem_vitality_offense"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="-10dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/vitality_gem"
-                        android:layout_centerHorizontal="true"
-                        android:textAlignment="center"
-                        android:id="@+id/vitality_gem_cost"
-                        android:fontFamily="sans-serif-condensed"
-                        />
-
-                    <TextView
-                        android:layout_below="@id/vitality_gem_cost"
-                        android:layout_centerHorizontal="true"
-                        android:layout_width="wrap_content"
-                        android:textAlignment="center"
-                        app:layout_marginTopPercent="5%"
-                        android:fontFamily="sans-serif-condensed"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:text="VIT"
-                        android:textStyle="bold"/>
-
-
-
-
-                </android.support.percent.PercentRelativeLayout>
-
-
 
             </android.support.percent.PercentRelativeLayout>
 
         </android.support.percent.PercentRelativeLayout>
 
-    </android.support.percent.PercentRelativeLayout>
+        <android.support.percent.PercentRelativeLayout
 
-    <android.support.percent.PercentRelativeLayout
-
-        android:layout_below="@id/viewLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/description_card"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="15dp">
+            android:layout_below="@id/viewLayout">
+
 
             <android.support.percent.PercentRelativeLayout
+                android:id="@+id/desc_space"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                app:layout_marginTopPercent="5%">
+
                 <TextView
                     android:id="@+id/minefftitle"
-                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
-                    android:text="Description"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:textStyle="bold"
-                    android:textSize="15sp"
-                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:layout_height="wrap_content" />
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="Description"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:layout_below="@id/minefftitle"
                     android:id="@+id/cotdeff"
-                    android:textAlignment="center"
-                    android:padding="5dp"
-                    android:textSize="12sp"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="sans-serif-condensed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_below="@id/minefftitle"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
 
             </android.support.percent.PercentRelativeLayout>
 
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_below="@id/description_card"
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
-            android:id="@+id/cooldown_card"
-            app:cardUseCompatPadding="true"
-            android:layout_marginTop="-30dp"
-            app:cardElevation="15dp"
-            >
-
             <android.support.percent.PercentRelativeLayout
+                android:id="@+id/cooldown_space"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/desc_space"
+                app:layout_marginTopPercent="5%"
+                app:layout_widthPercent="50%">
 
                 <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:text="Cooldown"
-                    android:visibility="visible"
                     android:id="@+id/cdtitle"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="sans-serif-smallcaps"
-                    android:textStyle="bold"
-                    android:textSize="15sp"
+                    android:text="Cooldown"
                     android:textAlignment="center"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:layout_widthPercent="50%" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:visibility="visible"
-                    android:text="N/A"
-                    android:textSize="12sp"
-                    android:padding="5dp"
+                    android:id="@+id/cotd_cd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/cdtitle"
+                    android:layout_centerHorizontal="true"
+                    android:padding="5dp"
+                    android:text="N/A"
                     android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cotd_cd"/>
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
 
             </android.support.percent.PercentRelativeLayout>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_below="@id/description_card"
-            app:layout_widthPercent="50%"
-            app:layout_marginLeftPercent="50%"
-            android:layout_height="wrap_content"
-            android:id="@+id/rarity_card"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="15dp"
-            android:layout_marginTop="-30dp"
-            >
 
             <android.support.percent.PercentRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/rarity_space"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/desc_space"
+                app:layout_marginLeftPercent="50%"
+                app:layout_marginTopPercent="5%"
+                app:layout_widthPercent="50%">
 
                 <TextView
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:layout_width="match_parent"
-                    android:text="Rarity"
-                    android:textSize="15sp"
-                    android:visibility="visible"
                     android:id="@+id/rarity_title"
-                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="Rarity"
                     android:textAlignment="center"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
 
                 <TextView
-                    android:layout_below="@id/rarity_title"
-                    android:layout_width="match_parent"
-                    android:visibility="visible"
-                    android:padding="5dp"
-                    android:textSize="12sp"
-                    android:layout_height="wrap_content"
                     android:id="@+id/rarity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rarity_title"
+                    android:padding="5dp"
                     android:textAlignment="center"
-                    />
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
 
             </android.support.percent.PercentRelativeLayout>
-        </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView
-            android:layout_below="@id/rarity_card"
-            app:layout_widthPercent="50%"
-            app:layout_marginLeftPercent="50%"
-            android:layout_height="wrap_content"
-            android:id="@+id/affinity_card"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="15dp"
-            android:layout_marginTop="-30dp"
-            >
 
             <android.support.percent.PercentRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/affinity_space"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rarity_space"
+                app:layout_marginLeftPercent="50%"
+                app:layout_marginTopPercent="5%"
+                app:layout_widthPercent="50%">
 
                 <TextView
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-smallcaps"
-                    android:layout_width="match_parent"
-                    android:text="Affinity"
-                    android:textSize="15sp"
-                    android:visibility="visible"
                     android:id="@+id/affinity_title"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:layout_below="@id/affinity_title"
                     android:layout_width="match_parent"
-                    android:visibility="visible"
-                    android:padding="5dp"
-                    android:textSize="12sp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/affinity"
-                    android:textAlignment="center"
-                    />
-
-            </android.support.percent.PercentRelativeLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_below="@id/rarity_card"
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
-            android:id="@+id/gold_card"
-            app:cardUseCompatPadding="true"
-            app:cardElevation="15dp"
-            android:layout_marginTop="-30dp"
-            >
-
-            <android.support.percent.PercentRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
                     android:layout_marginTop="5dp"
                     android:fontFamily="sans-serif-smallcaps"
-                    android:layout_width="match_parent"
-                    android:text="Gold Cost"
-                    android:textSize="15sp"
-                    android:visibility="visible"
-                    android:id="@+id/gold_title"
-                    android:textStyle="bold"
+                    android:text="Affinity"
                     android:textAlignment="center"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
 
                 <TextView
-                    android:layout_below="@id/gold_title"
+                    android:id="@+id/affinity"
                     android:layout_width="match_parent"
-                    android:visibility="visible"
-                    android:padding="5dp"
-                    android:textSize="12sp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/gold_cost"
+                    android:layout_below="@id/affinity_title"
+                    android:padding="5dp"
                     android:textAlignment="center"
-                    />
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
 
             </android.support.percent.PercentRelativeLayout>
 
-        </android.support.v7.widget.CardView>
+
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/gold_space"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cooldown_space"
+                app:layout_marginTopPercent="5%"
+                app:layout_widthPercent="50%">
+
+                <TextView
+                    android:id="@+id/gold_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:text="Gold Cost"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/gold_cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gold_title"
+                    android:padding="5dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
+
+            </android.support.percent.PercentRelativeLayout>
+
+        </android.support.percent.PercentRelativeLayout>
 
 
-
-
-
-
-
-
-
+         
     </android.support.percent.PercentRelativeLayout>
-
-
-
-     </android.support.percent.PercentRelativeLayout>
 </LinearLayout>

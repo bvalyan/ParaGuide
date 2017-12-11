@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.ms_square.etsyblur.BlurDialogFragment;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -215,8 +217,8 @@ public class Cards extends Fragment {
                     if(newCards.get(i).getName().equals(newCards.get(position).getName())){
                         CardData finalChoice = newCards.get(i);
                         finalChoice.setBareImageUrl(newCards.get(position).getImageUrl());
-                        android.app.DialogFragment newFragment = CardDisplay.newInstance(finalChoice);
-                        newFragment.show(getActivity().getFragmentManager(), "dialog");
+                        BlurDialogFragment newFragment = CardDisplay.newInstance(finalChoice);
+                        newFragment.show(getActivity().getSupportFragmentManager(), "dialog");
 
                         /*getFragmentManager()
                                 .beginTransaction()

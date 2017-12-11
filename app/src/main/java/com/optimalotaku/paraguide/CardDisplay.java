@@ -1,8 +1,11 @@
 package com.optimalotaku.paraguide;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.util.DisplayMetrics;
@@ -15,12 +18,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.ms_square.etsyblur.AsyncPolicy;
+import com.ms_square.etsyblur.BlurConfig;
+import com.ms_square.etsyblur.BlurDialogFragment;
+import com.ms_square.etsyblur.SmartAsyncPolicy;
 
 /**
  * Created by bvaly on 1/29/2017.
  */
 
-public class CardDisplay extends DialogFragment{
+public class CardDisplay extends BlurDialogFragment{
     static CardData cotd;
     ParagonAPIAttrReplace attrTranslator;
 
@@ -30,8 +37,17 @@ public class CardDisplay extends DialogFragment{
         cotd = data;
 
         CardDisplay fragment = new CardDisplay();
+        fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.EtsyBlurDialogTheme);
         fragment.setArguments(args);
         return fragment;
+    }
+
+
+    @NonNull
+    protected BlurConfig blurConfig() {
+        return new BlurConfig.Builder()
+                .debug(true)
+                .build();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
