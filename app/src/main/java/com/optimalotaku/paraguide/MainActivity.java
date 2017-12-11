@@ -383,6 +383,12 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
                // mCurrentSelectedPosition = 1;
                 return true;
             case R.id.navigation_item_2:
+                if(heroDataMap.size() < 1){
+                    getHeroData();
+                }
+                else {
+                    Log.i("HERODATA", "Hero data present! Good to go!");
+                }
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, CardOfTheDayView.newInstance(cotd))
