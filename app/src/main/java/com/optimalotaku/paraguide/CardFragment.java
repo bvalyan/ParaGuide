@@ -26,18 +26,18 @@ import java.util.Map;
 
 public class CardFragment extends Fragment {
 
-    ArrayList<WonderModel> listitems = new ArrayList<>();
+    ArrayList<AbilityObject> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
     String Wonders[];
     String Images[];
     String SkillImages[];
-    HashMap map;
+    ArrayList<ChampionData> map;
     int mStackLevel = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        map = (HashMap) getArguments().getSerializable("heroes");
+        map = (ArrayList<ChampionData>) getArguments().getSerializable("heroes");
         //Wonders = getArguments().getStringArray("heronames");
         //Images = getArguments().getStringArray("heropics");
 
@@ -68,13 +68,13 @@ public class CardFragment extends Fragment {
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-        private ArrayList<WonderModel> list;
+        private ArrayList<AbilityObject> list;
 
 
 
-        public MyAdapter(ArrayList<WonderModel> Data) {
+        public MyAdapter(ArrayList<AbilityObject> Data) {
             list = Data;
-            Collections.sort(list, new WonderComparator());
+            //Collections.sort(list, new WonderComparator());
         }
 
         @Override
@@ -91,30 +91,28 @@ public class CardFragment extends Fragment {
         @Override
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-            holder.titleTextView.setText(list.get(position).getCardName());
-            Picasso.with(getActivity()).load(list.get(position).getImageURL()).into(holder.coverImageView);
-            holder.shareImageView.setImageResource(list.get(position).getAffinity1());
-            holder.likeImageView.setImageResource(list.get(position).getAffinity2());
-            if(list.get(position).getSkill1pic() != null) {
-                Picasso.with(getActivity()).load(list.get(position).getSkill1pic()).into(holder.skill1view);
+            holder.titleTextView.setText(map.get(position).getName());
+            Picasso.with(getActivity()).load(map.get(position).getChampIconURL()).into(holder.coverImageView);
+            if(map.get(position).getAbility1().imageURL!= null) {
+                Picasso.with(getActivity()).load(map.get(position).getAbility1().getImageURL()).into(holder.skill1view);
             }
             else{
                 Picasso.with(getActivity()).load(R.drawable.error_icons).into(holder.skill1view);
             }
-            if(list.get(position).getSkill2pic() != null) {
-                Picasso.with(getActivity()).load(list.get(position).getSkill2pic()).into(holder.skill2view);
+            if(map.get(position).getAbility2().imageURL != null) {
+                Picasso.with(getActivity()).load(map.get(position).getAbility2().getImageURL()).into(holder.skill2view);
             }
             else{
                 Picasso.with(getActivity()).load(R.drawable.error_icons).into(holder.skill2view);
             }
-            if(list.get(position).getSkill3pic() != null){
-                Picasso.with(getActivity()).load(list.get(position).getSkill3pic()).into(holder.skill3view);
+            if(map.get(position).getAbility3().imageURL != null){
+                Picasso.with(getActivity()).load(map.get(position).getAbility3().imageURL ).into(holder.skill3view);
             }
             else{
                 Picasso.with(getActivity()).load(R.drawable.error_icons).into(holder.skill3view);
             }
-            if(list.get(position).getSkill4pic() != null) {
-                Picasso.with(getActivity()).load(list.get(position).getSkill4pic()).into(holder.skill4view);
+            if(map.get(position).getAbility4().imageURL != null) {
+                Picasso.with(getActivity()).load(map.get(position).getAbility4().imageURL).into(holder.skill4view);
             }
             else{
                 Picasso.with(getActivity()).load(R.drawable.paragon_white).into(holder.skill4view);
@@ -126,7 +124,7 @@ public class CardFragment extends Fragment {
                     newHeroFragment nextFrag= new newHeroFragment();
                     Bundle bundle = new Bundle();
 
-                    bundle.putInt("difficulty", list.get(position).getDifficulty());
+                    /*bundle.putInt("difficulty", list.get(position).getDifficulty());
                     bundle.putInt("physPower", list.get(position).getPhysicalPower());
                     bundle.putInt("abPower", list.get(position).getAbilitypower());
                     bundle.putInt("mobility", list.get(position).getMobility());
@@ -142,7 +140,7 @@ public class CardFragment extends Fragment {
                     }
                     ft.addToBackStack(null);
                     // Create and show the dialog.
-                    newFragment.show(ft, "dialog");
+                    newFragment.show(ft, "dialog");*/
 
                 }
             });
@@ -150,12 +148,12 @@ public class CardFragment extends Fragment {
             holder.skill1view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                 if(list.get(position).getSkill1name() != null) {
+                 if(map.get(position).getAbility1().imageURL != null) {
                      Intent i = new Intent(getActivity(), SkillDisplay.class);
                      Bundle pck = new Bundle();
-                     pck.putString("skillpic", list.get(position).getSkill1pic());
-                     pck.putString("skillname", list.get(position).getSkill1name());
-                     pck.putString("skillDesc", list.get(position).getSkill1desc());
+                     pck.putString("skillpic", map.get(position).getAbility1().getImageURL());
+                     pck.putString("skillname", map.get(position).getAbility1().getName());
+                     pck.putString("skillDesc", map.get(position).getAbility1().getDescription());
                      i.putExtras(pck);
                      startActivity(i);
                  }
@@ -165,12 +163,12 @@ public class CardFragment extends Fragment {
             holder.skill2view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(list.get(position).getSkill2name() != null){
+                    if(map.get(position).getAbility2().getImageURL() != null){
                         Intent i = new Intent(getActivity(),SkillDisplay.class);
                         Bundle pck = new Bundle();
-                        pck.putString("skillpic", list.get(position).getSkill2pic());
-                        pck.putString("skillname", list.get(position).getSkill2name());
-                        pck.putString("skillDesc", list.get(position).getSkill2desc());
+                        pck.putString("skillpic", map.get(position).getAbility2().getImageURL());
+                        pck.putString("skillname", map.get(position).getAbility2().getName());
+                        pck.putString("skillDesc", map.get(position).getAbility2().getDescription());
                         i.putExtras(pck);
                         startActivity(i);
                     }
@@ -181,12 +179,12 @@ public class CardFragment extends Fragment {
             holder.skill3view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(list.get(position).getSkill3name() != null){
+                    if(map.get(position).getAbility3().getImageURL() != null){
                         Intent i = new Intent(getActivity(),SkillDisplay.class);
                         Bundle pck = new Bundle();
-                        pck.putString("skillpic", list.get(position).getSkill3pic());
-                        pck.putString("skillname", list.get(position).getSkill3name());
-                        pck.putString("skillDesc", list.get(position).getSkill3desc());
+                        pck.putString("skillpic", map.get(position).getAbility3().getImageURL());
+                        pck.putString("skillname", map.get(position).getAbility3().getName());
+                        pck.putString("skillDesc", map.get(position).getAbility3().getDescription());
                         i.putExtras(pck);
                         startActivity(i);
                     }
@@ -197,12 +195,12 @@ public class CardFragment extends Fragment {
             holder.skill4view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(list.get(position).getSkill4name() != null) {
+                    if(map.get(position).getAbility4().getImageURL() != null) {
                         Intent i = new Intent(getActivity(), SkillDisplay.class);
                         Bundle pck = new Bundle();
-                        pck.putString("skillpic", list.get(position).getSkill4pic());
-                        pck.putString("skillname", list.get(position).getSkill4name());
-                        pck.putString("skillDesc", list.get(position).getSkill4desc());
+                        pck.putString("skillpic", map.get(position).getAbility4().getImageURL());
+                        pck.putString("skillname", map.get(position).getAbility4().getName());
+                        pck.putString("skillDesc", map.get(position).getAbility4().description);
                         i.putExtras(pck);
                         startActivity(i);
                     }
@@ -307,9 +305,9 @@ public class CardFragment extends Fragment {
 
 
     public void initializeList() {
-        listitems.clear();
+      /*  listitems.clear();
 
-        Iterator it = map.entrySet().iterator();
+
         while (it.hasNext()) {
             WonderModel item = new WonderModel();
             ParagonAPIAttrReplace replacer = new ParagonAPIAttrReplace();
@@ -371,8 +369,9 @@ public class CardFragment extends Fragment {
                 case "growth" : item.setAffinity2(R.drawable.growth_affinity_icon);
                     break;
             }
-            //it.remove(); // avoids a ConcurrentModificationException*/
+            //it.remove(); // avoids a ConcurrentModificationException
             listitems.add(item);
-        }
+
+        }*/
     }
 }

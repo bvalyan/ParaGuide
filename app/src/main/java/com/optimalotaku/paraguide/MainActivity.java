@@ -29,23 +29,51 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 
-public class MainActivity extends AppCompatActivity implements CardInfoResponse, ImageLoaderResponse, HeroInfoResponse, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     CardData cotd;
     FileManager fileManager;
     HashMap<String,HeroData> heroDataMap;
+    ArrayList<ChampionData> championDataList;
     HashMap<String,List<CardData>> cDataMap;
     ProgressDialog progress;
     private static final String PREFERENCES_FILE = "mymaterialapp_settings";
@@ -55,9 +83,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
     SharedPreferences prefs;
     SharedPreferences.Editor e;
     DrawerLayout drawer;
-    // Tracks if the SDK is playing an ad, since the SDK might not necessarily use the video
-    // player provided to play the video ad.
-    private boolean mIsAdPlaying;
+    RequestQueue mRequestQueue;
 
 
     @Override
@@ -69,10 +95,21 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
         e = getSharedPreferences("authInfo", Context.MODE_PRIVATE).edit();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        fileManager = new FileManager(this);
-        heroDataMap = new HashMap<>();
-        cDataMap = new HashMap<>();
-        authCode = prefs.getString("signedIn", "null");
+
+// Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+
+// Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+
+// Instantiate the RequestQueue with the cache and network.
+        mRequestQueue = new RequestQueue(cache, network);
+
+        // Start the queue
+        mRequestQueue.start();
+
+        AppRater.app_launched(this);
+        createAPISession();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -87,45 +124,9 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         navigationView.setNavigationItemSelectedListener(this);
         menu = navigationView.getMenu();
 
-        if(!authCode.equals("null")) {
-            for (int menuItemIndex = 0; menuItemIndex < menu.size(); menuItemIndex++) {
-                MenuItem menuItem = menu.getItem(menuItemIndex);
-                if (menuItem.getItemId() == R.id.signinbutton) {
-                    menuItem.setVisible(false);
-                }
-                if (menuItem.getItemId() == R.id.signoutbutton) {
-                    menuItem.setVisible(true);
-                }
-            }
-        }
 
-
-
-        if (savedInstanceState != null) {
-            return;
-        }
-        else{
-            authCode = prefs.getString("signedIn", "null");
-
-            progress = ProgressDialog.show(this, "Loading",
-                    "Checking for new Card/Hero data...", true);
-
-            getHeroData();
-            getCardData();
-
-            progress.dismiss();
-            AppRater.app_launched(this);
-
-        }
     }
 
-    private String mReturnAuthorizationRequestUri() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Constants.AUTHORIZE_PATH);
-        sb.append(Constants.CLIENT_ID);
-        sb.append(Constants.RESPONSE_TYPE);
-        return sb.toString();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,20 +144,9 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         findViewById(R.id.menu_action_1).startAnimation(rotation);
         switch (item.getItemId()) {
             case R.id.menu_action_1:
-
-                Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
-                ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
-                heroInfo.delegate = this;
-                heroInfo.execute();
-
-                Log.i("INFO", "MainActivity - getCardData(): Card data does not exist or is outdated. Grabbing current data from API ");
-                ParagonAPICardInfo cardInfo = new ParagonAPICardInfo();
-                cardInfo.delegate = this;
-                cardInfo.execute();
-
-
-
+                versionUpdate();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -164,165 +154,215 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
 
 
 
-    public void getHeroData(){
-        fileManager = new FileManager(this);
 
-        try {
-            heroDataMap = fileManager.readHeroFromStorage();
+    private void createAPISession() {
+        SimpleDateFormat dateFormatUTC = new SimpleDateFormat("yyyyMMddHHmmss");
+        dateFormatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String date = dateFormatUTC.format(Calendar.getInstance().getTime());
+        String signature = GetMD5Hash(Constants.PALADINS_DEV_ID + "createsession" + Constants.PALADINS_AUTH_KEY + date);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String url = Constants.PALADINS_API_URI + "createsessionjson/" + Constants.PALADINS_DEV_ID + "/" + signature + "/" + date;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
-        if(!fileManager.isLatestHeroData(heroDataMap)) {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //mTextView.setText("Response: " + response.toString());
+                        Log.i("SUCCESS", "CREATE SESSION SUCCESS");
+                        try {
+                            e.putString("session_id", response.getString("session_id"));
+                            e.putLong("session_time", System.currentTimeMillis());
+                            e.apply();
+                            versionUpdate();
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
 
-            Log.i("INFO", "HeroView - onCreate(): Hero data does not exist or is outdated. Grabbing current data from API ");
-
-            ParagonAPIHeroInfo heroInfo = new ParagonAPIHeroInfo();
-            heroInfo.delegate = this;
-            heroInfo.execute();
-        }
-        else{
-            Log.i("INFO", "HeroView - onCreate(): Hero data does exist and is current. Grabbing current data from file - hero.data ");
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
-                    .commit();
-        }
-    }
-
-    @Override
-    public void processHeroInfoFinish(final HashMap<String,HeroData> hData){
-        heroDataMap = hData;
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        try {
-            fileManager.saveHeroesToStorage(hData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(f == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
-                    .commit();
-        }
-        Toast.makeText(this, " Hero Database Updated!",
-                Toast.LENGTH_LONG).show();
-    }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("FAILURE", "CREATE SESSION FAILURE");
 
 
-    public void getCardData(){
-        try {
-            cDataMap = fileManager.readCardsFromStorage();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(!fileManager.isLatestCardData(cDataMap)){
-
-            Log.i("INFO", "MainActivity - getCardData(): Card data does not exist or is outdated. Grabbing current data from API ");
-
-            ParagonAPICardInfo cardInfo = new ParagonAPICardInfo();
-            cardInfo.delegate = this;
-            cardInfo.execute();
-        }
-        else{
-            Log.i("INFO", "MainActivity - getCardData(): Card data does exist and is current. Grabbing current data from file - cards.data ");
-            processCardInfoFromFile(cDataMap);
-        }
+                    }
+                });
+        // Add the request to the RequestQueue.
+        mRequestQueue.add(jsonObjectRequest);
 
     }
 
+   /* private void databaseUpdater() {
+        if(!prefs.getString("session_id","").equals("") && System.currentTimeMillis() < prefs.getLong("session_time",0) +  900000){
+            championUpdate();
+            versionUpdate();
+        }
+        else {
+            createAPISession();
+        }
+    }*/
+
+    private void versionUpdate() {
+        SimpleDateFormat dateFormatUTC = new SimpleDateFormat("yyyyMMddHHmmss");
+        dateFormatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String date = dateFormatUTC.format(Calendar.getInstance().getTime());
+        String session = prefs.getString("session_id","");
+        int langCode = prefs.getInt("lang_code",1);
+        String signature = GetMD5Hash(Constants.PALADINS_DEV_ID + "getpatchinfo" + Constants.PALADINS_AUTH_KEY + date);
+        String url = Constants.PALADINS_API_URI + "getpatchinfojson/" + Constants.PALADINS_DEV_ID + "/" + signature + "/" + session + "/" + date;
+        StringRequest jsonObjectRequest = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        //mTextView.setText("Response: " + response.toString());
+                        Log.i("SUCCESS", "VERSION ACQUISITION SUCCESS");
+                        try {
+                            JSONObject versionObject = new JSONObject(response);
+                            String versionString = versionObject.getString("version_string");
+                            String currentVersion = prefs.getString("version","");
+                            if(versionString.equals(currentVersion)){
+                                Toast.makeText(MainActivity.this, "Database up to date!",
+                                        Toast.LENGTH_LONG).show();
+                                Log.i("INFO", "HeroView - onCreate(): Champion data does exist and is current. Grabbing current data from file ");
+                                championDataList =  FileManager.readChampsFromStorage(MainActivity.this);
+                                getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
+                                        .commit();
+                            }
+                            else {
+                                championUpdate(versionString);
+                            }
+
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
 
 
-    public void processCardInfoFromFile(HashMap<String,List<CardData>> cDataMap) {
+                    }
+                }, new Response.ErrorListener() {
 
-        /*
-            Add up the Year month and day to get a number to get a number to mod with the
-            number of cards to select the card of the day
-         */
-
-        List<CardData> cDataList = cDataMap.get("Equip");
-
-        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
-        Calendar today = Calendar.getInstance();
-        String todayStr = formatter.format(today.getTime());
-        Log.i("INFO", "Today's Date: " + todayStr);
-        String[] todayParts = todayStr.split("-");
-        Integer dateSum = Integer.parseInt(todayParts[0]) + Integer.parseInt(todayParts[1]) + Integer.parseInt(todayParts[2]);
-        Log.i("INFO", "Today's Date Sum: " + dateSum.toString());
-        Integer chosenCard = dateSum % cDataList.size();
-        Log.i("INFO", "Today's Chosen Card Index: " + chosenCard.toString());
-
-        //Grab the chosen card
-        this.cotd = cDataList.get(chosenCard);
-
-        ImageLoader imgLoader = new ImageLoader(this.cotd);
-        imgLoader.delegate = this;
-        imgLoader.execute();
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("FAILURE", "VERSION ACQUISITION FAILURE");
+                    }
+                });
+        // Add the request to the RequestQueue.
+        mRequestQueue.add(jsonObjectRequest);
     }
 
+    private void championUpdate(final String versionString)  {
+        SimpleDateFormat dateFormatUTC = new SimpleDateFormat("yyyyMMddHHmmss");
+        dateFormatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String date = dateFormatUTC.format(Calendar.getInstance().getTime());
+        String session = prefs.getString("session_id","");
+        int langCode = prefs.getInt("lang_code",1);
+        String signature = GetMD5Hash(Constants.PALADINS_DEV_ID + "getchampions" + Constants.PALADINS_AUTH_KEY + date);
+        String url = Constants.PALADINS_API_URI + "getchampionsjson/" + Constants.PALADINS_DEV_ID + "/" + signature + "/" + session + "/" + date + "/" + langCode;
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse (JSONArray response) {
+                        //mTextView.setText("Response: " + response.toString());
+                        Log.i("SUCCESS", "CHAMPION ACQUISITION SUCCESS");
+                        ArrayList champList = new ArrayList();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject currentObject = response.getJSONObject(i);
+                                ChampionData champion = new ChampionData();
+                                AbilityObject ability1 = new AbilityObject(response.getJSONObject(i).getJSONObject("Ability_1").getInt("Id"), response.getJSONObject(i).getJSONObject("Ability_1").getString("Summary"), response.getJSONObject(i).getJSONObject("Ability_1").getString("Description"), response.getJSONObject(i).getJSONObject("Ability_1").getString("URL"));
+                                AbilityObject ability2 = new AbilityObject(response.getJSONObject(i).getJSONObject("Ability_2").getInt("Id"), response.getJSONObject(i).getJSONObject("Ability_2").getString("Summary"), response.getJSONObject(i).getJSONObject("Ability_2").getString("Description"), response.getJSONObject(i).getJSONObject("Ability_2").getString("URL"));
+                                AbilityObject ability3 = new AbilityObject(response.getJSONObject(i).getJSONObject("Ability_3").getInt("Id"), response.getJSONObject(i).getJSONObject("Ability_3").getString("Summary"), response.getJSONObject(i).getJSONObject("Ability_3").getString("Description"), response.getJSONObject(i).getJSONObject("Ability_3").getString("URL"));
+                                AbilityObject ability4 = new AbilityObject(response.getJSONObject(i).getJSONObject("Ability_4").getInt("Id"), response.getJSONObject(i).getJSONObject("Ability_4").getString("Summary"), response.getJSONObject(i).getJSONObject("Ability_4").getString("Description"), response.getJSONObject(i).getJSONObject("Ability_4").getString("URL"));
+                                AbilityObject ability5 = new AbilityObject(response.getJSONObject(i).getJSONObject("Ability_5").getInt("Id"), response.getJSONObject(i).getJSONObject("Ability_5").getString("Summary"), response.getJSONObject(i).getJSONObject("Ability_5").getString("Description"), response.getJSONObject(i).getJSONObject("Ability_5").getString("URL"));
+                                champion.setAbility1(ability1);
+                                champion.setAbility2(ability2);
+                                champion.setAbility3(ability3);
+                                champion.setAbility4(ability4);
+                                champion.setAbility5(ability5);
+                                champion.setChampIconURL(currentObject.getString("ChampionIcon_URL"));
+                                champion.setHealth(currentObject.getInt("Health"));
+                                champion.setLore(currentObject.getString("Lore"));
+                                champion.setName(currentObject.getString("Name"));
+                                champion.setOnFreeRotation(currentObject.getString("OnFreeRotation"));
+                                champion.setRoles(currentObject.getString("Roles"));
+                                champion.setSpeed(currentObject.getString("Speed"));
+                                champion.setTitle(currentObject.getString("Title"));
+                                champion.setId(currentObject.getInt("id"));
+                                champion.setLatestChamp(currentObject.getString("latestChampion"));
+
+                                champList.add(champion);
+                            }
+
+                            String fileName = "Champions";
+                            FileOutputStream fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+                            ObjectOutputStream oos = new ObjectOutputStream(fos);
+                            oos.writeObject(champList);
+                            oos.close();
+
+                            String currentVersion = prefs.getString("version","");
+                            Toast.makeText(MainActivity.this, "Database updated! Welcome to patch " + currentVersion + "!",
+                                    Toast.LENGTH_LONG).show();
+
+                            championDataList =  FileManager.readChampsFromStorage(MainActivity.this);
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
+                                    .commit();
 
 
+                        }
+                        catch (JSONException a){
+                            a.printStackTrace();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        e.putString("version", versionString);
+                        e.apply();
+                    }
 
 
+                }, new Response.ErrorListener() {
 
-    //@Override
-    public void processCardInfoFinish(HashMap<String,List<CardData>> cDataMap) {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("FAILURE", "CHAMPION ACQUISITION FAILURE");
+                    }
+                });
 
-        /*
-            Add up the Year month and day to get a number to get a number to mod with the
-            number of cards to select the card of the day
-         */
+        // Add the request to the RequestQueue.
+        mRequestQueue.add(jsonArrayRequest);
+    }
 
-        Integer chosenCard = 0;
-        List<CardData> cDataList = cDataMap.get("All");
-
+    public static String GetMD5Hash(String s) {
+        final String MD5 = "MD5";
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
-            Calendar today = Calendar.getInstance();
-            String todayStr = formatter.format(today.getTime());
-            Log.i("INFO", "Today's Date: " + todayStr);
-            String[] todayParts = todayStr.split("-");
-            Integer dateSum = Integer.parseInt(todayParts[0]) + Integer.parseInt(todayParts[1]) + Integer.parseInt(todayParts[2]);
-            Log.i("INFO", "Today's Date Sum: " + dateSum.toString());
-            chosenCard = dateSum % cDataList.size();
-            Log.i("INFO", "Today's Chosen Card Index: " + chosenCard.toString());
-        }
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest
+                    .getInstance(MD5);
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
 
-        catch (ArithmeticException a){
-            chosenCard = 1;
-            Log.e("CARDERROR", a.getMessage());
-        }
-
-            //Grab the chosen card
-            this.cotd = cDataList.get(chosenCard);
-
-            try {
-                fileManager.saveCardsToStorage(cDataMap.get("All"));
-            } catch (IOException e) {
-                e.printStackTrace();
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
             }
+            return hexString.toString();
 
-
-            ImageLoader imgLoader = new ImageLoader(this.cotd);
-            imgLoader.delegate = this;
-            imgLoader.execute();
-
-
-
-
-        Toast.makeText(this, "Card Database Updated!",
-                Toast.LENGTH_LONG).show();
-
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
-    @Override
-    public void processImageLoaderFinish(Bitmap imgBitmap) {
-        //Set the grid view Adapter
-       // gridview.setAdapter(new MyAdapter(this,imgBitmap));
-    }
+
 
 
     @Override
@@ -332,72 +372,20 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
         Intent intent;
 
         switch (item.getItemId()) {
-            case R.id.signoutbutton:
-                e.remove("signedIn");
-                e.apply();
-                authCode = prefs.getString("signedIn", "null");
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, TokenManager.newInstance(true, menu, heroDataMap))
-                        .commit();
-                drawer.closeDrawer(Gravity.LEFT);
-                //mCurrentSelectedPosition = 0;
-                return true;
-            case R.id.signinbutton:
-                authCode = prefs.getString("signedIn", "null");
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, TokenManager.newInstance(false, menu, heroDataMap))
-                        .commit();
-                drawer.closeDrawer(Gravity.LEFT);
-                //mCurrentSelectedPosition = 0;
-                return true;
             case R.id.navigation_item_0:
-                if(heroDataMap.size() < 1){
-                    getHeroData();
-
+                if(championDataList.size() < 1){
+                    versionUpdate();
                 }
                 else{
                     Log.i("HERODATA", "Hero data present! Good to go!");
                 }
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, NewHomeFragment.newInstance(heroDataMap))
+                        .replace(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
                         .addToBackStack("NEW")
                         .commit();
                 drawer.closeDrawer(Gravity.LEFT);
                 // mCurrentSelectedPosition = 1;
-                return true;
-            case R.id.navigation_item_1:
-                if(heroDataMap.size() < 1){
-                    getHeroData();
-                }
-                else {
-                    Log.i("HERODATA", "Hero data present! Good to go!");
-                }
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, NewPlayerAnalysis.newInstance(heroDataMap))
-                            .addToBackStack("NEW")
-                            .commit();
-                    drawer.closeDrawer(Gravity.LEFT);
-
-               // mCurrentSelectedPosition = 1;
-                return true;
-            case R.id.navigation_item_2:
-                if(heroDataMap.size() < 1){
-                    getHeroData();
-                }
-                else {
-                    Log.i("HERODATA", "Hero data present! Good to go!");
-                }
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, CardOfTheDayView.newInstance(cotd))
-                        .addToBackStack("NEW")
-                        .commit();
-                drawer.closeDrawer(Gravity.LEFT);
-               // mCurrentSelectedPosition = 2;
                 return true;
             case R.id.navigation_item_3:
                 getSupportFragmentManager()
@@ -409,25 +397,25 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
               //  mCurrentSelectedPosition = 3;
                 return true;
             case R.id.navigation_item_4:
-                if(heroDataMap.size() < 1){
-                    getHeroData();
+                if(championDataList.size() < 1){
+                    versionUpdate();
                 }
                 else{
-                    Log.i("HERODATA", "Hero data present! Good to go!");
+                    Log.i("Champ Data", "Champion data present! Good to go!");
                 }
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, HeroView.newInstance(heroDataMap))
+                        .replace(R.id.fragment_container, HeroView.newInstance(championDataList))
                         .addToBackStack("NEW")
                         .commit();
                 drawer.closeDrawer(Gravity.LEFT);
                 return true;
             case R.id.navigation_item_5:
-                getSupportFragmentManager()
+               /* getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, AffinitySelectionFragment.newInstance(cotd))
                         .addToBackStack("NEW")
-                        .commit();
+                        .commit();*/
                 drawer.closeDrawer(Gravity.LEFT);
                // mCurrentSelectedPosition = 5;
                 return true;
@@ -449,6 +437,7 @@ public class MainActivity extends AppCompatActivity implements CardInfoResponse,
             super.onBackPressed();
         }
     }
+
 }
 
 class AppRater {

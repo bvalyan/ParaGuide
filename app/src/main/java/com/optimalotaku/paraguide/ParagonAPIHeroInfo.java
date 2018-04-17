@@ -173,7 +173,6 @@ public class ParagonAPIHeroInfo extends AsyncTask<Void, Void, String> {
                     heroStats.put(hdata.getName(),hdata);
                 }
 
-                delegate.processHeroInfoFinish(heroStats);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

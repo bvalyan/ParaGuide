@@ -10,7 +10,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -20,13 +22,13 @@ import java.util.HashMap;
 public class HeroView extends android.support.v4.app.Fragment {
 
     ListView list;
-    String[] text;
-    String[] pics;
+    ArrayList<String> text;
+    ArrayList<String> pics;
     FileManager fileManager;
-    static HashMap<String,HeroData> map;
+    static ArrayList<ChampionData> map;
 
 
-    public static HeroView newInstance(HashMap<String,HeroData> hMap) {
+    public static HeroView newInstance(ArrayList<ChampionData> hMap) {
 
         map = hMap;
         return new HeroView();
@@ -40,18 +42,24 @@ public class HeroView extends android.support.v4.app.Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         View view = inflater.inflate(R.layout.listtest, container, false);
         fileManager = new FileManager(getContext());
-        final HashMap<String, HeroData> hData = map;
+        final ArrayList<ChampionData> hData = map;
 
         //Get List of hero names from Map
-        text = hData.keySet().toArray(new String[hData.size()]);
-        pics = new String[hData.keySet().toArray().length];
+        for (int i = 0; i < map.size(); i++){
+            String name = map.get(i).getName();
+            String pic = map.get(i).getChampIconURL();
+            text.add(name);
+            pics.add(pic);
+        }
 
-        Arrays.sort(text);
+
+
+        Collections.sort(text);
 
         //Put the image URLs associated with each hero in a array
-        for (int i = 0; i < text.length; i++) {
-            HeroData hero = hData.get(text[i]);
-            pics[i] = (hero.getImageIconURL());
+        for (int i = 0; i < text.size(); i++) {
+            ChampionData hero = hData.get(i);
+            pics.set(i, hero.getChampIconURL());
         }
 
 
@@ -87,13 +95,6 @@ public class HeroView extends android.support.v4.app.Fragment {
                 //hide keyboard upon return
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view2.getWindowToken(), 0);
-            }
-
-
-            try {
-                fileManager.saveHeroesToStorage(hData);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
 
 

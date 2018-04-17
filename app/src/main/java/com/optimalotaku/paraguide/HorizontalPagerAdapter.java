@@ -21,19 +21,19 @@ public class HorizontalPagerAdapter extends PagerAdapter {
 
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private HashMap<String,HeroData> mData;
-    private ArrayList<HeroData> list;
+    private ArrayList<ChampionData> mData;
+    private ArrayList<ChampionData> list;
     View mLayout;
     final ImageView background;
 
-    public HorizontalPagerAdapter(final Context context, HashMap<String,HeroData> data, View mainLayout) {
+    public HorizontalPagerAdapter(final Context context, ArrayList<ChampionData> data, View mainLayout) {
         mContext = context;
         mLayout = mainLayout;
         mLayoutInflater = LayoutInflater.from(context);
         mData = data;
-        list = new ArrayList<>(mData.values());
+        list = mData;
         background = (ImageView) mLayout.findViewById(R.id.background);
-        Picasso.with(mContext).load(list.get(0).getImageIconURL()).into(background);
+        Picasso.with(mContext).load(list.get(0).getChampIconURL()).into(background);
     }
 
 
@@ -51,7 +51,7 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         ImageView heroImageView = (ImageView) view.findViewById(R.id.hero_image);
         heroNameView.setText(list.get(position).getName());
         heroNameView.setVisibility(View.VISIBLE);
-        Picasso.with(mContext).load(list.get(position).getImageIconURL()).into(heroImageView);
+        Picasso.with(mContext).load(list.get(position).getChampIconURL()).into(heroImageView);
         container.addView(view);
         return view;
     }
@@ -67,7 +67,7 @@ public class HorizontalPagerAdapter extends PagerAdapter {
     public void pageChanged(int position) {
 
 
-        Picasso.with(mContext).load(list.get(position).getImageIconURL()).into(background);
+        Picasso.with(mContext).load(list.get(position).getChampIconURL()).into(background);
     }
 
 

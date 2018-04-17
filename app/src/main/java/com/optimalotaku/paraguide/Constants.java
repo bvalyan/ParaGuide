@@ -16,7 +16,9 @@ public class Constants {
     public static final String LOGOUT_PATH      = "https://developer-paragon.epicgames.com/v1/auth/logout/";
     public static final String RESPONSE_TYPE    = "?response_type=code";
     public static final String PARAGON_PLAYER_URL = "https://developer-paragon.epicgames.com/v1/accounts/find/";
-
+    public static final String PALADINS_API_URI = "http://api.paladins.com/paladinsapi.svc/";
+    public static final String PALADINS_DEV_ID = "2568";
+    public static final String PALADINS_AUTH_KEY = "660ACC8BED2044B986BE8329F8856B6B";
 
     //Chat Constants
 
@@ -49,7 +51,6 @@ public class Constants {
     public static final double currentMaxStructDamage = 3500;
     public static final double currentMaxTimePlayed = 6589413;
     public static final double currentMaxGamesPlayed = 5000;
-
 
 
 

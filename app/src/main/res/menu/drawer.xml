@@ -1,37 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/signinbutton"
-            android:title="Sign In"
-
-            />
-        <item
-            android:id="@+id/signoutbutton"
-            android:title="Sign Out"
-            android:visible="false"
-            />
-        <item
             android:id="@+id/navigation_item_0"
             android:checked="true"
 
             android:title="Home" />
         <item
-            android:id="@+id/navigation_item_1"
-
-            android:title="Player Analysis" />
-        <item
-            android:id="@+id/navigation_item_2"
-            android:title="Card of the Day" />
-
-        <item
             android:id="@+id/navigation_item_3"
-            android:title="Paragon News" />
+            android:title="News" />
         <item
             android:id="@+id/navigation_item_4"
-            android:title="Hero Data" />
+            android:title="Champion Data" />
         <item
             android:id="@+id/navigation_item_5"
-            android:title="Cards" />
+            android:title="Items" />
 
     </group>
 
