@@ -6,19 +6,14 @@ import android.util.Log;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
-import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,15 +21,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.security.PublicKey;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 
 /**
  * Created by Jerek on 1/25/2017.
@@ -171,6 +161,31 @@ public class FileManager {
             fis = context.openFileInput("Champions");
             ObjectInputStream ois = new ObjectInputStream(fis);
             returnlist = (ArrayList<ChampionData>) ois.readObject();
+            ois.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return championDataList;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return returnlist;
+
+
+    }
+
+    public static ArrayList<ItemObject> readItemsFromStorage(Context context) throws IOException{
+        ArrayList<ItemObject> championDataList = new ArrayList<>();
+        FileInputStream fis;
+        ArrayList<ItemObject> returnlist = new ArrayList<>();
+
+        Log.i("INFO", "FileManager - readChampsFromStorage: Attempting  to retrieve Hero data from device");
+        try {
+            fis = context.openFileInput("Items");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            returnlist = (ArrayList<ItemObject>) ois.readObject();
             ois.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

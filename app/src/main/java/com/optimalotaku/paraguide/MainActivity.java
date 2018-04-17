@@ -51,6 +51,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -69,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     CardData cotd;
     FileManager fileManager;
     HashMap<String,HeroData> heroDataMap;
-    ArrayList<ChampionData> championDataList;
+    ArrayList<ChampionData> championDataList = new ArrayList<>();
+    ArrayList<ItemObject> itemList = new ArrayList<>();
     HashMap<String,List<CardData>> cDataMap;
     ProgressDialog progress;
     private static final String PREFERENCES_FILE = "mymaterialapp_settings";
@@ -110,11 +112,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else{
             try {
-                championDataList =  FileManager.readChampsFromStorage(MainActivity.this);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
-                        .commit();
+                championDataList = FileManager.readChampsFromStorage(MainActivity.this);
+                itemList = FileManager.readItemsFromStorage(MainActivity.this);
+                if(itemList.size() < 1|| championDataList.size() < 1){
+                    versionUpdate();
+                }
+                else {
+                    Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                    if(f == null){
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
+                                .commit();
+                    }
+                }
             } catch (IOException e1) {
                 e1.printStackTrace();
                 versionUpdate();
@@ -261,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 }
                             }
                             else {
-                                championUpdate(versionString);
+                                itemUpdate(versionString);
                             }
 
                         } catch (JSONException e1) {
@@ -270,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             e1.printStackTrace();
                             Log.e("READ FAIL", "Data must be corrupted. Fetching new data.");
                             championUpdate(versionString);
+                            itemUpdate(versionString);
                         }
 
 
@@ -317,6 +329,75 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
         // Add the request to the RequestQueue.
         mRequestQueue.add(jsonObjectRequest);
+    }
+
+    private void itemUpdate(final String versionString) {
+        SimpleDateFormat dateFormatUTC = new SimpleDateFormat("yyyyMMddHHmmss");
+        dateFormatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String date = dateFormatUTC.format(Calendar.getInstance().getTime());
+        String session = prefs.getString("session_id","");
+        int langCode = prefs.getInt("lang_code",1);
+        final ArrayList<ItemObject> items = new ArrayList<>();
+        String signature = GetMD5Hash(Constants.PALADINS_DEV_ID + "getitems" + Constants.PALADINS_AUTH_KEY + date);
+        String url = Constants.PALADINS_API_URI + "getitemsjson/" + Constants.PALADINS_DEV_ID + "/" + signature + "/" + session + "/" + date + "/" + langCode;
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //mTextView.setText("Response: " + response.toString());
+                        Log.i("SUCCESS", "CREATE SESSION SUCCESS");
+                            try {
+                                for(int i = 0; i <  response.length(); i++) {
+                                    ItemObject item = new ItemObject();
+                                    item.setDescription(response.getJSONObject(i).getString("Description"));
+                                    item.setName(response.getJSONObject(i).getString("DeviceName"));
+                                    item.setIconID(response.getJSONObject(i).getInt("IconId"));
+                                    item.setItemID(response.getJSONObject(i).getInt("ItemId"));
+                                    item.setPrice(response.getJSONObject(i).getInt("Price"));
+                                    item.setShortDescription(response.getJSONObject(i).getString("ShortDesc"));
+                                    item.setChampionID(response.getJSONObject(i).getInt("champion_id"));
+                                    item.setImageURL(response.getJSONObject(i).getString("itemIcon_URL"));
+                                    item.setItemType(response.getJSONObject(i).getString("item_type"));
+                                    item.setTalentRewardLevel(response.getJSONObject(i).getInt("talent_reward_level"));
+
+                                    items.add(item);
+                                }
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
+
+
+                        try {
+                            String fileName = "Items";
+                            FileOutputStream fos;
+                            fos = openFileOutput(fileName, Context.MODE_PRIVATE);
+                            ObjectOutputStream oos = new ObjectOutputStream(fos);
+                            oos.writeObject(items);
+                            oos.close();
+                            championUpdate(versionString);
+                        } catch (FileNotFoundException e1) {
+                            e1.printStackTrace();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("FAILURE", "CREATE SESSION FAILURE");
+
+
+
+                    }
+                });
+        // Add the request to the RequestQueue.
+        mRequestQueue.add(jsonArrayRequest);
+
     }
 
     private void championUpdate(final String versionString)  {
