@@ -8,6 +8,10 @@
         android:layout_height="match_parent"
         android:background="@drawable/paladins_cover"
         android:scaleType="centerCrop" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#55000000"/>
 
     <TextView
         style="@style/TextAppearance.AppCompat.Subhead"
@@ -16,7 +20,8 @@
         android:layout_gravity="bottom"
         android:layout_marginLeft="7dp"
         android:layout_marginTop="1dp"
-        android:text="PALADICT"
+        android:text="@string/paladict"
+        android:textSize="25sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed"
         android:textColor="@color/colorPrimary" />
