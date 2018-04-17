@@ -9,11 +9,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * Created by Jerek on 12/19/2016.
@@ -22,8 +19,8 @@ import java.util.HashMap;
 public class HeroView extends android.support.v4.app.Fragment {
 
     ListView list;
-    ArrayList<String> text;
-    ArrayList<String> pics;
+    ArrayList<String> text = new ArrayList<>();
+    ArrayList<String> pics = new ArrayList<>();
     FileManager fileManager;
     static ArrayList<ChampionData> map;
 

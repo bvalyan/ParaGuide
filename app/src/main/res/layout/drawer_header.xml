@@ -6,7 +6,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/header_photo"
+        android:background="@drawable/paladins_cover"
         android:scaleType="centerCrop" />
 
     <TextView
@@ -16,7 +16,7 @@
         android:layout_gravity="bottom"
         android:layout_marginLeft="7dp"
         android:layout_marginTop="1dp"
-        android:text="PARAGUIDE"
+        android:text="PALADICT"
         android:textStyle="bold"
         android:fontFamily="sans-serif-condensed"
         android:textColor="@color/colorPrimary" />

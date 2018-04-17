@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by bvaly on 11/9/2017.
@@ -32,7 +31,7 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         mLayoutInflater = LayoutInflater.from(context);
         mData = data;
         list = mData;
-        background = (ImageView) mLayout.findViewById(R.id.background);
+        background = mLayout.findViewById(R.id.background);
         Picasso.with(mContext).load(list.get(0).getChampIconURL()).into(background);
     }
 
@@ -47,8 +46,8 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         final View view;
 
         view = mLayoutInflater.inflate(R.layout.hero_page_layout, container, false);
-        TextView heroNameView = (TextView) view.findViewById(R.id.hero_name);
-        ImageView heroImageView = (ImageView) view.findViewById(R.id.hero_image);
+        TextView heroNameView = view.findViewById(R.id.hero_name);
+        ImageView heroImageView = view.findViewById(R.id.hero_image);
         heroNameView.setText(list.get(position).getName());
         heroNameView.setVisibility(View.VISIBLE);
         Picasso.with(mContext).load(list.get(position).getChampIconURL()).into(heroImageView);
@@ -65,8 +64,6 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
     public void pageChanged(int position) {
-
-
         Picasso.with(mContext).load(list.get(position).getChampIconURL()).into(background);
     }
 

@@ -20,42 +20,6 @@
         android:layout_width="wrap_content"
         android:visibility="gone"></WebView>
 
-    <TextView
-        android:id="@+id/personalized_greeting"
-        android:textAlignment="center"
-        android:visibility="visible"
-        app:layout_marginTopPercent="62%"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_5"
-        android:fontFamily="sans-serif-condensed"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/personalized_hero_kill_stat"
-        android:layout_below="@id/personalized_greeting"
-        android:visibility="gone"
-        app:layout_marginTopPercent="2%"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif-smallcaps"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/personalized_core_kill_stat"
-        android:layout_below="@id/personalized_hero_kill_stat"
-        android:visibility="gone"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif-smallcaps"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/personalized_games_won_stat"
-        android:layout_below="@id/personalized_core_kill_stat"
-        android:visibility="gone"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif-smallcaps"/>
-
     <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
         android:id="@+id/vicvp"
         app:icvp_medium_scaled="true"
@@ -70,14 +34,37 @@
         app:layout_heightPercent="100%"
       />
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp"
+        android:layout_below="@id/title_5"
+        app:layout_marginTopPercent="65%"
+        android:requiresFadingEdge="horizontal|vertical"
+        android:fadingEdgeLength="50dp"
+        android:layout_width="wrap_content">
+
+        <TextView
+            android:id="@+id/lore_bit"
+            android:textAlignment="center"
+            android:visibility="visible"
+            android:maxLines="3"
+            android:ellipsize="end"
+            app:layout_marginTopPercent="62%"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_5"
+            android:fontFamily="sans-serif-condensed"/>
+    </android.support.v4.widget.NestedScrollView>
+
+
     <TextView
         android:id="@+id/title_5"
         app:layout_heightPercent="10%"
         app:layout_marginTopPercent="5%"
         android:layout_width="match_parent"
         android:textAlignment="center"
-        android:text="PARAGUIDE 5"
-        android:textColor="@color/white"
+        android:textColor="#33ffc3"
         android:textSize="50sp"
         android:fontFamily="sans-serif-condensed"
         />

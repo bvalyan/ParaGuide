@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    card_view:cardBackgroundColor="#2b2b2b"
+    card_view:cardBackgroundColor="#6b6b6b"
     card_view:cardCornerRadius="6dp">
 
 
@@ -52,27 +52,6 @@
                         android:textStyle="bold"
 
                         />
-
-                    <ImageView
-                        android:id="@+id/affinity1ImageView"
-                        android:layout_width="@dimen/icon_width"
-                        android:layout_height="60dip"
-                        android:layout_marginLeft="29dp"
-                        android:padding="@dimen/icon_padding"
-                        android:gravity="center_horizontal"
-                        android:layout_weight=".5"
-                        />
-
-                    <ImageView
-                        android:id="@+id/affinity2ImageView"
-                        android:layout_width="@dimen/icon_width"
-                        android:layout_height="@dimen/icon_height"
-                        android:padding="@dimen/icon_padding"
-                        android:gravity="center_horizontal"
-                        android:layout_weight=".5"
-                        />
-
-
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
@@ -82,14 +61,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
+            android:background="#0e2b2d"
             android:layout_weight="1"
+            android:padding="2.5dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/skill1View"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/icon_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginBottom="5dp"
                 android:layout_gravity="center"
@@ -99,7 +80,7 @@
                 android:id="@+id/skill2View"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="@dimen/icon_height"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
                 android:layout_gravity="center"
                 android:padding="@dimen/icon_padding"
@@ -108,7 +89,7 @@
                 android:id="@+id/skill3View"
                 android:layout_width="0dp"
                 android:layout_gravity="center"
-                android:layout_height="@dimen/icon_height"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginBottom="5dp"
                 android:padding="@dimen/icon_padding"
@@ -116,7 +97,16 @@
             <ImageView
                 android:id="@+id/skill4View"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/icon_height"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:padding="@dimen/icon_padding"
+                />
+            <ImageView
+                android:id="@+id/skill5View"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"

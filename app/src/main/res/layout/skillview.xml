@@ -7,14 +7,15 @@
     <RelativeLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:padding="40dp"
+
 >
 
 
        <ImageView
            android:id="@+id/skillimage"
-           android:layout_height="75dp"
-           android:layout_width="75dp"
+           android:layout_height="240dp"
+           android:layout_width="match_parent"
+           android:scaleType="fitXY"
            android:layout_centerHorizontal="true"
 
            />
@@ -33,6 +34,9 @@
         <TextView
             android:id="@+id/skillText"
             android:layout_marginTop="25dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="15dp"
             android:textColor="@color/white"
             android:layout_below="@id/skillname"
             android:layout_height="wrap_content"

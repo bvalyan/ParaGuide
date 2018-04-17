@@ -142,14 +142,12 @@ public class HeroAdapter extends RecyclerView.Adapter<HeroAdapter.ImageViewHolde
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
-            coverImageView = (ImageView) itemView.findViewById(R.id.coverImageView);
-            likeImageView = (ImageView) itemView.findViewById(R.id.affinity1ImageView);
-            shareImageView = (ImageView) itemView.findViewById(R.id.affinity2ImageView);
-            skill1view = (ImageView) itemView.findViewById(R.id.skill1View);
-            skill2view = (ImageView) itemView.findViewById(R.id.skill2View);
-            skill3view = (ImageView) itemView.findViewById(R.id.skill3View);
-            skill4view = (ImageView) itemView.findViewById(R.id.skill4View);
+            titleTextView = itemView.findViewById(R.id.titleTextView);
+            coverImageView = itemView.findViewById(R.id.coverImageView);
+            skill1view = itemView.findViewById(R.id.skill1View);
+            skill2view = itemView.findViewById(R.id.skill2View);
+            skill3view = itemView.findViewById(R.id.skill3View);
+            skill4view = itemView.findViewById(R.id.skill4View);
         }
     }
 }

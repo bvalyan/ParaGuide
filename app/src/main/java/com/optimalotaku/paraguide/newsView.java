@@ -52,9 +52,12 @@ public class newsView extends Fragment {
 
         View view = inflater.inflate(R.layout.news, container, false);
 
-        this.newsView = (WebView) view.findViewById(R.id.newsview);
+        this.newsView = view.findViewById(R.id.newsview);
 
-        newsView.loadUrl("https://www.epicgames.com/paragon/en-US/news");
+        newsView.getSettings().setJavaScriptEnabled(true);
+
+        newsView.loadUrl("https://www.paladins.com/news/");
+
 
         newsView.setOnKeyListener(new View.OnKeyListener() {
 

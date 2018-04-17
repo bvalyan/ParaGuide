@@ -1,11 +1,12 @@
 package com.optimalotaku.paraguide;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -45,24 +46,19 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
@@ -94,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         prefs = getSharedPreferences("authInfo", MODE_PRIVATE);
         e = getSharedPreferences("authInfo", Context.MODE_PRIVATE).edit();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
 // Instantiate the cache
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
@@ -109,18 +105,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRequestQueue.start();
 
         AppRater.app_launched(this);
-        createAPISession();
+        if(prefs.getString("session_id", "").equals("null") || prefs.getString("session_id", "").equals("")  || System.currentTimeMillis() > prefs.getLong("session_time",0) +  900000){
+            createAPISession();
+        }
+        else{
+            try {
+                championDataList =  FileManager.readChampsFromStorage(MainActivity.this);
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
+                        .commit();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+                versionUpdate();
+            }
+        }
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
-        drawer = (DrawerLayout) findViewById(R.id.nav_drawer);
+        drawer = findViewById(R.id.nav_drawer);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         menu = navigationView.getMenu();
 
@@ -174,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             e.putLong("session_time", System.currentTimeMillis());
                             e.apply();
                             versionUpdate();
+
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -183,6 +194,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("FAILURE", "CREATE SESSION FAILURE");
+                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                        alertDialog.setTitle("No Network!");
+                        alertDialog.setMessage("There has been a network error! if you are not connected to the internet please do so and try again.");
+                        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Try Again", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                versionUpdate();
+                            } });
+                        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Exit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finishAffinity();
+                            }
+                        });
 
 
                     }
@@ -217,19 +241,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     public void onResponse(String response) {
                         //mTextView.setText("Response: " + response.toString());
                         Log.i("SUCCESS", "VERSION ACQUISITION SUCCESS");
+                        String versionString = new String();
                         try {
                             JSONObject versionObject = new JSONObject(response);
-                            String versionString = versionObject.getString("version_string");
+                            versionString = versionObject.getString("version_string");
                             String currentVersion = prefs.getString("version","");
                             if(versionString.equals(currentVersion)){
                                 Toast.makeText(MainActivity.this, "Database up to date!",
                                         Toast.LENGTH_LONG).show();
                                 Log.i("INFO", "HeroView - onCreate(): Champion data does exist and is current. Grabbing current data from file ");
                                 championDataList =  FileManager.readChampsFromStorage(MainActivity.this);
-                                getSupportFragmentManager()
-                                        .beginTransaction()
-                                        .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
-                                        .commit();
+                                Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                                if(f == null){
+                                    getSupportFragmentManager()
+                                            .beginTransaction()
+                                            .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
+                                            .commit();
+                                }
                             }
                             else {
                                 championUpdate(versionString);
@@ -239,6 +267,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             e1.printStackTrace();
                         } catch (IOException e1) {
                             e1.printStackTrace();
+                            Log.e("READ FAIL", "Data must be corrupted. Fetching new data.");
+                            championUpdate(versionString);
                         }
 
 
@@ -248,6 +278,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("FAILURE", "VERSION ACQUISITION FAILURE");
+                        AlertDialog alertDialog1 = new AlertDialog.Builder(MainActivity.this).create();
+                        alertDialog1.setTitle("Update Failure!");
+                        alertDialog1.setMessage("There has been an error attempting to update the database. When you get a moment use the refresh button to try again.");
+                        alertDialog1.setButton(AlertDialog.BUTTON_NEUTRAL,"OK!", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            } });
+                        if(!prefs.getString("version","").equals("null") || !prefs.getString("version","").equals("")){
+                            try {
+                                championDataList =  FileManager.readChampsFromStorage(MainActivity.this);
+                                getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
+                                        .commit();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+
+                        }
+                        else{
+                            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                            alertDialog.setTitle("No Network!");
+                            alertDialog.setMessage("There has been a network error! if you are not connected to the internet please do so and try again.");
+                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Try Again", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    versionUpdate();
+                                } });
+                            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Exit", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finishAffinity();
+                                }
+                            });
+                        }
                     }
                 });
         // Add the request to the RequestQueue.
@@ -303,11 +367,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             oos.writeObject(champList);
                             oos.close();
 
-                            String currentVersion = prefs.getString("version","");
-                            Toast.makeText(MainActivity.this, "Database updated! Welcome to patch " + currentVersion + "!",
-                                    Toast.LENGTH_LONG).show();
-
                             championDataList =  FileManager.readChampsFromStorage(MainActivity.this);
+
                             getSupportFragmentManager()
                                     .beginTransaction()
                                     .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
@@ -322,6 +383,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                         e.putString("version", versionString);
                         e.apply();
+                        String currentVersion = prefs.getString("version","");
+                        Toast.makeText(MainActivity.this, "Database updated! Welcome to patch " + currentVersion + "!",
+                                Toast.LENGTH_LONG).show();
                     }
 
 
@@ -441,8 +505,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 }
 
 class AppRater {
-    private final static String APP_TITLE = "Paraguide";// App Name
-    private final static String APP_PNAME = "com.optimalotaku.paraguide";// Package Name
+    private final static String APP_TITLE = "Paladict";// App Name
+    private final static String APP_PNAME = "com.optimalotaku.paladict";// Package Name
 
     private final static int DAYS_UNTIL_PROMPT = 3;//Min number of days
     private final static int LAUNCHES_UNTIL_PROMPT = 3;//Min number of launches
