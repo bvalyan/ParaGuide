@@ -208,8 +208,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("FAILURE", "CREATE SESSION FAILURE");
-                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                        final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                         alertDialog.setTitle("No Network!");
+                        alertDialog.setCancelable(false);
+                        alertDialog.setCanceledOnTouchOutside(false);
                         alertDialog.setMessage("There has been a network error! if you are not connected to the internet please do so and try again.");
                         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Try Again", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -221,8 +223,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 finishAffinity();
                             }
                         });
-
-
+                        alertDialog.setOnShowListener( new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface arg0) {
+                                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.CYAN);
+                                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.CYAN);
+                            }
+                        });
+                        alertDialog.show();
                     }
                 });
         // Add the request to the RequestQueue.
@@ -283,6 +291,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }*/
 
     private void versionUpdate() {
+        if(prefs.getString("session_id", "").equals("null") || prefs.getString("session_id", "").equals("")  || System.currentTimeMillis() > prefs.getLong("session_time",0) +  900000){
+            createAPISession();
+            return;
+        }
         SimpleDateFormat dateFormatUTC = new SimpleDateFormat("yyyyMMddHHmmss");
         dateFormatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
         String date = dateFormatUTC.format(Calendar.getInstance().getTime());
@@ -335,20 +347,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("FAILURE", "VERSION ACQUISITION FAILURE");
-                        AlertDialog alertDialog1 = new AlertDialog.Builder(MainActivity.this).create();
+                        final AlertDialog alertDialog1 = new AlertDialog.Builder(MainActivity.this).create();
                         alertDialog1.setTitle("Update Failure!");
-                        alertDialog1.setMessage("There has been an error attempting to update the database. When you get a moment use the refresh button to try again.");
+                        alertDialog1.setMessage("There has been an error attempting to update the database and you are in offline mode. When you get a moment use the refresh button to try again.");
                         alertDialog1.setButton(AlertDialog.BUTTON_NEUTRAL,"OK!", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
                             } });
                         if(!prefs.getString("version","").equals("null") || !prefs.getString("version","").equals("")){
                             try {
+
                                 championDataList =  FileManager.readChampsFromStorage(MainActivity.this);
                                 getSupportFragmentManager()
                                         .beginTransaction()
                                         .add(R.id.fragment_container, NewHomeFragment.newInstance(championDataList))
                                         .commit();
+                                alertDialog1.setOnShowListener(new DialogInterface.OnShowListener() {
+                                    @Override
+                                    public void onShow(DialogInterface dialogInterface) {
+                                        alertDialog1.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(Color.CYAN);
+                                    }
+                                });
+                                alertDialog1.show();
                             } catch (IOException e1) {
                                 e1.printStackTrace();
                             }
@@ -613,12 +633,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawer.closeDrawer(Gravity.LEFT);
                 return true;
             case R.id.navigation_item_5:
+                if(itemList.size() > 0) {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, PaladinsItemFragment.newInstance(itemList.get(0)))
+                            .addToBackStack("NEW")
+                            .commit();
+                }
+                else{
 
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_container, PaladinsItemFragment.newInstance(itemList.get(0)))
-                        .addToBackStack("NEW")
-                        .commit();
+                    versionUpdate();
+                }
                 drawer.closeDrawer(Gravity.LEFT);
                // mCurrentSelectedPosition = 5;
                 return true;
