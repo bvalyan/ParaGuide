@@ -64,7 +64,7 @@
         app:layout_marginTopPercent="4%"
         android:layout_width="match_parent"
         android:textAlignment="center"
-        android:text="PARAGUIDE 5"
+        android:text="PALADICT"
         android:textColor="@color/white"
         android:textSize="50sp"
         android:fontFamily="sans-serif-condensed"

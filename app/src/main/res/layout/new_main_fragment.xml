@@ -65,6 +65,7 @@
         android:layout_width="match_parent"
         android:textAlignment="center"
         android:textColor="#33ffc3"
+        android:text="PALADICT"
         android:textSize="50sp"
         android:fontFamily="sans-serif-condensed"
         />

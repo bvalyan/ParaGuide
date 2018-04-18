@@ -60,58 +60,103 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dip"
+            android:layout_height="wrap_content"
             android:background="#0e2b2d"
-            android:layout_weight="1"
+
             android:padding="2.5dp"
             android:gravity="center"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center"
+                android:padding="@dimen/icon_padding">
+
             <ImageView
                 android:id="@+id/skill1View"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:layout_marginBottom="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
                 android:layout_gravity="center"
                 android:padding="@dimen/icon_padding"
-                />
+                >
             <ImageView
                 android:id="@+id/skill2View"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:layout_gravity="center"
-                android:padding="@dimen/icon_padding"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:layout_height="50dp"
+                android:layout_width="match_parent"
                 />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:layout_weight="1"
+                android:padding="@dimen/icon_padding">
             <ImageView
                 android:id="@+id/skill3View"
-                android:layout_width="0dp"
-                android:layout_gravity="center"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginBottom="5dp"
-                android:padding="@dimen/icon_padding"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:layout_height="50dp"
+                android:layout_width="match_parent"
                 />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                android:padding="@dimen/icon_padding"
+                >
             <ImageView
                 android:id="@+id/skill4View"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:layout_height="50dp"
+                android:layout_width="match_parent"
+                />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
                 android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
                 android:padding="@dimen/icon_padding"
-                />
+                >
             <ImageView
                 android:id="@+id/skill5View"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dp"
-                android:padding="@dimen/icon_padding"
+                android:scaleType="centerCrop"
+                android:cropToPadding="true"
+                android:layout_height="50dp"
+                android:layout_width="match_parent"
                 />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
