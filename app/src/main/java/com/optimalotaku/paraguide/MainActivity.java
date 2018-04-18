@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else{
             try {
+                checkServers();
                 championDataList = FileManager.readChampsFromStorage(MainActivity.this);
                 itemList = FileManager.readItemsFromStorage(MainActivity.this);
                 if(itemList.size() < 1|| championDataList.size() < 1){
