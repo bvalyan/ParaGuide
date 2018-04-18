@@ -9,18 +9,20 @@ import android.view.ViewGroup;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 
+import java.util.ArrayList;
+
 /**
  * Created by bvalyan on 12/7/17.
  */
 
 public class AffinitySelectionFragment extends Fragment{
 
-    static CardData incCard;
+    static ArrayList<ItemObject> itemObjects;
 
-    public static AffinitySelectionFragment newInstance(CardData cotd) {
+    public static AffinitySelectionFragment newInstance(ArrayList<ItemObject> cotd) {
 
         Bundle args = new Bundle();
-        incCard = cotd;
+        itemObjects = cotd;
         AffinitySelectionFragment fragment = new AffinitySelectionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -37,10 +39,10 @@ public class AffinitySelectionFragment extends Fragment{
     @Override
     public void onViewCreated (final View topView, Bundle savedInstanceState) {
         final HorizontalInfiniteCycleViewPager horizontalInfiniteCycleViewPager =
-                (HorizontalInfiniteCycleViewPager) topView.findViewById(R.id.affinity_wheel);
+                topView.findViewById(R.id.affinity_wheel);
 
 
-        final AffinitySelectorAdapter adapter = new AffinitySelectorAdapter(getContext(), topView, AffinitySelectionFragment.this, incCard);
+        final AffinitySelectorAdapter adapter = new AffinitySelectorAdapter(getContext(), topView, AffinitySelectionFragment.this, itemObjects);
         horizontalInfiniteCycleViewPager.setAdapter(adapter);
         horizontalInfiniteCycleViewPager.notifyDataSetChanged();
         horizontalInfiniteCycleViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

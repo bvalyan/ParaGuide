@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FileManager fileManager;
     HashMap<String,HeroData> heroDataMap;
     ArrayList<ChampionData> championDataList = new ArrayList<>();
-    ArrayList<ItemObject> itemList = new ArrayList<>();
+    HashMap<Integer,ItemObject>  itemList = new HashMap<Integer,ItemObject>();
     HashMap<String,List<CardData>> cDataMap;
     ProgressDialog progress;
     private static final String PREFERENCES_FILE = "mymaterialapp_settings";
@@ -370,12 +370,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
                         try {
+                            HashMap<Integer, ArrayList<ItemObject>> itemMap = new HashMap<Integer, ArrayList<ItemObject>>();
+                            for (ItemObject item : items) {
+                                if(!itemMap.containsKey(item.getChampionID())){
+                                    ArrayList<ItemObject> itemMapList = new ArrayList<>();
+                                    itemMapList.add(item);
+                                    itemMap.put(item.getChampionID(), itemMapList);
+                                }
+                                else{
+                                    itemMap.get(item.getChampionID()).add(item);
+                                }
+                            }
                             String fileName = "Items";
                             FileOutputStream fos;
                             fos = openFileOutput(fileName, Context.MODE_PRIVATE);
                             ObjectOutputStream oos = new ObjectOutputStream(fos);
-                            oos.writeObject(items);
+                            oos.writeObject(itemMap);
                             oos.close();
+                            itemList = FileManager.readItemsFromStorage(MainActivity.this);
                             championUpdate(versionString);
                         } catch (FileNotFoundException e1) {
                             e1.printStackTrace();
@@ -557,9 +569,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawer.closeDrawer(Gravity.LEFT);
                 return true;
             case R.id.navigation_item_5:
-               /* getSupportFragmentManager()
+                //TODO: Iterate through hash
+                /*
+                getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, AffinitySelectionFragment.newInstance(cotd))
+                        .replace(R.id.fragment_container, AffinitySelectionFragment.newInstance(itemList))
                         .addToBackStack("NEW")
                         .commit();*/
                 drawer.closeDrawer(Gravity.LEFT);

@@ -41,12 +41,12 @@ public class Cards extends Fragment {
 
     GridView gridview;
     FileManager cardmanager;
-    static CardData incCard;
+    static ArrayList incCard;
     static String selectedAffinity;
     static  String prevName;
     String TAG = Cards.class.getSimpleName();
 
-    public static Cards newInstance(CardData cotd, String affinity, String oldName) {
+    public static Cards newInstance(ArrayList<ItemObject> cotd, String affinity, String oldName) {
 
         Bundle args = new Bundle();
         incCard = cotd;
@@ -63,7 +63,7 @@ public class Cards extends Fragment {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final Intent intent;
         View view = inflater.inflate(R.layout.cardlist2, container, false);
-        PercentRelativeLayout backgroundLayout = (PercentRelativeLayout) view.findViewById(R.id.cardlist_background);
+        PercentRelativeLayout backgroundLayout = view.findViewById(R.id.cardlist_background);
         if(selectedAffinity.toLowerCase().trim().equals("order")){
             backgroundLayout.setBackgroundColor(Color.parseColor("#878164"));
         }
@@ -87,7 +87,7 @@ public class Cards extends Fragment {
             e.printStackTrace();
         }
         final Map<String, List<CardData>> finalCDataMap = cDataMap;
-        gridview = (GridView) view.findViewById(R.id.gridview2);
+        gridview = view.findViewById(R.id.gridview2);
         final SharedPreferences prefs = getActivity().getSharedPreferences("authInfo", Context.MODE_PRIVATE);
         final SharedPreferences.Editor e = getActivity().getSharedPreferences("authInfo", Context.MODE_PRIVATE).edit();
         String authCode = prefs.getString("signedIn", "null");

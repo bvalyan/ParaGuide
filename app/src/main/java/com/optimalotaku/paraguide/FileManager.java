@@ -176,16 +176,16 @@ public class FileManager {
 
     }
 
-    public static ArrayList<ItemObject> readItemsFromStorage(Context context) throws IOException{
-        ArrayList<ItemObject> championDataList = new ArrayList<>();
+    public static HashMap<Integer,ItemObject> readItemsFromStorage(Context context) throws IOException{
+        HashMap<Integer,ItemObject>  championDataList = new HashMap<Integer,ItemObject>();
         FileInputStream fis;
-        ArrayList<ItemObject> returnlist = new ArrayList<>();
+        HashMap<Integer,ItemObject> returnlist = new HashMap<Integer,ItemObject> ();
 
         Log.i("INFO", "FileManager - readChampsFromStorage: Attempting  to retrieve Hero data from device");
         try {
             fis = context.openFileInput("Items");
             ObjectInputStream ois = new ObjectInputStream(fis);
-            returnlist = (ArrayList<ItemObject>) ois.readObject();
+            returnlist = (HashMap<Integer,ItemObject> ) ois.readObject();
             ois.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
