@@ -45,11 +45,11 @@ android {
         multiDexEnabled  true
         renderscriptTargetApi 25
         renderscriptSupportModeEnabled true
-        applicationId "com.optimalotaku.paraguide"
+        applicationId "com.optimalotaku.paladict"
         minSdkVersion 23
         targetSdkVersion 25
-        versionCode 51
-        versionName "5.23"
+        versionCode 1
+        versionName "1.00"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         packagingOptions {
             pickFirst  'META-INF/LICENSE'

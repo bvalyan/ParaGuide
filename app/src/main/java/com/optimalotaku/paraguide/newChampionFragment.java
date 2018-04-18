@@ -25,7 +25,7 @@ import java.util.HashMap;
  * Created by bvalyan on 7/18/17.
  */
 
-public class newHeroFragment extends DialogFragment{
+public class newChampionFragment extends DialogFragment{
 
     ArrayList<WonderModel> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
@@ -42,8 +42,8 @@ public class newHeroFragment extends DialogFragment{
     String name;
     String imageURL;
 
-    static newHeroFragment newInstance(int num, int difficulty, int physPower, int abPower, int mobility, int durability, String imageURL, String name) {
-        newHeroFragment f = new newHeroFragment();
+    static newChampionFragment newInstance(int num, int difficulty, int physPower, int abPower, int mobility, int durability, String imageURL, String name) {
+        newChampionFragment f = new newChampionFragment();
 
 
         Bundle bundle = new Bundle();
@@ -82,14 +82,14 @@ public class newHeroFragment extends DialogFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_hero_screen, container, false);
-        IconRoundCornerProgressBar difficultyBar = (IconRoundCornerProgressBar) view.findViewById(R.id.difficulty_bar);
-        IconRoundCornerProgressBar mobilityBar = (IconRoundCornerProgressBar) view.findViewById(R.id.mobility_bar);
-        IconRoundCornerProgressBar durabilityBar = (IconRoundCornerProgressBar) view.findViewById(R.id.durability_bar);
-        IconRoundCornerProgressBar physicalBar = (IconRoundCornerProgressBar) view.findViewById(R.id.physical_power_bar);
-        IconRoundCornerProgressBar abilityBar = (IconRoundCornerProgressBar) view.findViewById(R.id.ability_power_bar);
-        TextView name = (TextView) view.findViewById(R.id.hero_name);
-        ImageView coverView = (ImageView) view.findViewById(R.id.hero_portrait);
-        layout = (FABRevealLayout) view.findViewById(R.id.fab_reveal_layout);
+        IconRoundCornerProgressBar difficultyBar = view.findViewById(R.id.difficulty_bar);
+        IconRoundCornerProgressBar mobilityBar = view.findViewById(R.id.mobility_bar);
+        IconRoundCornerProgressBar durabilityBar = view.findViewById(R.id.durability_bar);
+        IconRoundCornerProgressBar physicalBar = view.findViewById(R.id.physical_power_bar);
+        IconRoundCornerProgressBar abilityBar = view.findViewById(R.id.ability_power_bar);
+        TextView name = view.findViewById(R.id.hero_name);
+        ImageView coverView = view.findViewById(R.id.hero_portrait);
+        layout = view.findViewById(R.id.fab_reveal_layout);
 
         name.setText(this.name);
         difficultyBar.setProgress(difficulty*50);

@@ -61,18 +61,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.TimeZone;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    CardData cotd;
     FileManager fileManager;
-    HashMap<String,HeroData> heroDataMap;
     ArrayList<ChampionData> championDataList = new ArrayList<>();
     HashMap<Integer,ArrayList<ItemObject>>  itemList = new HashMap<Integer,ArrayList<ItemObject>>();
-    HashMap<String,List<CardData>> cDataMap;
     ProgressDialog progress;
     private static final String PREFERENCES_FILE = "mymaterialapp_settings";
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
@@ -628,7 +624,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, HeroView.newInstance(championDataList))
+                        .replace(R.id.fragment_container, ChampionView.newInstance(championDataList))
                         .addToBackStack("NEW")
                         .commit();
                 drawer.closeDrawer(Gravity.LEFT);

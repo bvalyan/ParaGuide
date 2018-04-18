@@ -16,7 +16,7 @@ import java.util.Collections;
  * Created by Jerek on 12/19/2016.
  */
 
-public class HeroView extends android.support.v4.app.Fragment {
+public class ChampionView extends android.support.v4.app.Fragment {
 
     ListView list;
     ArrayList<String> text = new ArrayList<>();
@@ -25,10 +25,10 @@ public class HeroView extends android.support.v4.app.Fragment {
     static ArrayList<ChampionData> map;
 
 
-    public static HeroView newInstance(ArrayList<ChampionData> hMap) {
+    public static ChampionView newInstance(ArrayList<ChampionData> hMap) {
 
         map = hMap;
-        return new HeroView();
+        return new ChampionView();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class HeroView extends android.support.v4.app.Fragment {
                                     int position, long id) {
                 //Toast.makeText(getApplicationContext(), "You Clicked " +text[+ position], Toast.LENGTH_SHORT).show();
                 //start new activity with method that takes in name and HeroData object and displays information
-                Intent i = new Intent(HeroView.this,HeroDisplayPrototype.class);
+                Intent i = new Intent(ChampionView.this,HeroDisplayPrototype.class);
                 HeroData chosenHero = hData.get(text[position]);
                 i.putExtra("HeroData",chosenHero);
                 startActivity(i);

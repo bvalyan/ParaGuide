@@ -121,7 +121,7 @@ public class CardFragment extends Fragment {
             holder.coverImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    newHeroFragment nextFrag= new newHeroFragment();
+                    newChampionFragment nextFrag= new newChampionFragment();
                     Bundle bundle = new Bundle();
 
                     /*bundle.putInt("difficulty", list.get(position).getDifficulty());
@@ -131,7 +131,7 @@ public class CardFragment extends Fragment {
                     bundle.putInt("durability", list.get(position).getDurability());
                     bundle.putString("imageurl", list.get(position).getImageURL());
                     bundle.putString("name", list.get(position).getCardName());
-                    DialogFragment newFragment = newHeroFragment.newInstance(mStackLevel,list.get(position).getDifficulty(),list.get(position).getPhysicalPower(),list.get(position).getAbilitypower(),list.get(position).getMobility(),list.get(position).getDurability(),list.get(position).getImageURL(),list.get(position).getCardName());
+                    DialogFragment newFragment = newChampionFragment.newInstance(mStackLevel,list.get(position).getDifficulty(),list.get(position).getPhysicalPower(),list.get(position).getAbilitypower(),list.get(position).getMobility(),list.get(position).getDurability(),list.get(position).getImageURL(),list.get(position).getCardName());
                     newFragment.setArguments(bundle);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     Fragment prev = getFragmentManager().findFragmentByTag("dialog");
@@ -271,7 +271,6 @@ public class CardFragment extends Fragment {
 
         for(int i = 0; i < map.size(); i++) {
             WonderModel item = new WonderModel();
-            ParagonAPIAttrReplace replacer = new ParagonAPIAttrReplace();
             item.setCardName(map.get(i).getName());
             ChampionData singledata = map.get(i);
             //item.setDifficulty(singledata.getDifficulty());
@@ -293,7 +292,7 @@ public class CardFragment extends Fragment {
             item.setSkill3desc(skillDesc);
             item.setSkill4pic(singledata.getAbility4().getImageURL());
             item.setSkill4name(singledata.getAbility4().getName());
-            skillDesc = replacer.replaceStatWithText(singledata.getAbility4().getDescription());
+            skillDesc = singledata.getAbility4().getDescription();
             item.setSkill4desc(skillDesc);
 
             item.setImageURL(singledata.getChampIconURL());
