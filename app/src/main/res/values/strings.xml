@@ -6,4 +6,5 @@
     <string name="navigation_drawer_close">close</string>
     <string name="update_string">Update Database</string>
     <string name="paladict">PALADICT</string>
+    <string name="pc_server_status">PC Server Status</string>
 </resources>

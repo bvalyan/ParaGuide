@@ -1,5 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_top">
         <item
             android:id="@+id/navigation_item_0"
             android:checked="true"
@@ -14,6 +15,16 @@
         <item
             android:id="@+id/navigation_item_5"
             android:title="Items" />
+
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom">
+        <item
+            android:id="@+id/pc_server_status"
+            android:title="@string/pc_server_status"
+            android:icon="@drawable/connected"
+            ></item>
 
     </group>
 

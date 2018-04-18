@@ -52,7 +52,7 @@
             app:layout_marginLeftPercent="66%"
             app:layout_marginTopPercent="5%"
             android:layout_gravity="center"
-            android:id="@+id/dynamicArcView2"
+            android:id="@+id/itemDescView"
             />
 
     </android.support.percent.PercentRelativeLayout>

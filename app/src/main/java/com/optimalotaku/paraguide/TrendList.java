@@ -87,8 +87,8 @@ public class TrendList extends RecyclerView.Adapter<TrendList.ViewHolder> {
                 .setChartStyle(SeriesItem.ChartStyle.STYLE_DONUT)
                 .build();
 
-        final TextView scorePercent = (TextView) holder.itemView.findViewById(R.id.scorePercent);
-        final TextView gradePercent = (TextView) holder.itemView.findViewById(R.id.gradePercent);
+        final TextView scorePercent = holder.itemView.findViewById(R.id.scorePercent);
+        final TextView gradePercent = holder.itemView.findViewById(R.id.gradePercent);
         scorePercent.setTextColor(Color.WHITE);
 
         String grade;
@@ -176,11 +176,11 @@ public class TrendList extends RecyclerView.Adapter<TrendList.ViewHolder> {
             super(itemView);
 
             setIsRecyclable(false);
-            trendchart1 = (DecoView) itemView.findViewById(R.id.dynamicArcView2);
-            heroImage = (ImageView) itemView.findViewById(R.id.img);
-            heroText = (TextView) itemView.findViewById(R.id.txt);
-            gradeNumber = (TextView) itemView.findViewById(R.id.scorePercent);
-            gradeLetter = (TextView) itemView.findViewById(R.id.gradePercent);
+            trendchart1 = itemView.findViewById(R.id.itemDescView);
+            heroImage = itemView.findViewById(R.id.img);
+            heroText = itemView.findViewById(R.id.txt);
+            gradeNumber = itemView.findViewById(R.id.scorePercent);
+            gradeLetter = itemView.findViewById(R.id.gradePercent);
 
         }
     }

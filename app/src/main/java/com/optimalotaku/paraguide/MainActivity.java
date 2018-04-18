@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FileManager fileManager;
     HashMap<String,HeroData> heroDataMap;
     ArrayList<ChampionData> championDataList = new ArrayList<>();
-    HashMap<Integer,ItemObject>  itemList = new HashMap<Integer,ItemObject>();
+    HashMap<Integer,ArrayList<ItemObject>>  itemList = new HashMap<Integer,ArrayList<ItemObject>>();
     HashMap<String,List<CardData>> cDataMap;
     ProgressDialog progress;
     private static final String PREFERENCES_FILE = "mymaterialapp_settings";
@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setScrimColor(Color.TRANSPARENT);
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
         menu = navigationView.getMenu();
 
@@ -195,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             e.putString("session_id", response.getString("session_id"));
                             e.putLong("session_time", System.currentTimeMillis());
                             e.apply();
+                            checkServers();
                             versionUpdate();
 
                         } catch (JSONException e1) {
@@ -228,6 +230,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void checkServers() {
+        SimpleDateFormat dateFormatUTC = new SimpleDateFormat("yyyyMMddHHmmss");
+        dateFormatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String date = dateFormatUTC.format(Calendar.getInstance().getTime());
+        String session = prefs.getString("session_id","");
+        int langCode = prefs.getInt("lang_code",1);
+        String signature = GetMD5Hash(Constants.PALADINS_DEV_ID + "gethirezserverstatus" + Constants.PALADINS_AUTH_KEY + date);
+        String url = Constants.PALADINS_API_URI + "gethirezserverstatusjson/" + Constants.PALADINS_DEV_ID + "/" + signature + "/" + session + "/" + date;
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        //mTextView.setText("Response: " + response.toString());
+                        Log.i("SUCCESS", "Server Status acquisition success");
+                        try {
+                            String serverResponse = response.getJSONObject(0).getString("status");
+                            MenuItem status = menu.findItem(R.id.pc_server_status);
+                            if(serverResponse.toLowerCase().equals("up")){
+                                status.setIcon(R.drawable.connected);
+                            }
+                            else{
+                                status.setIcon(R.drawable.not_connected);
+                            }
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("FAILURE", "CREATE SESSION FAILURE");
+
+                    }
+                });
+        // Add the request to the RequestQueue.
+        mRequestQueue.add(jsonArrayRequest);
+    }
+
    /* private void databaseUpdater() {
         if(!prefs.getString("session_id","").equals("") && System.currentTimeMillis() < prefs.getLong("session_time",0) +  900000){
             championUpdate();
@@ -259,9 +303,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             versionString = versionObject.getString("version_string");
                             String currentVersion = prefs.getString("version","");
                             if(versionString.equals(currentVersion)){
-                                Toast.makeText(MainActivity.this, "Database up to date!",
+                                Toast.makeText(MainActivity.this, "Database up to date! Current patch is " + currentVersion,
                                         Toast.LENGTH_LONG).show();
-                                Log.i("INFO", "HeroView - onCreate(): Champion data does exist and is current. Grabbing current data from file ");
+                                Log.i("INFO", "MainActivity - versionUpdate(): Champion data does exist and is current. Grabbing current data from stored file");
                                 championDataList =  FileManager.readChampsFromStorage(MainActivity.this);
                                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                                 if(f == null){
@@ -347,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void onResponse(JSONArray response) {
                         //mTextView.setText("Response: " + response.toString());
-                        Log.i("SUCCESS", "CREATE SESSION SUCCESS");
+                        Log.i("SUCCESS", "ITEM ACQUISITION SUCCESS");
                             try {
                                 for(int i = 0; i <  response.length(); i++) {
                                     ItemObject item = new ItemObject();
@@ -401,7 +445,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("FAILURE", "CREATE SESSION FAILURE");
+                        Log.e("FAILURE", "ITEM ACQUISITION FAILURE");
 
 
 
@@ -569,13 +613,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawer.closeDrawer(Gravity.LEFT);
                 return true;
             case R.id.navigation_item_5:
-                //TODO: Iterate through hash
-                /*
+
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container, AffinitySelectionFragment.newInstance(itemList))
+                        .replace(R.id.fragment_container, PaladinsItemFragment.newInstance(itemList.get(0)))
                         .addToBackStack("NEW")
-                        .commit();*/
+                        .commit();
                 drawer.closeDrawer(Gravity.LEFT);
                // mCurrentSelectedPosition = 5;
                 return true;
